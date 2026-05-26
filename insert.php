@@ -2,15 +2,16 @@
 // Sabse pehli line par bina kisi space ke ob_start chalana hai
 ob_start();
 
-// ==================== 1. POSTGRESQL CONNECTION CONFIG ====================
-$host = "localhost";
+// ==================== 1. POSTGRESQL ONLINE CONFIG ====================
+$host = "dpg-d8al6bu7r5hc73ehhmv0-a.oregon-postgres.render.com";
 $port = "5432";               
 $dbname = "mohit_portfolio";   
-$user = "postgres";           
-$password = "143Papa#@";  
+$user = "mohit";           
+$password = "ejAM4ZN2L5XitWL8d183Kk5fgOXygVzM";  
 
 try {
-    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;user=$user;password=$password";
+    // Render Cloud Secure Connection parameters with SSL
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;user=$user;password=$password;sslmode=require";
     $pdo = new PDO($dsn);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
@@ -234,4 +235,3 @@ try {
     if (ob_get_length()) ob_end_clean();
     echo "Bhai, connection fail ho gaya: " . $e->getMessage();
 }
-// Janbujhkar closing tag hataya hai taaki extra spaces ka naamo-nishan na rahe

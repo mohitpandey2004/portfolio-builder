@@ -1,13 +1,34 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = htmlspecialchars($_POST['user_name']);
-    $title = htmlspecialchars($_POST['user_title']);
-    $about = htmlspecialchars($_POST['user_about']);
-    $email = htmlspecialchars($_POST['user_email']);
-    $phone = htmlspecialchars($_POST['user_phone']);
-    $location = htmlspecialchars($_POST['user_location']);
+// Sabse pehli line par bina kisi space ke ob_start chalana hai taaki headers miss na hon
+ob_start();
 
-    $html_content = '<!DOCTYPE html>
+// ==================== 1. POSTGRESQL ONLINE CONFIG ====================
+$host = "dpg-d8al6bu7r5hc73ehhmv0-a.oregon-postgres.render.com";
+$port = "5432";               
+$dbname = "mohit_portfolio";   
+$user = "mohit";           
+$password = "ejAM4ZN2L5XitWL8d183Kk5fgOXygVzM";  
+
+try {
+    // Render Cloud Secure Connection parameters with SSL
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;user=$user;password=$password;sslmode=require";
+    $pdo = new PDO($dsn);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // ==================== 2. MAIN REQUEST HANDLING ====================
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = htmlspecialchars($_POST['user_name']);
+        $title = htmlspecialchars($_POST['user_title']);
+        $about = htmlspecialchars($_POST['user_about']);
+        $email = htmlspecialchars($_POST['user_email']);
+        $phone = htmlspecialchars($_POST['user_phone']);
+        $location = htmlspecialchars($_POST['user_location']);
+
+        // Optional: Agar tum portfolio generator ka data bhi table me track karna chahte ho
+        // SQL insert query yahan daal sakte ho jaise contact form me daali thi.
+
+        // Dynamic HTML template architecture setup
+        $html_content = '<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,23 +62,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 </html>';
 
-    $zip = new ZipArchive();
-    $zip_name = "My_Premium_Portfolio.zip";
+        $zip = new ZipArchive();
+        $zip_name = "My_Premium_Portfolio.zip";
 
-    if ($zip->open($zip_name, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
-        $zip->addFromString('index.html', $html_content);
-        if (file_exists('style.css')) $zip->addFile('style.css', 'style.css');
-        if (file_exists('app.js')) $zip->addFile('app.js', 'app.js');
-        $zip->close();
+        if ($zip->open($zip_name, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+            $zip->addFromString('index.html', $html_content);
+            if (file_exists('style.css')) $zip->addFile('style.css', 'style.css');
+            if (file_exists('app.js')) $zip->addFile('app.js', 'app.js');
+            $zip->close();
 
-        header('Content-Type: application/zip');
-        header('Content-Disposition: attachment; filename="' . $zip_name . '"');
-        header('Content-Length: ' . filesize($zip_name));
-        readfile($zip_name);
-        unlink($zip_name);
-        exit;
-    } else {
-        echo "Bhai, Zip file banane me koi dikkat aayi hai!";
+            // MASTER BUFFER FIX: Zip dispatch karne se pehle output memory stream clear karna
+            if (ob_get_length()) {
+                ob_end_clean();
+            }
+
+            header('Content-Type: application/zip');
+            header('Content-Disposition: attachment; filename="' . $zip_name . '"');
+            header('Content-Length: ' . filesize($zip_name));
+            header('Pragma: no-cache');
+            header('Expires: 0');
+            
+            readfile($zip_name);
+            unlink($zip_name);
+            exit;
+        } else {
+            echo "Bhai, Zip file banane me koi dikkat aayi hai!";
+        }
     }
+} catch (PDOException $e) {
+    if (ob_get_length()) ob_end_clean();
+    echo "Bhai, Cloud connection fail ho gaya: " . $e->getMessage();
 }
-?>
