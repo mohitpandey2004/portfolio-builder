@@ -15,6 +15,18 @@ try {
     $pdo = new PDO($dsn);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
+    // MASTER AUTOMATION: Agar online database me table nahi hai, toh ye automatic bana dega
+    $createTableSQL = "CREATE TABLE IF NOT EXISTS contact_messages (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        phone VARCHAR(50),
+        subject VARCHAR(255),
+        message TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );";
+    $pdo->exec($createTableSQL);
+    
     // ==================== 2. MAIN REQUEST HANDLING ====================
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
@@ -51,7 +63,7 @@ try {
             }
             $js_strings = implode(', ', $typed_formatted);
 
-            // ==================== PREMIUM LIVE CODE TEMPLATE FOR ZIP ====================
+            // PREMIUM LIVE CODE TEMPLATE
             $html_content = '<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +75,6 @@ try {
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 </head>
 <body>
-    
     <header class="header">
         <a href="#" class="logo" data-target="home">Portfolio</a>
         <div class="navbar">
@@ -73,7 +84,6 @@ try {
             <a href="#" class="nav-link" data-target="contact">Contact</a>
         </div>
     </header>
-
     <main class="main-content">
         <section class="content-section active" id="home">
             <div class="home-content">
@@ -92,7 +102,6 @@ try {
                 <img src="user-avatar.jpg" alt="' . $name . '">
             </div>
         </section>
-
         <section class="content-section" id="about">
             <div class="about-container">
                 <h2 class="heading">About <span>Me</span></h2>
@@ -104,7 +113,6 @@ try {
                 </div>
             </div>
         </section>
-
         <section class="content-section" id="skills">
             <h2 class="heading">My <span>Skills</span></h2>
             <div class="skills-row" style="justify-content: center; display: flex;">
@@ -115,7 +123,6 @@ try {
                 </div>
             </div>
         </section>
-
         <section class="content-section" id="contact">
             <h2 class="heading">Contact <span>Me!</span></h2>
             <div class="contact-container" style="justify-content: center; display: flex;">
@@ -136,12 +143,9 @@ try {
             </div>
         </section>
     </main>
-
     <script>
-        // NAVIGATION LOGIC
         const navLinks = document.querySelectorAll(".nav-link");
         const sections = document.querySelectorAll(".content-section");
-
         navLinks.forEach(link => {
             link.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -154,8 +158,6 @@ try {
                 if (matchingNavbarLink) matchingNavbarLink.classList.add("active");
             });
         });
-
-        // TYPED.JS
         var typed = new Typed(".text", {
             strings: [' . $js_strings . '],
             typeSpeed: 100, backSpeed: 100, backDelay: 1000, loop: true
@@ -170,29 +172,17 @@ try {
 
             if ($zip->open($zip_name, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
                 $zip->addFromString('index.html', $html_content);
-                
-                if (file_exists('style.css')) {
-                    $zip->addFile('style.css', 'style.css');
-                }
-                
+                if (file_exists('style.css')) $zip->addFile('style.css', 'style.css');
                 if (isset($_FILES['user_image']) && $_FILES['user_image']['error'] == 0) {
-                    $image_tmp_path = $_FILES['user_image']['tmp_name'];
-                    $zip->addFile($image_tmp_path, 'user-avatar.jpg');
+                    $zip->addFile($_FILES['user_image']['tmp_name'], 'user-avatar.jpg');
                 }
-                
                 $zip->close();
 
-                // MASTER FIX: Ab tak ka saara buffer bilkul saaf kar do taaki headers force download kar sakein
-                if (ob_get_length()) {
-                    ob_end_clean();
-                }
+                if (ob_get_length()) ob_end_clean();
 
                 header('Content-Type: application/zip');
                 header('Content-Disposition: attachment; filename="' . $zip_name . '"');
                 header('Content-Length: ' . filesize($zip_name));
-                header('Pragma: no-cache');
-                header('Expires: 0');
-                
                 readfile($zip_name);
                 unlink($zip_name);
                 exit;
@@ -221,7 +211,6 @@ try {
                 ':message' => $message
             ]);
 
-            // Buffer clear karke script output dena
             if (ob_get_length()) ob_end_clean();
 
             echo "<script>
