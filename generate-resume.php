@@ -1,35 +1,58 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    $name = htmlspecialchars($_POST['res_name']);
-    $title = htmlspecialchars($_POST['res_title']);
-    $email = htmlspecialchars($_POST['res_email']);
-    $phone = htmlspecialchars($_POST['res_phone']);
-    $address = htmlspecialchars($_POST['res_address']);
-    $education = nl2br(htmlspecialchars($_POST['res_education']));
-    $projects = nl2br(htmlspecialchars($_POST['res_projects']));
-    $experience = nl2br(htmlspecialchars($_POST['res_experience']));
-    $skills_raw = htmlspecialchars($_POST['res_skills']);
-    
-    // Catch specific layout selection id (51, 52, 53, 54)
-    $template = isset($_POST['chosen_template']) ? $_POST['chosen_template'] : '51';
+// Sabse pehli line par bina kisi space ke ob_start chalana hai taaki buffers break na hon
+ob_start();
 
-    // Skills array loop conversion
-    $skills_array = explode(',', $skills_raw);
-    $skills_html = "";
-    foreach ($skills_array as $skill) {
-        if(!empty(trim($skill))) {
-            $skills_html .= '<span class="skill-badge tpl-badge-' . $template . '">' . trim($skill) . '</span>';
+// ==================== 1. POSTGRESQL ONLINE CONFIG ====================
+$host = "dpg-d8al6bu7r5hc73ehhmv0-a.oregon-postgres.render.com";
+$port = "5432";               
+$dbname = "mohit_portfolio";   
+$user = "mohit";           
+$password = "ejAM4ZN2L5XitWL8d183Kk5fgOXygVzM";  
+
+try {
+    // Secure Render Connection Parameter with SSL Mode
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;user=$user;password=$password;sslmode=require";
+    $pdo = new PDO($dsn);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        
+        $name = htmlspecialchars($_POST['res_name'] ?? 'Your Name');
+        $title = htmlspecialchars($_POST['res_title'] ?? 'Professional Title');
+        $email = htmlspecialchars($_POST['res_email'] ?? 'email@example.com');
+        $phone = htmlspecialchars($_POST['res_phone'] ?? '1234567890');
+        $address = htmlspecialchars($_POST['res_address'] ?? 'Location');
+        
+        // Exact matching for line breaks form textareas
+        $education = nl2br(htmlspecialchars($_POST['res_education'] ?? ''));
+        $projects = nl2br(htmlspecialchars($_POST['res_projects'] ?? ''));
+        $experience = nl2br(htmlspecialchars($_POST['res_experience'] ?? ''));
+        $skills_raw = htmlspecialchars($_POST['res_skills'] ?? '');
+        
+        // Catch specific layout selection id (51, 52, 53, 54)
+        $template = isset($_POST['chosen_template']) ? $_POST['chosen_template'] : '51';
+
+        // Skills array loop conversion
+        $skills_array = explode(',', $skills_raw);
+        $skills_html = "";
+        foreach ($skills_array as $skill) {
+            if(!empty(trim($skill))) {
+                $skills_html .= '<span class="skill-badge tpl-badge-' . $template . '">' . trim($skill) . '</span>';
+            }
         }
-    }
 
-    // Process secure base64 image data parsing
-    $avatar_data = "";
-    if (isset($_FILES['res_image']) && $_FILES['res_image']['error'] == 0) {
-        $image_path = $_FILES['res_image']['tmp_name'];
-        $base64 = base64_encode(file_get_contents($image_path));
-        $avatar_data = 'data:' . $_FILES['res_image']['type'] . ';base64,' . $base64;
-    }
+        // Process secure base64 image data parsing
+        $avatar_data = "";
+        if (isset($_FILES['res_image']) && $_FILES['res_image']['error'] == 0) {
+            $image_path = $_FILES['res_image']['tmp_name'];
+            $base64 = base64_encode(file_get_contents($image_path));
+            $avatar_data = 'data:' . $_FILES['res_image']['type'] . ';base64,' . $base64;
+        }
+
+        // Clean output buffers just before injecting direct HTML response
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -235,5 +258,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 </html>
 <?php
+        exit();
+    }
+} catch (PDOException $e) {
+    if (ob_get_length()) ob_end_clean();
+    echo "Bhai, Connection failed in Resume Engine: " . $e->getMessage();
 }
 ?>
