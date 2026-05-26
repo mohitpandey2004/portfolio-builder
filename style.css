@@ -812,3 +812,60 @@ body {
         height: 200px;
     }
 }
+
+/* ==================== 🚀 PREMIUM CYBERPUNK FOOTER STYLES ==================== */
+.custom-footer {
+    width: 100%;
+    background: rgba(4, 13, 22, 0.9);
+    border-top: 1px solid rgba(0, 239, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 30px 20px;
+    margin-top: 50px; /* Sections ke content se thoda gap */
+    text-align: center;
+}
+
+.footer-content h3 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.footer-content h3 span {
+    color: #0ef;
+    text-shadow: 0 0 10px rgba(0, 239, 255, 0.4);
+}
+
+.footer-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+    font-size: 15px;
+    color: #ccc;
+}
+
+.footer-info a {
+    color: #0ef;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-info a:hover {
+    text-shadow: 0 0 10px #0ef;
+}
+
+.footer-info span i {
+    color: #ff007f;
+    margin-right: 5px;
+}
+
+.footer-rights {
+    font-size: 13px;
+    color: #666;
+    margin-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 15px;
+}
