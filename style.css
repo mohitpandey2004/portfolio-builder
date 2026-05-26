@@ -98,7 +98,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    padding: 120px 13% 130px; /* Desktop par niche padding badhai taaki content footer ke piche na chhupe */
+    padding: 120px 13% 130px; /* Desktop padding adjustment */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -685,7 +685,7 @@ body {
     50% { transform: translateY(-12px); }
 }
 
-/* ==================== 🚀 MASTER ABSOLUTE FOOTER FIX (FOR LAPTOP VIEW) ==================== */
+/* ==================== 🚀 GLOBAL ABSOLUTE FOOTER SETUP ==================== */
 .custom-footer {
     position: absolute;
     bottom: 0;
@@ -748,7 +748,7 @@ body {
 /* ==================== 📱 SMARTPHONE RESPONSIVE CORE ENGINE ==================== */
 @media (max-width: 991px) {
     .content-section {
-        padding: 120px 8% 120px;
+        padding: 120px 8% 130px;
     }
     .home-content h1 {
         font-size: 42px;
@@ -761,12 +761,12 @@ body {
     }
     
     .content-section {
-        position: absolute;
-        height: auto;
+        position: relative !important; /* Mobile layout engine flows naturally */
+        height: auto !important;
         min-height: 100vh;
-        overflow-y: visible; /* Let mobile browser handle the scroll native */
-        padding: 160px 25px 40px; /* Mobile layout optimization */
-        display: block; /* Flex layout block override for mobile stack tracking */
+        overflow-y: visible; 
+        padding: 160px 24px 40px !important; /* Unified wrapper block spacing */
+        display: block !important; /* Flex behavior reset to fix vertical alignments */
     }
 
     /* Fixed Header Flex Override */
@@ -796,41 +796,48 @@ body {
         margin-right: 12px;
     }
 
-    /* Home Layout Vertical Flow */
+    /* Home Layout Vertical Flow without flexing conflicts */
     #home {
+        display: block !important; 
+        padding-top: 180px !important;
+    }
+
+    .home-img {
+        margin-bottom: 30px;
         display: flex;
-        flex-direction: column-reverse;
         justify-content: center;
-        gap: 40px;
-        text-align: center;
-        padding-top: 180px;
-    }
-
-    .home-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .home-content h1 {
-        font-size: 36px;
-    }
-
-    .home-content h3 {
-        font-size: 24px;
-    }
-
-    .home-content p {
-        font-size: 16px;
-    }
-
-    .home-sci a {
-        margin: 20px 10px;
     }
 
     .home-img img {
-        width: 240px;
-        height: 240px;
+        width: 220px !important;
+        height: 220px !important;
+    }
+
+    .home-content {
+        text-align: center;
+    }
+
+    .home-content h1 {
+        font-size: 32px;
+        margin: 10px 0;
+    }
+
+    .home-content h3 {
+        font-size: 22px;
+    }
+
+    .home-content p {
+        font-size: 15px;
+    }
+
+    .home-sci {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .home-sci a {
+        margin: 10px !important;
     }
 
     /* Content Structural Stack grids */
@@ -842,7 +849,6 @@ body {
 
     .about-card, .portfolio-box, .skills-column, .contact-info, .contact-form-wrap {
         width: 100% !important;
-        flex: 1 1 100% !important;
         padding: 25px;
     }
 
@@ -855,13 +861,15 @@ body {
         margin-bottom: 1.5rem;
     }
 
-    /* Override absolute placement to flow naturally after mobile container content */
+    /* Mobile Overrides to force Footer at the absolute end of scroll container */
     .custom-footer {
-        position: relative !important;
+        position: relative !important; 
         margin-top: 60px !important;
-        margin-left: -25px; /* Compressing global gutter gaps */
-        margin-right: -25px;
-        width: calc(100% + 50px);
+        bottom: auto !important;
+        left: auto !important;
+        margin-left: -24px;
+        margin-right: -24px;
+        width: calc(100% + 48px) !important;
     }
 }
 
@@ -875,10 +883,10 @@ body {
         margin-right: 8px;
     }
     .home-content h1 {
-        font-size: 28px;
+        font-size: 26px;
     }
     .home-img img {
-        width: 200px;
-        height: 200px;
+        width: 180px !important;
+        height: 180px !important;
     }
 }
