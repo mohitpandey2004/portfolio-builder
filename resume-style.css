@@ -1,3 +1,8 @@
+/* ==================== 1. GLOBAL STYLES & RESET ==================== */
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -46,6 +51,7 @@ body {
     text-shadow: 0 0 5px #00eeff;
 }
 
+/* ==================== 2. TWO-COLUMN GRID ENGINE ==================== */
 .resume-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -99,6 +105,7 @@ body {
     color: #ff007f;
     font-size: 1.3rem;
     text-transform: uppercase;
+    margin-bottom: 20px;
 }
 
 .input-group {
@@ -136,7 +143,8 @@ body {
     border-color: #00eeff;
 }
 
-/* Photo Uploader Design */
+/* ==================== 3. COMPONENT STYLES ==================== */
+/* Photo Box Setup */
 .photo-uploader-container {
     display: flex;
     align-items: center;
@@ -237,291 +245,7 @@ body {
     box-shadow: 0 0 25px #00eeff;
 }
 
-/* Purane style ke niche ye extra template select styles jodh dena */
-.template-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 15px;
-}
-
-.template-card {
-    background: rgba(18, 38, 54, 0.6);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-
-.template-card p {
-    font-size: 0.9rem;
-    margin-top: 8px;
-    color: #ccc;
-}
-
-.template-card.active, .template-card:hover {
-    border-color: #00eeff;
-    box-shadow: 0 0 15px rgba(0, 238, 255, 0.4);
-    background: rgba(18, 38, 54, 0.9);
-}
-
-.template-card.active p {
-    color: #00eeff;
-    font-weight: bold;
-}
-
-.tpl-preview {
-    height: 110px;
-    border-radius: 4px;
-    background: #fff;
-    position: relative;
-    border: 1px solid #ddd;
-}
-
-/* Dummy graphic lines layout representation */
-.tpl-modern {
-    background: linear-gradient(to right, #1a365d 30%, #fff 30%);
-}
-.tpl-minimal {
-    background: linear-gradient(to bottom, #f8fafc 15%, #fff 15%);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background: #081b29;
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
-    overflow-y: auto !important;
-    padding: 20px;
-}
-
-.builder-container {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 40px;
-    background: rgba(18, 38, 54, 0.9);
-    border: 2px solid #00eeff;
-    box-shadow: 0 0 25px #00eeff;
-    border-radius: 10px;
-}
-
-.builder-title {
-    text-align: center;
-    color: #00eeff;
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 0 0 10px #00eeff;
-}
-
-.back-home {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: #fff;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.back-home:hover { 
-    color: #00eeff; 
-    text-shadow: 0 0 5px #00eeff;
-}
-
-.resume-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 25px;
-    margin-top: 30px;
-}
-
-.resume-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.section-tab {
-    background: rgba(18, 38, 54, 0.7);
-    border: 1px solid #00eeff;
-    color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: 0.3s;
-}
-
-.section-tab.active, .section-tab:hover {
-    background: #00eeff;
-    color: #081b29;
-    box-shadow: 0 0 15px #00eeff;
-    font-weight: bold;
-}
-
-.form-content-area {
-    background: rgba(8, 27, 41, 0.85);
-    border: 2px solid #ff007f;
-    box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);
-    border-radius: 12px;
-    padding: 30px;
-}
-
-.resume-form-section {
-    display: none;
-}
-
-.resume-form-section.active {
-    display: block;
-}
-
-.form-section-title {
-    color: #ff007f;
-    font-size: 1.3rem;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.input-group {
-    position: relative;
-    width: 100%;
-    margin-bottom: 30px;
-}
-
-.input-group input, .input-group textarea {
-    width: 100%;
-    padding: 12px 10px;
-    font-size: 1rem;
-    color: #fff;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    outline: none;
-    background: rgba(8, 27, 41, 0.5);
-}
-
-.input-group textarea { resize: none; }
-
-.input-group label {
-    position: absolute;
-    top: -12px;
-    left: 12px;
-    font-size: 0.85rem;
-    color: #00eeff;
-    background: #081b29;
-    padding: 0 6px;
-    border-radius: 4px;
-    pointer-events: none; 
-}
-
-/* Photo Box Setup */
-.photo-uploader-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 25px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px dashed #00eeff;
-}
-
-.avatar-preview-box {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #ff007f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background: #122636;
-}
-
-.avatar-preview-box img { width: 100%; height: 100%; object-fit: cover; }
-.avatar-preview-box i { font-size: 2.5rem; color: #00eeff; }
-
-.upload-action-btns { display: flex; flex-direction: column; gap: 8px; }
-
-.photo-btn {
-    padding: 8px 14px;
-    font-size: 0.85rem;
-    border: 1px solid;
-    border-radius: 4px;
-    cursor: pointer;
-    background: transparent;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.btn-change { color: #00eeff; border-color: #00eeff; }
-.btn-remove { color: #ff007f; border-color: #ff007f; display: none; }
-
-.section-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 10px;
-}
-
-.help-trigger-btn {
-    background: transparent;
-    border: 1px solid #00eeff;
-    color: #00eeff;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.help-panel {
-    background: rgba(18, 38, 54, 0.95);
-    border-left: 4px solid #00eeff;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 25px;
-    display: none;
-}
-
-.help-panel h4 { color: #00eeff; margin-bottom: 8px; }
-.help-panel ul { margin-left: 20px; color: #ccc; font-size: 0.9rem;}
-.help-panel ul li span { color: #ff007f; font-weight: bold; }
-
-.cyber-btn {
-    padding: 14px 32px;
-    background: transparent;
-    color: #00eeff;
-    border: 2px solid #00eeff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.cyber-btn:hover {
-    background: #00eeff;
-    color: #081b29;
-    box-shadow: 0 0 25px #00eeff;
-}
-
-/* ==================== 4 PREMIUM TEMPLATES SELECTION GRID STYLES ==================== */
+/* ==================== 4. PREMIUM TEMPLATES SELECTION GRID STYLES ==================== */
 .template-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -568,3 +292,81 @@ body {
 .tpl-52 { background: linear-gradient(to right, #fcfbf7 32%, #fff 32%); border-left: 5px solid #d4af37; }
 .tpl-53 { background: linear-gradient(to right, #1e293b 32%, #fff 32%); }
 .tpl-54 { background: #fff; box-shadow: inset 0 15px 0 #00eeff; }
+
+
+/* ==================== 📱 MOBILE RESPONSIVE QUERIES ==================== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .builder-container {
+        margin: 10px auto;
+        padding: 20px 15px;
+        border-radius: 6px;
+    }
+
+    .builder-title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    /* Column grid turns to vertical full width stack */
+    .resume-layout {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+
+    .resume-sidebar {
+        flex-direction: row;
+        overflow-x: auto; /* Sidebar turns into scrollable top horizontal navigation buttons */
+        padding-bottom: 10px;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .section-tab {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        white-space: nowrap; /* Prevent tab titles from breaking into lines */
+        flex: 0 0 auto;
+    }
+
+    .form-content-area {
+        padding: 20px 15px;
+    }
+
+    /* Avatar file input alignment */
+    .photo-uploader-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .upload-action-btns {
+        width: 100%;
+        align-items: center;
+    }
+
+    /* Template Cards grid drops to single line stack */
+    .template-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+
+    .cyber-btn {
+        width: 100%; /* Force submit button full width on mobile view */
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .builder-title {
+        font-size: 1.5rem;
+    }
+    .form-section-title {
+        font-size: 1.1rem;
+    }
+}

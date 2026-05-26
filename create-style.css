@@ -155,3 +155,57 @@ input[type="file"]::-webkit-file-upload-button:hover {
     color: #081b29;
     box-shadow: 0 0 15px #00eeff;
 }
+
+/* ==================== 📱 SMARTPHONE RESPONSIVE QUERIES ==================== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .builder-container {
+        margin: 20px auto;
+        padding: 25px 20px; /* Paddings are compressed to look grand on mobile */
+        width: 100%;
+    }
+
+    .builder-title {
+        font-size: 1.8rem; /* Titles scale down proportionally */
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    .form-section-title {
+        font-size: 1.1rem;
+        margin: 20px 0 12px 0;
+    }
+
+    .input-group {
+        margin-bottom: 25px;
+    }
+
+    .input-group input, .input-group textarea {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    /* Target the webkit upload button inside input for full stack configuration */
+    input[type="file"]::-webkit-file-upload-button {
+        width: 100%; /* Turn upload file link selector into a massive easy tap pad */
+        margin-bottom: 10px;
+        display: block;
+        text-align: center;
+    }
+
+    .cyber-btn {
+        width: 100%; /* Generate / Download buttons match 100% block grid */
+        text-align: center;
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .builder-title {
+        font-size: 1.5rem;
+    }
+}

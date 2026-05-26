@@ -13,7 +13,7 @@ html {
 body {
     color: #ededed;
     background: #06131f; /* Base deep dark color */
-    overflow: hidden;    /* Scrollbars perfectly blocked for SPA structure */
+    overflow: hidden;    /* Scrollbars perfectly blocked for SPA structure on desktop */
     height: 100vh;
     width: 100vw;
 }
@@ -111,7 +111,7 @@ body {
     transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
                 transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
-    overflow-y: auto; 
+    overflow-y: auto; /* Internal scrolling active */
 }
 
 /* Active State Triggered by JS */
@@ -233,7 +233,6 @@ body {
 
 /* ==================== 5. NEXT-LEVEL ANIMATED ABOUT SECTION (GRADIENT) ==================== */
 #about {
-    /* Premium dark gradient block to break color sameness */
     background: linear-gradient(135deg, #071624 0%, #0b2236 100%);
 }
 
@@ -249,12 +248,11 @@ body {
     flex-wrap: wrap;
 }
 
-/* Glassmorphism Cards with Neon Border Hints */
 .about-card {
     flex: 1 1 28rem;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 239, 255, 0.15); /* Enhanced card borders */
+    border: 1px solid rgba(0, 239, 255, 0.15);
     border-radius: 1.5rem;
     padding: 35px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
@@ -262,7 +260,6 @@ body {
     transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
 }
 
-/* Slide Entry Actions triggered when About tab opens */
 .content-section#about.active .summary-card {
     animation: slideRight 0.8s ease forwards;
     animation-delay: 0.1s;
@@ -296,7 +293,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* Cyber Timeline Styling */
 .timeline {
     position: relative;
     border-left: 2px solid rgba(0, 239, 255, 0.4);
@@ -356,7 +352,6 @@ body {
 
 /* ==================== 6. SKILLS SECTION (DEEP DARK CYBER) ==================== */
 #skills { 
-    /* High contrast dark mode layout to lift neon blocks */
     background: linear-gradient(135deg, #050f1a 0%, #081a2b 100%); 
 }
 
@@ -386,25 +381,21 @@ body {
 
 .skill-tag { 
     padding: 10px 20px; 
-    border: 2px solid rgba(0, 239, 255, 0.4); /* Cleaner softer non-hover ring */
+    border: 2px solid rgba(0, 239, 255, 0.4); 
     border-radius: 20px; 
     color: #0ef; 
     font-weight: 600; 
     background: rgba(0, 239, 255, 0.02);
     cursor: default;
-    
     opacity: 0;
     transform: translateY(30px);
     transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Sequential Staggered Drop Actions */
-/* ENTRY TRIGGER: Ab ek-ek karke aaram se loop chalega */
 .content-section#skills.active .skill-tag {
     animation: slideTop .6s ease forwards;
-    animation-delay: calc(.25s * var(--i)); /* Gap badha diya taaki aaram se ek-ek karke aaye */
+    animation-delay: calc(.25s * var(--i)); 
 } 
-
 
 .skill-tag:hover { 
     background: #0ef; 
@@ -459,7 +450,6 @@ body {
     font-size: 13px; 
 }
 
-/* ==================== 8. CONTACT SECTION ==================== */
 /* ==================== 8. CONTACT SECTION (ULTIMATE CYBERPUNK) ==================== */
 #contact {
     background: linear-gradient(135deg, #040d16 0%, #061524 100%);
@@ -475,7 +465,6 @@ body {
     align-items: center;
 }
 
-/* --- Left Side Info Cards --- */
 .contact-info {
     flex: 1 1 25rem;
     display: flex;
@@ -496,7 +485,6 @@ body {
     transition: all 0.4s ease;
 }
 
-/* Entry Animation Trigger */
 .content-section#contact.active .info-box {
     animation: slideRight 0.8s ease forwards;
     animation-delay: calc(0.15s * var(--i));
@@ -537,7 +525,6 @@ body {
     margin-top: 2px;
 }
 
-/* --- Right Side Holographic Form --- */
 .contact-form-wrap {
     flex: 1.5 1 35rem;
     background: rgba(6, 19, 31, 0.6);
@@ -560,7 +547,6 @@ body {
     gap: 1.5rem;
 }
 
-/* Cyber Floating Input Style */
 .input-group {
     position: relative;
     width: 48%;
@@ -601,7 +587,6 @@ body {
     transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Input Focus Floating Logic */
 .input-group input:focus ~ label,
 .input-group input:valid ~ label,
 .input-group textarea:focus ~ label,
@@ -613,7 +598,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Laser Border Draw Animation Under Inputs */
 .input-group .line {
     position: absolute;
     bottom: 0;
@@ -630,7 +614,6 @@ body {
     width: 100%;
 }
 
-/* --- Ultimate Sci-Fi Cyber Button --- */
 .cyber-btn {
     position: relative;
     padding: 14px 35px;
@@ -672,12 +655,6 @@ body {
     transform: scale(1.03);
 }
 
-/* Responsive adjustment */
-@media (max-width: 768px) {
-    .contact-container { flex-direction: column; }
-    .input-group { width: 100%; }
-}
-
 /* ==================== 9. ENGINE KEYFRAMES ==================== */
 @keyframes slideRight {
     0% { transform: translateX(-100px); opacity: 0; }
@@ -707,4 +684,131 @@ body {
 @keyframes floatImage {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-12px); }
+}
+
+/* ==================== 📱 SMARTPHONE RESPONSIVE CORE ENGINE ==================== */
+@media (max-width: 991px) {
+    .content-section {
+        padding: 120px 8% 40px;
+    }
+    .home-content h1 {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow: auto; /* Allow global background control if needed */
+    }
+    
+    .content-section {
+        position: absolute;
+        height: auto;
+        min-height: 100vh;
+        overflow-y: visible; /* Let mobile browser handle the scroll native */
+        padding: 160px 25px 60px;
+    }
+
+    /* Fixed Header Flex Override */
+    .header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .logo {
+        padding-left: 0;
+        font-size: 22px;
+    }
+    
+    .navbar {
+        padding-right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    
+    .navbar a {
+        font-size: 16px;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    /* Home Layout Vertical Flow */
+    #home {
+        flex-direction: column-reverse;
+        justify-content: center;
+        gap: 40px;
+        text-align: center;
+        padding-top: 180px;
+    }
+
+    .home-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home-content h1 {
+        font-size: 36px;
+    }
+
+    .home-content h3 {
+        font-size: 24px;
+    }
+
+    .home-content p {
+        font-size: 16px;
+    }
+
+    .home-sci a {
+        margin: 20px 10px;
+    }
+
+    .home-img img {
+        width: 240px;
+        height: 240px;
+    }
+
+    /* Content Structural Stack grids */
+    .about-grid, .portfolio-container, .skills-row, .contact-container {
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+    }
+
+    .about-card, .portfolio-box, .skills-column, .contact-info, .contact-form-wrap {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        padding: 25px;
+    }
+
+    .input-group {
+        width: 100% !important; /* Force input fields full width in forms */
+    }
+
+    .heading {
+        font-size: 32px;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 12px 10px;
+    }
+    .navbar a {
+        font-size: 14px;
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    .home-content h1 {
+        font-size: 28px;
+    }
+    .home-img img {
+        width: 200px;
+        height: 200px;
+    }
 }
