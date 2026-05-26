@@ -1,0 +1,157 @@
+/* ==================== PORTFOLIO BUILDER STYLES ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #081b29;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    overflow-y: auto !important; /* Isse scroll bar 100% chalega */
+    padding: 20px;
+}
+
+.builder-container {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 40px;
+    background: rgba(18, 38, 54, 0.9);
+    border: 2px solid #00eeff;
+    box-shadow: 0 0 25px #00eeff;
+    border-radius: 10px;
+    position: relative;
+    z-index: 10;
+}
+
+.builder-title {
+    text-align: center;
+    color: #00eeff;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #00eeff;
+}
+
+.form-section-title {
+    color: #ff007f;
+    margin: 25px 0 15px 0;
+    font-size: 1.3rem;
+    border-bottom: 1px solid rgba(255, 0, 127, 0.4);
+    padding-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.back-home {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.back-home:hover { 
+    color: #00eeff; 
+    text-shadow: 0 0 5px #00eeff;
+}
+
+/* Input groups jisse click aur typing ekdum crystal clear ho */
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 1rem;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    outline: none;
+    background: rgba(8, 27, 41, 0.5);
+    transition: 0.3s;
+}
+
+.input-group textarea {
+    resize: none;
+}
+
+/* Label ko upar fix kiya taaki typing box par click karne me rukawat na bane */
+.input-group label {
+    position: absolute;
+    top: -12px;
+    left: 12px;
+    font-size: 0.85rem;
+    color: #00eeff;
+    background: #081b29;
+    padding: 0 6px;
+    border-radius: 4px;
+    pointer-events: none; 
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    border-color: #00eeff;
+    box-shadow: 0 0 10px rgba(0, 238, 255, 0.2);
+}
+
+.cyber-btn {
+    position: relative;
+    display: inline-block;
+    padding: 14px 32px;
+    background: transparent;
+    color: #00eeff;
+    border: 2px solid #00eeff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.5s;
+    box-shadow: 0 0 10px rgba(0, 238, 255, 0.3);
+}
+
+.cyber-btn:hover {
+    background: #00eeff;
+    color: #081b29;
+    box-shadow: 0 0 25px #00eeff;
+}
+
+/* ==================== PREMIUM FILE UPLOAD BUTTON STYLES ==================== */
+input[type="file"] {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* File Upload button ka native cyberpunk design */
+input[type="file"]::-webkit-file-upload-button {
+    background: #ff007f;
+    border: 1px solid #ff007f;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-right: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 5px rgba(255, 0, 127, 0.4);
+}
+
+/* Button Hover state */
+input[type="file"]::-webkit-file-upload-button:hover {
+    background: #00eeff;
+    border-color: #00eeff;
+    color: #081b29;
+    box-shadow: 0 0 15px #00eeff;
+}

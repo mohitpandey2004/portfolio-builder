@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="resume-style.css">
+</head>
+<body>
+
+    <div class="builder-container">
+        <a href="index.html" class="back-home">← Back to Portfolio</a>
+        <h1 class="builder-title">Resume Builder Pro</h1>
+        
+        <form action="generate-resume.php" method="POST" enctype="multipart/form-data">
+            <div class="resume-layout">
+                
+                <div class="resume-sidebar">
+                    <div class="section-tab active" onclick="switchSection('personal-sec')">
+                        <span><i class="fa-solid fa-user"></i> Personal Details</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <div class="section-tab" onclick="switchSection('education-sec')">
+                        <span><i class="fa-solid fa-graduation-cap"></i> Education</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <div class="section-tab" onclick="switchSection('skills-sec')">
+                        <span><i class="fa-solid fa-laptop-code"></i> Skills Matrix</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <div class="section-tab" onclick="switchSection('experience-sec')">
+                        <span><i class="fa-solid fa-briefcase"></i> Work & Template</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <div class="form-content-area">
+                    
+                    <div class="resume-form-section active" id="personal-sec">
+                        <div class="section-header-row">
+                            <div class="form-section-title"><i class="fa-solid fa-user"></i> Personal Information</div>
+                            <button type="button" class="help-trigger-btn" onclick="toggleHelp('personal-help')">?</button>
+                        </div>
+                        
+                        <div class="help-panel" id="personal-help">
+                            <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Personal Details</h4>
+                            <ul>
+                                <li><span>Compulsory Fields:</span> Full Name, Email, Phone aur Address compulsory hain.</li>
+                                <li><span>Profile Photo:</span> Optional hai, select karne par live preview dikhega.</li>
+                            </ul>
+                        </div>
+
+                        <div class="photo-uploader-container">
+                            <div class="avatar-preview-box" id="avatarPreview">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div class="upload-action-btns">
+                                <input type="file" id="realFolderFile" name="res_image" accept="image/*" style="display: none;" onchange="previewImage(this)">
+                                <button type="button" class="photo-btn btn-change" onclick="triggerUpload()">Add / Change Photo</button>
+                                <button type="button" class="photo-btn btn-remove" id="removeImgBtn" onclick="removeSelectedImage()">Remove Photo</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="text" name="res_name" required>
+                            <label>Full Name</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" name="res_title" placeholder="e.g. Android Developer" required>
+                            <label>Professional Target Role</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" name="res_email" required>
+                            <label>Email Address</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" name="res_phone" required>
+                            <label>Phone Number</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" name="res_address" required>
+                            <label>Full Address (City, State)</label>
+                        </div>
+                    </div>
+
+                    <div class="resume-form-section" id="education-sec">
+                        <div class="section-header-row">
+                            <div class="form-section-title"><i class="fa-solid fa-graduation-cap"></i> Education Timeline</div>
+                            <button type="button" class="help-trigger-btn" onclick="toggleHelp('edu-help')">?</button>
+                        </div>
+
+                        <div class="help-panel" id="edu-help">
+                            <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Education</h4>
+                            <ul>
+                                <li><span>Tip:</span> Qualifications ko break karke line-by-line enter karein.</li>
+                            </ul>
+                        </div>
+
+                        <div class="input-group">
+                            <textarea name="res_education" rows="5" placeholder="e.g. BCA - CGC Jhanjheri (CGPA: 8.07) [2022-2025]&#10;12th - CBSE Board (85%)" required></textarea>
+                            <label>Education Qualifications</label>
+                        </div>
+                    </div>
+
+                    <div class="resume-form-section" id="skills-sec">
+                        <div class="section-header-row">
+                            <div class="form-section-title"><i class="fa-solid fa-laptop-code"></i> Technical Matrix</div>
+                            <button type="button" class="help-trigger-btn" onclick="toggleHelp('skills-help')">?</button>
+                        </div>
+
+                        <div class="help-panel" id="skills-help">
+                            <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Skills</h4>
+                            <ul>
+                                <li><span>Format:</span> Har ek skill ke baad comma (,) daalna mandatory hai.</li>
+                            </ul>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="text" name="res_skills" placeholder="e.g. Kotlin, Java, PHP, HTML, CSS, PostgreSQL" required>
+                            <label>Technical Skills (Comma separated)</label>
+                        </div>
+                    </div>
+
+                    <div class="resume-form-section" id="experience-sec">
+                        <div class="section-header-row">
+                            <div class="form-section-title"><i class="fa-solid fa-briefcase"></i> Work & Creation Matrix</div>
+                            <button type="button" class="help-trigger-btn" onclick="toggleHelp('exp-help')">?</button>
+                        </div>
+
+                        <div class="help-panel" id="exp-help">
+                            <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Templates</h4>
+                            <ul>
+                                <li><span>Template:</span> Niche charo premium structures me se apna layout choose karein.</li>
+                            </ul>
+                        </div>
+
+                        <div class="input-group">
+                            <textarea name="res_projects" rows="4" placeholder="e.g. Family Safety App: Built using Kotlin & Maps API..." required></textarea>
+                            <label>Project Details</label>
+                        </div>
+                        <div class="input-group">
+                            <textarea name="res_experience" rows="3" placeholder="e.g. Fresher Developer / Android Intern" required></textarea>
+                            <label>Experience / Internships</label>
+                        </div>
+
+                        <div class="form-section-title" style="font-size: 1.1rem; margin-bottom: 15px;"><i class="fa-solid fa-images"></i> Choose Premium Layout Engine_</div>
+                        <div class="template-grid">
+                            <input type="hidden" name="chosen_template" id="selectedTemplateInput" value="51">
+                            
+                            <div class="template-card active" id="tpl51" onclick="selectTemplate('51')">
+                                <div class="tpl-preview tpl-51"></div>
+                                <p>Corporate Blue (Tpl 51)</p>
+                            </div>
+                            <div class="template-card" id="tpl52" onclick="selectTemplate('52')">
+                                <div class="tpl-preview tpl-52"></div>
+                                <p>Gold Minimal (Tpl 52)</p>
+                            </div>
+                            <div class="template-card" id="tpl53" onclick="selectTemplate('53')">
+                                <div class="tpl-preview tpl-53"></div>
+                                <p>Dark Accent Sidebar (Tpl 53)</p>
+                            </div>
+                            <div class="template-card" id="tpl54" onclick="selectTemplate('54')">
+                                <div class="tpl-preview tpl-54"></div>
+                                <p>Neon Cyber Clean (Tpl 54)</p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 35px; text-align: right;">
+                            <button type="submit" class="cyber-btn" style="color: #00eeff; border-color: #00eeff;">
+                                <span>View & Generate Layout_</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function switchSection(sectionId) {
+            document.querySelectorAll('.resume-form-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.section-tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function toggleHelp(helpId) {
+            const panel = document.getElementById(helpId);
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function selectTemplate(id) {
+            document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('tpl' + id).classList.add('active');
+            document.getElementById('selectedTemplateInput').value = id;
+        }
+
+        function triggerUpload() { document.getElementById('realFolderFile').click(); }
+
+        function previewImage(input) {
+            const previewBox = document.getElementById('avatarPreview');
+            const removeBtn = document.getElementById('removeImgBtn');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewBox.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    removeBtn.style.display = 'inline-block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeSelectedImage() {
+            document.getElementById('realFolderFile').value = "";
+            document.getElementById('avatarPreview').innerHTML = `<i class="fa-solid fa-user-tie"></i>`;
+            document.getElementById('removeImgBtn').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

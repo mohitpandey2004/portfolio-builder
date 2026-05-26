@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="create-style.css">
+</head>
+<body>
+
+    <div class="builder-container">
+        <a href="index.html" class="back-home">← Back to Portfolio</a>
+        <h1 class="builder-title">Portfolio Builder</h1>
+        
+        <form action="insert.php" method="POST" enctype="multipart/form-data">
+            
+            <div class="form-section-title"><i class="fa-solid fa-user"></i> Personal Info</div>
+            
+            <div class="input-group">
+                <input type="file" name="user_image" accept="image/*" required style="border: none; padding: 5px 0;">
+                <label style="top: -22px; color: #ff007f; font-size: 0.85rem;">Upload Your Profile Photo (JPG/PNG)</label>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="user_name" required>
+                <label>Your Full Name</label>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" name="user_title" required>
+                <label>Professional Title (e.g. Web Developer)</label>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="user_typed_text" placeholder="e.g. Web Developer, Android Developer, Designer" required>
+                <label>Animated Skills (Comma separated)</label>
+            </div>
+
+            <div class="form-section-title"><i class="fa-solid fa-address-card"></i> About & Skills Section</div>
+            <div class="input-group">
+                <textarea name="user_about" rows="4" required></textarea>
+                <label>Tell something about yourself...</label>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="user_skills" placeholder="e.g. HTML, CSS, JavaScript, Kotlin, Java" required>
+                <label>Your Tech Skills (Comma separated)</label>
+            </div>
+
+            <div class="form-section-title"><i class="fa-solid fa-address-book"></i> Contact Info</div>
+            <div class="input-group">
+                <input type="email" name="user_email" required>
+                <label>Public Email Address</label>
+            </div>
+            <div class="input-group">
+                <input type="text" name="user_phone" required>
+                <label>Phone Number</label>
+            </div>
+            <div class="input-group">
+                <input type="text" name="user_location" required>
+                <label>Location (City, State)</label>
+            </div>
+
+            <div style="margin-top: 40px; text-align: center;">
+                <button type="submit" class="cyber-btn">
+                    <span>Generate & Download Zip_</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

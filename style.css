@@ -1,0 +1,710 @@
+/* ==================== 1. GLOBAL STYLES & RESET ==================== */
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif, Arial;
+}
+
+body {
+    color: #ededed;
+    background: #06131f; /* Base deep dark color */
+    overflow: hidden;    /* Scrollbars perfectly blocked for SPA structure */
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Common Section Headings */
+.heading {
+    font-size: 45px;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.heading span {
+    color: #0ef;
+    text-shadow: 0 0 15px rgba(0, 239, 255, 0.4);
+}
+
+/* ==================== 2. FIXED HEADER (WITH GLOW BORDER) ==================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 10px;
+    /* Translucent glass look taaki text alag se chamke */
+    background: rgba(6, 19, 31, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid rgba(0, 239, 255, 0.12); /* Subtle neon divider line */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    position: relative;
+    font-size: 25px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: default;
+    opacity: 0;
+    animation: slideRight 1s ease forwards;
+    padding-left: 10%;
+}
+
+.navbar {
+    padding-right: 10%;
+}
+
+.navbar a {
+    display: inline-block;
+    font-size: 20px;
+    color: #aaa; /* Non-active links stay slightly dimmer */
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 35px;
+    transition: .3s ease;
+    opacity: 0;
+    animation: slideTop .5s ease forwards;
+    animation-delay: calc(.2s * var(--i));
+    cursor: pointer;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: #0ef;
+    text-shadow: 0 0 15px #0ef;
+}
+
+/* ==================== 3. SINGLE PAGE LAYOUT ENGINE ==================== */
+.main-content {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.content-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 140px 13% 40px; /* Padding optimization to prevent header overlap */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    /* Default Hidden State */
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.96);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+    overflow-y: auto; 
+}
+
+/* Active State Triggered by JS */
+.content-section.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    z-index: 5;
+}
+
+/* ==================== 4. HOME SECTION ==================== */
+#home {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: url("https://img.freepik.com/free-vector/abstract-background-design-black_53876-62802.jpg?w=1060") center/cover no-repeat;
+}
+
+.home-content {
+    max-width: 600px;
+}
+
+.home-content h3 {
+    font-size: 32px;
+    font-weight: 700;
+    opacity: 0;
+    animation: slideBottom 1s ease forwards;
+    animation-delay: .7s;
+}
+
+.home-content h1 {
+    font-size: 56px;
+    font-weight: 700;
+    margin: -3px 0;
+    opacity: 0;
+    animation: slideRight 1s ease forwards;
+    animation-delay: 1s;
+}
+
+.home-content h3:nth-of-type(2) {
+    margin-bottom: 30px;
+    animation: slideTop 1s ease forwards;
+    animation-delay: 1.2s;
+}
+
+.home-content h3 span {
+    color: #0ef;
+}
+
+.home-content p {
+    font-size: 20px;
+    opacity: 0;
+    animation: slideLeft 1s ease forwards;
+    animation-delay: 1.4s;
+    line-height: 1.6;
+}
+
+.home-sci a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 2px solid teal;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #0ef;
+    text-decoration: none;
+    transition: .5s ease;
+    opacity: 0;
+    animation: slideLeft 1s ease forwards;
+    animation-delay: calc(.2s * var(--i));
+    margin: 30px 15px 30px 0;
+}
+
+.home-sci a:hover {
+    background: #0ef;
+    color: #081b29;
+    box-shadow: 0 0 20px #0ef;
+    border-color: #0ef;
+}
+
+.home-img img {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: #0ef;
+    border-left-color: aquamarine;
+    border-bottom-color: #0ef;
+    border-right-color: aquamarine;
+    box-shadow: 0 0 50px rgba(0, 239, 255, 0.4);
+    opacity: 0;
+    animation: zoomIn 1s ease forwards, floatImage 4s ease-in-out infinite;
+    animation-delay: 1.5s, 2.5s;
+}
+
+.btn-box {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0ef;
+    border-radius: 40px;
+    font-size: 16px;
+    color: #081b29;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: 600;
+    opacity: 0;
+    animation: slideTop 1s ease forwards;
+    animation-delay: 2s;
+    box-shadow: 0 0 5px #0ef, 0 0 25px #0ef;
+    transition: 0.3s ease;
+}
+
+.btn-box:hover {
+    box-shadow: 0 0 5px cyan, 0 0 25px cyan, 0 0 50px cyan, 0 0 100px cyan;
+}
+
+/* ==================== 5. NEXT-LEVEL ANIMATED ABOUT SECTION (GRADIENT) ==================== */
+#about {
+    /* Premium dark gradient block to break color sameness */
+    background: linear-gradient(135deg, #071624 0%, #0b2236 100%);
+}
+
+.about-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.about-grid {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+/* Glassmorphism Cards with Neon Border Hints */
+.about-card {
+    flex: 1 1 28rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 239, 255, 0.15); /* Enhanced card borders */
+    border-radius: 1.5rem;
+    padding: 35px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    opacity: 0; 
+    transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+/* Slide Entry Actions triggered when About tab opens */
+.content-section#about.active .summary-card {
+    animation: slideRight 0.8s ease forwards;
+    animation-delay: 0.1s;
+}
+
+.content-section#about.active .education-card {
+    animation: slideLeft 0.8s ease forwards;
+    animation-delay: 0.1s;
+}
+
+.about-card:hover {
+    border-color: #0ef;
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(0, 239, 255, 0.25);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.about-card h3 {
+    font-size: 24px;
+    color: #0ef;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.about-card p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #dcdcdc;
+    margin-bottom: 15px;
+}
+
+/* Cyber Timeline Styling */
+.timeline {
+    position: relative;
+    border-left: 2px solid rgba(0, 239, 255, 0.4);
+    padding-left: 25px;
+    margin-left: 10px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    background: #0b2236;
+    border: 2px solid #0ef;
+    border-radius: 50%;
+    transition: 0.3s ease;
+}
+
+.timeline-item:hover::before {
+    background: #0ef;
+    box-shadow: 0 0 12px #0ef;
+    transform: scale(1.2);
+}
+
+.timeline-item .year {
+    font-size: 12px;
+    color: #0ef;
+    font-weight: 600;
+    background: rgba(0, 239, 255, 0.15);
+    padding: 3px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.timeline-item h4 {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.timeline-item p {
+    font-size: 14px;
+    color: #b5b5b5;
+}
+
+/* ==================== 6. SKILLS SECTION (DEEP DARK CYBER) ==================== */
+#skills { 
+    /* High contrast dark mode layout to lift neon blocks */
+    background: linear-gradient(135deg, #050f1a 0%, #081a2b 100%); 
+}
+
+.skills-row { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 2rem; 
+}
+
+.skills-column { 
+    flex: 1 1 25rem; 
+}
+
+.skills-column h3 { 
+    font-size: 22px; 
+    margin-bottom: 1.5rem; 
+    color: #fff; 
+    border-bottom: 2px solid rgba(0,239,255,0.25); 
+    padding-bottom: 5px;
+}
+
+.skills-box { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+}
+
+.skill-tag { 
+    padding: 10px 20px; 
+    border: 2px solid rgba(0, 239, 255, 0.4); /* Cleaner softer non-hover ring */
+    border-radius: 20px; 
+    color: #0ef; 
+    font-weight: 600; 
+    background: rgba(0, 239, 255, 0.02);
+    cursor: default;
+    
+    opacity: 0;
+    transform: translateY(30px);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Sequential Staggered Drop Actions */
+/* ENTRY TRIGGER: Ab ek-ek karke aaram se loop chalega */
+.content-section#skills.active .skill-tag {
+    animation: slideTop .6s ease forwards;
+    animation-delay: calc(.25s * var(--i)); /* Gap badha diya taaki aaram se ek-ek karke aaye */
+} 
+
+
+.skill-tag:hover { 
+    background: #0ef; 
+    color: #081b29; 
+    box-shadow: 0 0 20px #0ef; 
+    border-color: #0ef;
+    transform: translateY(-5px) !important; 
+}
+
+/* ==================== 7. PORTFOLIO SECTION ==================== */
+#portfolio {
+    background: linear-gradient(135deg, #071624 0%, #0b2236 100%);
+}
+
+.portfolio-container { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 2rem; 
+}
+
+.portfolio-box { 
+    flex: 1 1 25rem; 
+    background: rgba(255, 255, 255, 0.03); 
+    border: 2px solid teal; 
+    border-radius: 1.5rem; 
+    padding: 25px; 
+    transition: .3s ease; 
+}
+
+.portfolio-box:hover { 
+    border-color: #0ef; 
+    transform: translateY(-5px); 
+    box-shadow: 0 0 15px rgba(0, 239, 255, 0.1); 
+}
+
+.portfolio-layer h4 { 
+    font-size: 22px; 
+    color: #fff; 
+    margin-bottom: 10px; 
+}
+
+.portfolio-layer p { 
+    font-size: 15px; 
+    line-height: 1.5; 
+    margin-bottom: 15px; 
+    color: #dcdcdc; 
+}
+
+.tech-used { 
+    color: #0ef; 
+    font-weight: 600; 
+    font-size: 13px; 
+}
+
+/* ==================== 8. CONTACT SECTION ==================== */
+/* ==================== 8. CONTACT SECTION (ULTIMATE CYBERPUNK) ==================== */
+#contact {
+    background: linear-gradient(135deg, #040d16 0%, #061524 100%);
+}
+
+.contact-container {
+    display: flex;
+    gap: 3rem;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* --- Left Side Info Cards --- */
+.contact-info {
+    flex: 1 1 25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 239, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+/* Entry Animation Trigger */
+.content-section#contact.active .info-box {
+    animation: slideRight 0.8s ease forwards;
+    animation-delay: calc(0.15s * var(--i));
+}
+
+.info-box:hover {
+    border-color: #0ef;
+    background: rgba(0, 239, 255, 0.05);
+    transform: translateX(10px);
+    box-shadow: -5px 0 20px rgba(0, 239, 255, 0.2);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 239, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0ef;
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 239, 255, 0.2);
+}
+
+.info-text span {
+    display: block;
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-text p {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* --- Right Side Holographic Form --- */
+.contact-form-wrap {
+    flex: 1.5 1 35rem;
+    background: rgba(6, 19, 31, 0.6);
+    border: 1px solid rgba(0, 239, 255, 0.15);
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    opacity: 0;
+}
+
+.content-section#contact.active .contact-form-wrap {
+    animation: slideLeft 1s ease forwards;
+    animation-delay: 0.2s;
+}
+
+.contact-form-wrap form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+/* Cyber Floating Input Style */
+.input-group {
+    position: relative;
+    width: 48%;
+    opacity: 0;
+}
+
+.input-group.full-width {
+    width: 100%;
+}
+
+.content-section#contact.active .input-group,
+.content-section#contact.active .cyber-btn {
+    animation: slideTop 0.6s ease forwards;
+    animation-delay: calc(0.12s * var(--i));
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px 5px;
+    font-size: 16px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(0, 239, 255, 0.2);
+    outline: none;
+    resize: none;
+    transition: 0.3s;
+}
+
+.input-group label {
+    position: absolute;
+    left: 5px;
+    top: 12px;
+    font-size: 16px;
+    color: #aaa;
+    pointer-events: none;
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Input Focus Floating Logic */
+.input-group input:focus ~ label,
+.input-group input:valid ~ label,
+.input-group textarea:focus ~ label,
+.input-group textarea:valid ~ label {
+    top: -12px;
+    font-size: 12px;
+    color: #0ef;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Laser Border Draw Animation Under Inputs */
+.input-group .line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #0ef;
+    box-shadow: 0 0 10px #0ef;
+    transition: 0.4s ease;
+}
+
+.input-group input:focus ~ .line,
+.input-group textarea:focus ~ .line {
+    width: 100%;
+}
+
+/* --- Ultimate Sci-Fi Cyber Button --- */
+.cyber-btn {
+    position: relative;
+    padding: 14px 35px;
+    background: transparent;
+    border: 2px solid #0ef;
+    color: #0ef;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.4s;
+    box-shadow: 0 0 10px rgba(0, 239, 255, 0.1);
+    opacity: 0;
+    margin-top: 1rem;
+}
+
+.cyber-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 239, 255, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.cyber-btn:hover::before {
+    left: 100%;
+}
+
+.cyber-btn:hover {
+    background: #0ef;
+    color: #081b29;
+    box-shadow: 0 0 25px #0ef, 0 0 50px rgba(0, 239, 255, 0.5);
+    transform: scale(1.03);
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+    .contact-container { flex-direction: column; }
+    .input-group { width: 100%; }
+}
+
+/* ==================== 9. ENGINE KEYFRAMES ==================== */
+@keyframes slideRight {
+    0% { transform: translateX(-100px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideLeft {
+    0% { transform: translateX(100px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideTop {
+    0% { transform: translateY(50px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideBottom {
+    0% { transform: translateY(-50px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatImage {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
