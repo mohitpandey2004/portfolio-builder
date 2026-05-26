@@ -1,6 +1,7 @@
 /* ==================== 1. GLOBAL STYLES & RESET ==================== */
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden; /* Prevent horizontal scroll completely */
 }
 
 * {
@@ -13,7 +14,7 @@ html {
 body {
     color: #ededed;
     background: #06131f; /* Base deep dark color */
-    overflow: hidden;    /* Scrollbars perfectly blocked for SPA structure on desktop */
+    overflow: hidden;    /* Scrollbars blocked perfectly for SPA structure */
     height: 100vh;
     width: 100vw;
 }
@@ -46,7 +47,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 100;
+    z-index: 1000; /* Max z-index to stay on top */
 }
 
 .logo {
@@ -63,6 +64,9 @@ body {
 
 .navbar {
     padding-right: 10%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .navbar a {
@@ -71,11 +75,11 @@ body {
     color: #aaa; /* Non-active links stay slightly dimmer */
     text-decoration: none;
     font-weight: 500;
-    margin-left: 35px;
+    margin-left: 15px; /* Unified compact spacing */
     transition: .3s ease;
     opacity: 0;
     animation: slideTop .5s ease forwards;
-    animation-delay: calc(.2s * var(--i));
+    animation-delay: calc(.15s * var(--i)); /* Unified faster entry */
     cursor: pointer;
 }
 
@@ -98,7 +102,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    padding: 120px 13% 130px; /* Desktop padding adjustment */
+    padding: 130px 13% 140px; /* Balanced desktop padding */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -183,7 +187,7 @@ body {
     transition: .5s ease;
     opacity: 0;
     animation: slideLeft 1s ease forwards;
-    animation-delay: calc(.2s * var(--i));
+    animation-delay: calc(.15s * var(--i));
     margin: 30px 15px 30px 0;
 }
 
@@ -393,7 +397,7 @@ body {
 
 .content-section#skills.active .skill-tag {
     animation: slideTop .6s ease forwards;
-    animation-delay: calc(.25s * var(--i)); 
+    animation-delay: calc(.15s * var(--i)); 
 } 
 
 .skill-tag:hover { 
@@ -486,7 +490,7 @@ body {
 
 .content-section#contact.active .info-box {
     animation: slideRight 0.8s ease forwards;
-    animation-delay: calc(0.15s * var(--i));
+    animation-delay: calc(0.1s * var(--i));
 }
 
 .info-box:hover {
@@ -559,7 +563,7 @@ body {
 .content-section#contact.active .input-group,
 .content-section#contact.active .cyber-btn {
     animation: slideTop 0.6s ease forwards;
-    animation-delay: calc(0.12s * var(--i));
+    animation-delay: calc(0.1s * var(--i));
 }
 
 .input-group input,
@@ -654,37 +658,6 @@ body {
     transform: scale(1.03);
 }
 
-/* ==================== 9. ENGINE KEYFRAMES ==================== */
-@keyframes slideRight {
-    0% { transform: translateX(-100px); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideLeft {
-    0% { transform: translateX(100px); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideTop {
-    0% { transform: translateY(50px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideBottom {
-    0% { transform: translateY(-50px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes zoomIn {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes floatImage {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-}
-
 /* ==================== 🚀 GLOBAL ABSOLUTE FOOTER SETUP ==================== */
 .custom-footer {
     position: absolute;
@@ -694,7 +667,7 @@ body {
     background: rgba(4, 13, 22, 0.95);
     border-top: 1px solid rgba(0, 239, 255, 0.2);
     backdrop-filter: blur(10px);
-    padding: 15px 20px;
+    padding: 20px;
     text-align: center;
     z-index: 99;
 }
@@ -748,7 +721,7 @@ body {
 /* ==================== 📱 SMARTPHONE RESPONSIVE CORE ENGINE ==================== */
 @media (max-width: 991px) {
     .content-section {
-        padding: 120px 8% 130px;
+        padding: 120px 8% 140px;
     }
     .home-content h1 {
         font-size: 42px;
@@ -757,16 +730,16 @@ body {
 
 @media (max-width: 768px) {
     body {
-        overflow: auto;
+        overflow: auto; /* ALLOW global native background control */
     }
     
     .content-section {
-        position: relative !important; /* Mobile layout engine flows naturally */
-        height: auto !important;
+        position: absolute;
+        height: auto;
         min-height: 100vh;
-        overflow-y: visible; 
-        padding: 160px 24px 40px !important; /* Unified wrapper block spacing */
-        display: block !important; /* Flex behavior reset to fix vertical alignments */
+        overflow-y: visible; /* Browser default scroll control ACTIVE */
+        padding: 160px 24px 60px; /* Mobile structural balance spacing */
+        display: block; /* Section flexing reset for mobile flow tracking */
     }
 
     /* Fixed Header Flex Override */
@@ -775,6 +748,7 @@ body {
         flex-direction: column;
         gap: 15px;
         text-align: center;
+        z-index: 1000;
     }
     
     .logo {
@@ -792,20 +766,21 @@ body {
     
     .navbar a {
         font-size: 16px;
-        margin-left: 12px;
-        margin-right: 12px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
-    /* Home Layout Vertical Flow without flexing conflicts */
+    /* Home Layout Vertical Flow tracking engine */
     #home {
         display: block !important; 
         padding-top: 180px !important;
+        background: none !important; /* Mobile ganda BG blocked */
     }
 
     .home-img {
-        margin-bottom: 30px;
         display: flex;
         justify-content: center;
+        margin-bottom: 25px;
     }
 
     .home-img img {
@@ -819,7 +794,6 @@ body {
 
     .home-content h1 {
         font-size: 32px;
-        margin: 10px 0;
     }
 
     .home-content h3 {
@@ -849,6 +823,7 @@ body {
 
     .about-card, .portfolio-box, .skills-column, .contact-info, .contact-form-wrap {
         width: 100% !important;
+        flex: 1 1 100% !important;
         padding: 25px;
     }
 
@@ -870,6 +845,7 @@ body {
         margin-left: -24px;
         margin-right: -24px;
         width: calc(100% + 48px) !important;
+        border-top: 1px solid rgba(0, 239, 255, 0.1);
     }
 }
 
