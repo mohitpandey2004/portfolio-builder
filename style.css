@@ -39,7 +39,6 @@ body {
     left: 0;
     width: 100%;
     padding: 20px 10px;
-    /* Translucent glass look taaki text alag se chamke */
     background: rgba(6, 19, 31, 0.85);
     backdrop-filter: blur(12px);
     border-bottom: 2px solid rgba(0, 239, 255, 0.12); /* Subtle neon divider line */
@@ -99,7 +98,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    padding: 140px 13% 40px; /* Padding optimization to prevent header overlap */
+    padding: 120px 13% 130px; /* Desktop par niche padding badhai taaki content footer ke piche na chhupe */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -686,10 +685,70 @@ body {
     50% { transform: translateY(-12px); }
 }
 
+/* ==================== 🚀 MASTER ABSOLUTE FOOTER FIX (FOR LAPTOP VIEW) ==================== */
+.custom-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(4, 13, 22, 0.95);
+    border-top: 1px solid rgba(0, 239, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    text-align: center;
+    z-index: 99;
+}
+
+.footer-content h3 {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.footer-content h3 span {
+    color: #0ef;
+    text-shadow: 0 0 10px rgba(0, 239, 255, 0.4);
+}
+
+.footer-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.footer-info a {
+    color: #0ef;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-info a:hover {
+    text-shadow: 0 0 10px #0ef;
+}
+
+.footer-info span i {
+    color: #ff007f;
+    margin-right: 5px;
+}
+
+.footer-rights {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 5px;
+}
+
 /* ==================== 📱 SMARTPHONE RESPONSIVE CORE ENGINE ==================== */
 @media (max-width: 991px) {
     .content-section {
-        padding: 120px 8% 40px;
+        padding: 120px 8% 120px;
     }
     .home-content h1 {
         font-size: 42px;
@@ -698,7 +757,7 @@ body {
 
 @media (max-width: 768px) {
     body {
-        overflow: auto; /* Allow global background control if needed */
+        overflow: auto;
     }
     
     .content-section {
@@ -706,7 +765,8 @@ body {
         height: auto;
         min-height: 100vh;
         overflow-y: visible; /* Let mobile browser handle the scroll native */
-        padding: 160px 25px 60px;
+        padding: 160px 25px 40px; /* Mobile layout optimization */
+        display: block; /* Flex layout block override for mobile stack tracking */
     }
 
     /* Fixed Header Flex Override */
@@ -738,6 +798,7 @@ body {
 
     /* Home Layout Vertical Flow */
     #home {
+        display: flex;
         flex-direction: column-reverse;
         justify-content: center;
         gap: 40px;
@@ -786,12 +847,21 @@ body {
     }
 
     .input-group {
-        width: 100% !important; /* Force input fields full width in forms */
+        width: 100% !important;
     }
 
     .heading {
         font-size: 32px;
         margin-bottom: 1.5rem;
+    }
+
+    /* Override absolute placement to flow naturally after mobile container content */
+    .custom-footer {
+        position: relative !important;
+        margin-top: 60px !important;
+        margin-left: -25px; /* Compressing global gutter gaps */
+        margin-right: -25px;
+        width: calc(100% + 50px);
     }
 }
 
@@ -811,61 +881,4 @@ body {
         width: 200px;
         height: 200px;
     }
-}
-
-/* ==================== 🚀 PREMIUM CYBERPUNK FOOTER STYLES ==================== */
-.custom-footer {
-    width: 100%;
-    background: rgba(4, 13, 22, 0.9);
-    border-top: 1px solid rgba(0, 239, 255, 0.2);
-    backdrop-filter: blur(10px);
-    padding: 30px 20px;
-    margin-top: 50px; /* Sections ke content se thoda gap */
-    text-align: center;
-}
-
-.footer-content h3 {
-    font-size: 20px;
-    color: #fff;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-.footer-content h3 span {
-    color: #0ef;
-    text-shadow: 0 0 10px rgba(0, 239, 255, 0.4);
-}
-
-.footer-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
-    flex-wrap: wrap;
-    margin: 15px 0;
-    font-size: 15px;
-    color: #ccc;
-}
-
-.footer-info a {
-    color: #0ef;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.footer-info a:hover {
-    text-shadow: 0 0 10px #0ef;
-}
-
-.footer-info span i {
-    color: #ff007f;
-    margin-right: 5px;
-}
-
-.footer-rights {
-    font-size: 13px;
-    color: #666;
-    margin-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 15px;
 }
