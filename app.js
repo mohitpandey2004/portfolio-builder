@@ -1,5 +1,5 @@
 // ==================== 1. TYPED.JS INTERFACE ====================
-// Ye aapka pehle wala code hai jo landing page par skills ko animate karega
+// Landing page par dynamic text auto-typing loop trigger configuration
 var typed = new Typed(".text", {
     strings: ["Frontend Developer", "Web Developer", "Android Developer"],
     typeSpeed: 100,
@@ -8,40 +8,51 @@ var typed = new Typed(".text", {
     loop: true
 });
 
-
 // ==================== 2. SINGLE PAGE TAB SWITCHING LOGIC ====================
-// Ye logic click karne par baaki saare sections ko hide karega aur sirf target section ko samne layega
-const navLinks = document.querySelectorAll('.nav-link');
+// Target links aur master content wrappers ko catch karna
+// Maine isme '.logo' aur '.btn-box' ko bhi target kar diya hai taaki unpe click hone pe bhi page change ho!
+const navLinks = document.querySelectorAll('.nav-link, .logo, .btn-box');
 const sections = document.querySelectorAll('.content-section');
 
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        // Step A: Kis section par jana hai, uski 'data-target' value nikalna
+        // Step A: Page reload toggle settings block karna
         const targetSectionId = link.getAttribute('data-target');
 
-        // Step B: Saare sections se 'active' class hatana taaki wo chhup (hide) jayein
-        sections.forEach(section => {
-            section.classList.remove('active');
-        });
+        if (targetSectionId) {
+            e.preventDefault();
 
-        // Step C: Sirf click kiye huye section ko active karke screen par laana
-        const activeSection = document.getElementById(targetSectionId);
-        if (activeSection) {
-            activeSection.className = "content-section active";
-        }
+            // Step B: Navbar ke saare links se active highlighted classes hatana
+            document.querySelectorAll('.navbar a').forEach(navLink => {
+                navLink.classList.remove('active');
+            });
 
-        // Step D: Navbar ke saare links se 'active' text color/style hatana
-        navLinks.forEach(navLink => {
-            navLink.classList.remove('active');
-        });
-        
-        // Step E: Agar header ke navbar wala link click hua hai, ya fir home ka 'More About Me' button click hua hai,
-        // dono hi case mein upar navbar mein sahi button blue/cyan color ka active ho jayega.
-        const matchingNavbarLink = document.querySelector(`.navbar a[data-target="${targetSectionId}"]`);
-        if (matchingNavbarLink) {
-            matchingNavbarLink.classList.add('active');
+            // Step C: Upar navbar mein sahi button ko active (Blue/Cyan neon) highlight dena
+            const matchingNavbarLink = document.querySelector(`.navbar a[data-target="${targetSectionId}"]`);
+            if (matchingNavbarLink) {
+                matchingNavbarLink.classList.add('active');
+            }
+
+            // Step D: Saare absolute wrappers ko band karke sirf targeted element ko active karna
+            sections.forEach(section => {
+                section.classList.remove('active');
+                if (section.id === targetSectionId) {
+                    section.classList.add('active');
+                    
+                    // Desktop internal section scroll bar reset configuration
+                    section.scrollTop = 0;
+                }
+            });
+
+            // Step E: 🔥 MOBILE ENGINE CORE PATCH (Sabse Zaroori)
+            // Agar smartphone view chal raha hai, toh naya section khulte hi screen automatic 
+            // ekdum top par smooth scroll ho jayegi, jisse black screen ya missing content bilkul nahi hoga!
+            if (window.innerWidth <= 768) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
         }
     });
 });
