@@ -10,6 +10,7 @@ html {
     font-family: 'Poppins', sans-serif, Arial;
 }
 
+/* 🚀 FIX 1: Solid background colors ko sirf body par lock kiya taaki canvas block na ho */
 body {
     color: #ededed;
     background: #06131f; /* Base deep dark color */
@@ -17,6 +18,7 @@ body {
     height: 100vh;
     width: 100vw;
     transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
 }
 
 /* Common Section Headings */
@@ -175,7 +177,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    padding: 140px 13% 100px; /* Secure gap above desktop footer */
+    padding: 140px 13% 100px; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -185,8 +187,11 @@ body {
     pointer-events: none;
     transform: scale(0.96);
     transition: opacity 0.5s ease, transform 0.5s ease;
-    z-index: 2 !important; /* Fixed Layer System */
-    overflow-y: auto; /* Internal section scrolling active */
+    overflow-y: auto; 
+    
+    /* 🚀 FIX 2: Saare sections ko transparent kiya taaki canvas block na ho sake */
+    background: transparent !important; 
+    z-index: 5;
 }
 
 /* Active State Triggered by JS */
@@ -194,34 +199,16 @@ body {
     opacity: 1;
     pointer-events: auto;
     transform: scale(1);
-    z-index: 10 !important; /* Content explicitly locked above everything */
+    z-index: 10 !important; 
 }
 
-/* ==================== 4. HOME SECTION (PURE DYNAMIC CSS BACKDROP) ==================== */
+/* ==================== 4. HOME SECTION ==================== */
 #home {
     display: flex;
     flex-direction: row; 
     align-items: center;
     justify-content: space-between;
-    position: relative;
-}
-
-/* 🚀 PURE DYNAMIC GRADIENT ANIMATION (Image hatakar ye lagaya hai taaki laptop ka khela set ho) */
-#home::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(-45deg, #040d16, #0b1e30, #06131f, #021a2e);
-    background-size: 400% 400%;
-    animation: gradientMove 15s ease infinite; /* Cyberpunk background gradient move loop */
-    z-index: -10 !important;
-    pointer-events: none;
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    background: transparent !important;
 }
 
 .home-content {
@@ -288,7 +275,6 @@ body {
 }
 
 /* ==================== 5. ABOUT SECTION ==================== */
-#about { background: linear-gradient(135deg, #071624 0%, #0b2236 100%); }
 .about-container { width: 100%; max-width: 1100px; margin: 0 auto; }
 .about-grid { display: flex; gap: 2.5rem; flex-wrap: wrap; }
 .about-card {
@@ -315,7 +301,6 @@ body {
 .timeline-item h4 { font-size: 18px; color: #fff; }
 
 /* ==================== 6. SKILLS SECTION ==================== */
-#skills { background: linear-gradient(135deg, #050f1a 0%, #081a2b 100%); }
 .skills-row { display: flex; flex-wrap: wrap; gap: 2rem; }
 .skills-column { flex: 1 1 25rem; }
 .skills-column h3 { font-size: 22px; margin-bottom: 1.5rem; color: #fff; border-bottom: 2px solid rgba(0,239,255,0.25); padding-bottom: 5px;}
@@ -324,7 +309,6 @@ body {
 .skill-tag:hover { background: #0ef; color: #081b29; box-shadow: 0 0 20px #0ef; }
 
 /* ==================== 7. PORTFOLIO SECTION ==================== */
-#portfolio { background: linear-gradient(135deg, #071624 0%, #0b2236 100%); }
 .portfolio-container { display: flex; flex-wrap: wrap; gap: 2rem; }
 .portfolio-box { flex: 1 1 25rem; background: rgba(255, 255, 255, 0.03); border: 2px solid teal; border-radius: 1.5rem; padding: 25px; transition: .3s ease; }
 .portfolio-box:hover { border-color: #0ef; box-shadow: 0 0 15px rgba(0, 239, 255, 0.1); }
@@ -333,7 +317,6 @@ body {
 .tech-used { color: #0ef; font-weight: 600; font-size: 13px; }
 
 /* ==================== 8. CONTACT SECTION ==================== */
-#contact { background: linear-gradient(135deg, #040d16 0%, #061524 100%); }
 .contact-container { display: flex; gap: 3rem; width: 100%; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; align-items: center; }
 .contact-info { flex: 1 1 25rem; display: flex; flex-direction: column; gap: 1.5rem; }
 .info-box { display: flex; align-items: center; gap: 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 239, 255, 0.1); padding: 20px; border-radius: 1rem; }
@@ -360,8 +343,10 @@ body {
     border-top: 2px solid rgba(0, 239, 255, 0.2);
     padding: 15px 20px;
     text-align: center;
-    z-index: 999;
+    z-index: 1000;
 }
+body.light-mode-active .custom-footer { background: #ffffff !important; border-top: 2px solid #cbd5e1 !important; }
+
 .footer-content h3 { font-size: 18px; color: #fff; margin-bottom: 5px; }
 .footer-content h3 span { color: #0ef; }
 .footer-info { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin: 5px 0; font-size: 14px; color: #ccc; }
@@ -404,21 +389,20 @@ body {
 input:checked + .slider { background-color: rgba(0, 239, 255, 0.1); border-color: #0ef; box-shadow: 0 0 10px rgba(0, 239, 255, 0.3); }
 input:checked + .slider:before { background-color: #0ef; transform: translateX(22px); box-shadow: 0 0 8px #0ef; }
 
-/* 🌧️ HIGH-PRECISION DYNAMIC MATRIX LAYER CANVAS OVERRIDE (LOCKED SECURELY ABOVE BG BACKDROP) */
+/* 🌧️ HIGH-PRECISION DYNAMIC MATRIX LAYER CANVAS OVERRIDE */
 #matrixCanvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw !important;
     height: 100vh !important;
-    z-index: 3 !important; /* 🚀 Fixed Layer Matrix: Shifted securely above dynamic CSS gradients but behind content text */
+    z-index: 1 !important; /* 🚀 Fixed Layer Matrix: Brought cleanly to Layer 1 inside body context nodes */
     pointer-events: none;
     display: none;
 }
 
-/* 🌸 HOT NEON PINK THEME MODES */
-body.pink-neon-theme { background: #0a030c; }
-body.pink-neon-theme #home::before { background: linear-gradient(-45deg, #0a030c, #2d001e, #14000b, #0a030c); } /* Custom pink shifting loop */
+/* 🌸 HOT NEON PINK THEME MODES (APPLIED PURELY TO BODY BACKGROUND) */
+body.pink-neon-theme { background: #0a030c !important; }
 body.pink-neon-theme .heading span,
 body.pink-neon-theme .navbar a:hover,
 body.pink-neon-theme .navbar a.active,
@@ -430,7 +414,7 @@ body.pink-neon-theme .home-content h3 span { color: #ff007f !important; text-sha
 body.pink-neon-theme .btn-box,
 body.pink-neon-theme .cyber-btn { background: #ff007f !important; border-color: #ff007f !important; color: #fff !important; box-shadow: 0 0 25px #ff007f !important; }
 body.pink-neon-theme .skill-tag:hover { background: #ff007f !important; color: #fff !important; box-shadow: 0 0 20px #ff007f !important; border-color: #ff007f !important; }
-body.pink-neon-theme .cyber-panel { border-color: rgba(255, 0, 127, 0.4); }
+body.pink-neon-theme .cyber-panel { border-color: rgba(255, 0, 127, 0.4); background: #140312; }
 body.pink-neon-theme .panel-toggle-btn { border-color: #ff007f; color: #ff007f; }
 body.pink-neon-theme .create-btn-nav { border-color: #00eeff !important; color: #00eeff !important; box-shadow: 0 0 8px #00eeff !important;}
 body.pink-neon-theme .create-btn-nav:hover { border-color: #ff007f !important; color: #ff007f !important; box-shadow: 0 0 20px #ff007f !important;}
@@ -440,7 +424,6 @@ body.pink-neon-theme input:checked + .slider:before { background-color: #ff007f;
 
 /* ☀️ SOLID PROFESSIONAL LIGHT THEME ENGINE MODE */
 body.light-mode-active { background: #eceef1 !important; color: #1e293b !important; }
-body.light-mode-active #home::before { background: linear-gradient(-45deg, #eceef1, #cbd5e1, #e2e8f0, #f1f5f9); } /* Custom clean gray shifting loop */
 body.light-mode-active .header { background: rgba(236, 238, 241, 0.9) !important; border-bottom: 2px solid #cbd5e1 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important; }
 body.light-mode-active .logo, body.light-mode-active .navbar a { color: #334155 !important; }
 body.light-mode-active .navbar a.active, body.light-mode-active .navbar a:hover { color: #0284c7 !important; text-shadow: none !important; }
@@ -534,7 +517,8 @@ body.light-mode-active .setting-label { color: #334155 !important; }
 
     #home.active { 
         display: flex !important;
-        flex-direction: column-reverse !important; text-align: center; 
+        flex-direction: column-reverse !important; 
+        text-align: center; 
         background: none !important; 
         gap: 25px !important;
     }
