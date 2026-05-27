@@ -18,18 +18,18 @@ navLinks.forEach(link => {
         if (targetSectionId) {
             e.preventDefault();
 
-            // Step B: Navbar links reset handling
+            // 🔥 ON-CLICK AUDIO TRIGGERS: Jab kisi page menu par click ho, tab beep play hoga
+            playSystemSound(550, 'triangle', 0.1);
+
             document.querySelectorAll('.navbar a').forEach(navLink => {
                 navLink.classList.remove('active');
             });
 
-            // Step C: Highlight target active nav menu link
             const matchingNavbarLink = document.querySelector(`.navbar a[data-target="${targetSectionId}"]`);
             if (matchingNavbarLink) {
                 matchingNavbarLink.classList.add('active');
             }
 
-            // Step D: Active sections visibility handler toggle core
             sections.forEach(section => {
                 section.classList.remove('active');
                 
@@ -48,7 +48,6 @@ navLinks.forEach(link => {
                 }
             });
 
-            // Step E: MOBILE ENGINE SCROLL FORCE JUMP RESET
             if (window.innerWidth <= 768) {
                 window.scrollTo(0, 0);
                 document.body.scrollTop = 0;
@@ -58,32 +57,35 @@ navLinks.forEach(link => {
     });
 });
 
-// ==================== 🎛️ CONTROL PANEL ADVANCED LOCK SCHEME LOGIC ====================
+// ==================== 🎛️ CONTROL PANEL STRUCTURAL CONFIGURATION LOGIC ====================
 const cyberPanel = document.getElementById('cyberPanel');
 const panelToggle = document.getElementById('panelToggle');
 const matrixToggle = document.getElementById('matrixToggle');
 const themeToggle = document.getElementById('themeToggle');
+const lightModeToggle = document.getElementById('lightModeToggle');
 const soundToggle = document.getElementById('soundToggle');
 const matrixCanvas = document.getElementById('matrixCanvas');
 
-// 🔥 FIX: Stop propagation taaki body par laga close event toggle ko block na kare
+// Slide drawer toggle action configuration
 panelToggle.addEventListener('click', (e) => {
     e.stopPropagation(); 
     cyberPanel.classList.toggle('open');
-    playSystemSound(500, 'triangle', 0.08);
+    playSystemSound(650, 'sine', 0.08);
 });
 
-// 🔥 NEW SMART DETECTOR: Agar panel open hai aur user screen par kahin bhi bahar click kare toh panel automatic andar slide ho jaye
+// Auto close if user clicks outside anywhere on the layout
 document.addEventListener('click', (e) => {
     if (cyberPanel.classList.contains('open') && !cyberPanel.contains(e.target)) {
         cyberPanel.classList.remove('open');
-        playSystemSound(250, 'triangle', 0.05);
+        playSystemSound(300, 'sine', 0.06);
     }
 });
 
-// A. CYBER THEME SWAPPING CORE ENGINE
+// A. NEON MODES CORE LAYER 
 themeToggle.addEventListener('change', () => {
     if(themeToggle.checked) {
+        lightModeToggle.checked = false; // Turn off light mode if pink neon is active
+        document.body.classList.remove('light-mode-active');
         document.body.classList.add('pink-neon-theme');
         playSystemSound(440, 'triangle', 0.12);
     } else {
@@ -92,7 +94,20 @@ themeToggle.addEventListener('change', () => {
     }
 });
 
-// B. REAL-TIME MULTI-THREAD MATRIX RAIN LOGIC ENGINE
+// B. LIGHT THEME MODE INTERFACE IMPLEMENTATION
+lightModeToggle.addEventListener('change', () => {
+    if(lightModeToggle.checked) {
+        themeToggle.checked = false; // Turn off pink neon if light mode is active
+        document.body.classList.remove('pink-neon-theme');
+        document.body.classList.add('light-mode-active');
+        playSystemSound(700, 'sine', 0.1);
+    } else {
+        document.body.classList.remove('light-mode-active');
+        playSystemSound(350, 'sine', 0.1);
+    }
+});
+
+// C. REAL-TIME MULTI-THREAD MATRIX RAIN LOGIC ENGINE (LAPTOP + MOBILE OPTIMIZED)
 const ctx = matrixCanvas.getContext('2d');
 let matrixInterval = null;
 
@@ -100,7 +115,6 @@ function resizeCanvas() {
     matrixCanvas.width = window.innerWidth;
     matrixCanvas.height = window.innerHeight;
 }
-window.addEventListener('resize', resizeCanvas);
 
 const katakana = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const alphabet = katakana.split("");
@@ -117,10 +131,18 @@ function initMatrix() {
 }
 
 function drawMatrix() {
-    ctx.fillStyle = 'rgba(6, 19, 31, 0.05)'; 
+    // Dynamic trace opacity clear depending on theme context modes
+    ctx.fillStyle = document.body.classList.contains('light-mode-active') ? 'rgba(244, 246, 249, 0.05)' : 'rgba(6, 19, 31, 0.05)';
     ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
-    ctx.fillStyle = document.body.classList.contains('pink-neon-theme') ? '#ff007f' : '#00eeff';
+    if (document.body.classList.contains('pink-neon-theme')) {
+        ctx.fillStyle = '#ff007f';
+    } else if (document.body.classList.contains('light-mode-active')) {
+        ctx.fillStyle = '#00b4d8';
+    } else {
+        ctx.fillStyle = '#00eeff';
+    }
+    
     ctx.font = fontSize + 'px monospace';
 
     for (let i = 0; i < rainDrops.length; i++) {
@@ -139,6 +161,7 @@ matrixToggle.addEventListener('change', () => {
         matrixCanvas.style.display = 'block';
         resizeCanvas();
         initMatrix();
+        clearInterval(matrixInterval);
         matrixInterval = setInterval(drawMatrix, 30);
         playSystemSound(600, 'sine', 0.08);
     } else {
@@ -149,7 +172,7 @@ matrixToggle.addEventListener('change', () => {
     }
 });
 
-// C. WEB AUDIO API SIGNALS SOUND SYNTHESIZER
+// D. HARDWARE AUDIO CORE RE-SYNTHESIS ENGINE (ON-CLICK ROUTED)
 function playSystemSound(frequency, type, duration) {
     if (!soundToggle.checked) return; 
     try {
@@ -168,11 +191,11 @@ function playSystemSound(frequency, type, duration) {
         oscillator.start();
         oscillator.stop(audioCtx.currentTime + duration);
     } catch (e) {
-        console.log("Audio contexts blocked");
+        console.log("Audio contexts locked initialization");
     }
 }
 
-// Global hover audio nodes attachments loop map
+// Global ambient micro sound on-hover node attachments
 document.querySelectorAll('.navbar a, .logo, .btn-box, .panel-toggle-btn, .skill-tag, .portfolio-box').forEach(element => {
     element.addEventListener('mouseenter', () => {
         playSystemSound(900, 'sine', 0.015);

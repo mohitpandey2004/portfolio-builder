@@ -60,22 +60,10 @@
 </head>
 <body>
     
-    <header class="header">
-        <a href="#" class="logo" data-target="home">Portfolio</a>
+    <!-- 🌧️ MATRIX CANVAS BACKGROUND CONTAINER -->
+    <canvas id="matrixCanvas"></canvas>
 
-        <div class="navbar">
-            <a href="#" style="--i:1" class="nav-link active" data-target="home">Home</a>
-            <a href="#" style="--i:2" class="nav-link" data-target="about">About</a>
-            <a href="#" style="--i:3" class="nav-link" data-target="skills">Skills</a>
-            <a href="#" style="--i:4" class="nav-link" data-target="portfolio">Portfolio</a>
-            <a href="#" style="--i:5" class="nav-link" data-target="contact">Contact</a>
-            
-            <a href="resume.html" style="--i:5.5" class="resume-btn-nav">Resume_</a>
-            <a href="create.html" style="--i:6" class="create-btn-nav">Create_</a>
-        </div>
-    </header>
-
-    <!-- 🎛️ CYBER CONTROL PANEL (SIDEBAR MENU) -->
+    <!-- 🎛️ FIXED CYBER CONTROL PANEL (TOP-LEFT SYSTEM PANEL) -->
     <div class="cyber-panel" id="cyberPanel">
         <button class="panel-toggle-btn" id="panelToggle"><i class="fa-solid fa-sliders"></i></button>
         <div class="panel-content">
@@ -91,11 +79,20 @@
                 </label>
             </div>
 
-            <!-- Neon Theme Toggle -->
+            <!-- Neon Pink Toggle -->
             <div class="setting-item">
                 <span class="setting-label"><i class="fa-solid fa-palette"></i> Cyber Pink Mode</span>
                 <label class="switch">
                     <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Light Mode Toggle -->
+            <div class="setting-item">
+                <span class="setting-label"><i class="fa-solid fa-sun"></i> Light Theme</span>
+                <label class="switch">
+                    <input type="checkbox" id="lightModeToggle">
                     <span class="slider"></span>
                 </label>
             </div>
@@ -111,8 +108,23 @@
         </div>
     </div>
 
-    <!-- 🌧️ MATRIX CANVAS BACKGROUND -->
-    <canvas id="matrixCanvas"></canvas>
+    <header class="header">
+        <div class="logo-wrapper">
+            <!-- Space allocated perfectly for top-left icon alignment -->
+            <a href="#" class="logo" data-target="home">Portfolio</a>
+        </div>
+
+        <div class="navbar">
+            <a href="#" style="--i:1" class="nav-link active" data-target="home">Home</a>
+            <a href="#" style="--i:2" class="nav-link" data-target="about">About</a>
+            <a href="#" style="--i:3" class="nav-link" data-target="skills">Skills</a>
+            <a href="#" style="--i:4" class="nav-link" data-target="portfolio">Portfolio</a>
+            <a href="#" style="--i:5" class="nav-link" data-target="contact">Contact</a>
+            
+            <a href="resume.html" style="--i:5.5" class="resume-btn-nav">Resume_</a>
+            <a href="create.html" style="--i:6" class="create-btn-nav">Create_</a>
+        </div>
+    </header>
 
     <main class="main-content">
 

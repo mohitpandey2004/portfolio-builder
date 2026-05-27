@@ -16,6 +16,7 @@ body {
     overflow: hidden;    /* Scrollbars perfectly blocked for SPA structure on desktop */
     height: 100vh;
     width: 100vw;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Common Section Headings */
@@ -32,21 +33,26 @@ body {
     text-shadow: 0 0 15px rgba(0, 239, 255, 0.4);
 }
 
-/* ==================== 2. FIXED HEADER (WITH GLOW BORDER) ==================== */
+/* ==================== 2. FIXED HEADER ==================== */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 10px;
+    padding: 20px 2% 20px 7%; /* Added padding gap left to align nicely with the top slider */
     background: rgba(6, 19, 31, 0.85);
     backdrop-filter: blur(12px);
-    border-bottom: 2px solid rgba(0, 239, 255, 0.12); /* Subtle neon divider line */
+    border-bottom: 2px solid rgba(0, 239, 255, 0.12);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
 }
 
 .logo {
@@ -55,11 +61,11 @@ body {
     color: #fff;
     text-decoration: none;
     font-weight: 600;
-    padding-left: 10%;
 }
 
 .navbar {
-    padding-right: 10%;
+    display: flex;
+    align-items: center;
 }
 
 .navbar a {
@@ -92,7 +98,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    padding: 140px 13% 100px; /* Secure gap above desktop footer */
+    padding: 140px 13% 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -103,7 +109,7 @@ body {
     transform: scale(0.96);
     transition: opacity 0.5s ease, transform 0.5s ease;
     z-index: 1;
-    overflow-y: auto; /* Internal section scrolling active */
+    overflow-y: auto;
 }
 
 /* Active State Triggered by JS */
@@ -117,7 +123,7 @@ body {
 /* ==================== 4. HOME SECTION (DESKTOP) ==================== */
 #home {
     display: flex;
-    flex-direction: row; /* Desktop par Text Left, Image Right */
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     background: url("https://img.freepik.com/free-vector/abstract-background-design-black_53876-62802.jpg?w=1060") center/cover no-repeat;
@@ -271,63 +277,60 @@ body {
 
 @keyframes floatImage { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
-/* ==================== 🎛️ FIXED CYBER CONTROL PANEL (LEFT SIDE DESIGN) ==================== */
+/* ==================== 🎛️ FIXED PREMIUM CYBER CONTROL PANEL (LEFT DESIGN LOCKED) ==================== */
 .cyber-panel {
     position: fixed;
-    top: 25%;
-    left: -260px; /* 🚀 Fixed: Right se hata kar ab LEFT side par perfectly hide kiya */
+    top: 0; /* Header alignment matrix loop */
+    left: -260px; /* Hidden default state */
     width: 260px;
+    height: 100vh;
     background: rgba(4, 13, 22, 0.98);
-    border: 1px solid rgba(0, 239, 255, 0.3);
-    border-left: none; /* Left side screen se layer match karegi */
-    border-radius: 0 12px 12px 0;
-    backdrop-filter: blur(15px);
-    box-shadow: 5px 0 25px rgba(0, 239, 255, 0.25);
-    z-index: 9999; /* Stay above elements safely */
-    transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    padding: 20px;
+    border-right: 1px solid rgba(0, 239, 255, 0.25);
+    backdrop-filter: blur(20px);
+    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.7);
+    z-index: 2000; /* Stays above header navigation flow safely */
+    transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 100px 20px 20px; /* Secure upper margin alignment protection */
 }
 
-/* JavaScript Trigger State */
 .cyber-panel.open {
-    left: 0 !important; /* Open hone par right nahi, balki left screen par aayega */
-    box-shadow: 5px 0 35px rgba(0, 239, 255, 0.4);
+    left: 0 !important;
+    box-shadow: 5px 0 40px rgba(0, 239, 255, 0.3);
 }
 
-/* Floating Settings Button Restructured */
+/* 🚀 FIXED LOGO ATTACHMENT: Sliders button placed beautifully inside the top-left corner */
 .panel-toggle-btn {
-    position: absolute;
-    right: -45px; /* Button ab panel ke absolute right side bahar niklega */
-    left: auto;
+    position: fixed;
     top: 20px;
-    width: 45px;
-    height: 45px;
+    left: 20px;
+    width: 42px;
+    height: 42px;
     background: #040d16;
     border: 1px solid rgba(0, 239, 255, 0.3);
-    border-left: none;
-    border-radius: 0 8px 8px 0;
+    border-radius: 6px;
     color: #0ef;
     font-size: 18px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 3px 0 10px rgba(0, 239, 255, 0.15);
+    z-index: 2500; /* Stays statically visible in header top-left */
+    transition: 0.3s ease;
 }
 
 .panel-toggle-btn:hover {
     color: #fff;
-    text-shadow: 0 0 10px #0ef;
-    box-shadow: 3px 0 15px #0ef;
+    box-shadow: 0 0 15px #0ef;
+    text-shadow: 0 0 5px #0ef;
 }
 
 .panel-content h3 { font-size: 15px; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
 .panel-divider { border: none; border-top: 1px solid rgba(0, 239, 255, 0.15); margin: 15px 0; }
-.setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.setting-label { font-size: 14px; color: #aaa; display: flex; align-items: center; gap: 10px; }
+.setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+.setting-label { font-size: 14px; color: #ccc; display: flex; align-items: center; gap: 10px; }
 .setting-label i { color: #0ef; }
 
-/* 🎚️ SWITCH TOGGLE HOOKS */
+/* 🎚️ HARDWARE SWITCH SWITCH ENGINE */
 .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #0c1f30; border: 1px solid rgba(0, 239, 255, 0.2); border-radius: 34px; transition: 0.4s; }
@@ -335,19 +338,19 @@ body {
 input:checked + .slider { background-color: rgba(0, 239, 255, 0.1); border-color: #0ef; box-shadow: 0 0 10px rgba(0, 239, 255, 0.3); }
 input:checked + .slider:before { background-color: #0ef; transform: translateX(22px); box-shadow: 0 0 8px #0ef; }
 
-/* 🌧️ MATRIX BACKGROUND LAYER */
+/* 🌧️ MATRIX BACKGROUND OVERRIDE ENGINE */
 #matrixCanvas {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: -2 !important; /* Forces layout behind sections */
     pointer-events: none;
     display: none;
 }
 
-/* 🌸 DYNAMIC RADICAL NEON PINK MODE */
+/* 🌸 DYNAMIC RADICAL NEON PINK MODE SYSTEM */
 body.pink-neon-theme { background: #0a030c; }
 body.pink-neon-theme .heading span,
 body.pink-neon-theme .navbar a:hover,
@@ -361,15 +364,48 @@ body.pink-neon-theme .home-content h3 span { color: #ff007f !important; text-sha
 body.pink-neon-theme .btn-box,
 body.pink-neon-theme .cyber-btn { background: #ff007f !important; border-color: #ff007f !important; color: #fff !important; box-shadow: 0 0 25px #ff007f !important; }
 body.pink-neon-theme .skill-tag:hover { background: #ff007f !important; color: #fff !important; box-shadow: 0 0 20px #ff007f !important; border-color: #ff007f !important; }
-body.pink-neon-theme .cyber-panel { border-color: rgba(255, 0, 127, 0.3); box-shadow: 5px 0 25px rgba(255, 0, 127, 0.2); }
+body.pink-neon-theme .cyber-panel { border-color: rgba(255, 0, 127, 0.3); }
 body.pink-neon-theme input:checked + .slider { border-color: #ff007f; box-shadow: 0 0 10px rgba(255, 0, 127, 0.3); }
 body.pink-neon-theme input:checked + .slider:before { background-color: #ff007f; box-shadow: 0 0 8px #ff007f; }
+
+/* ☀️ PREMIUM LIGHT THEME ENGINE OVERRIDES */
+body.light-mode-active {
+    background: #f4f6f9 !important;
+    color: #2c3e50 !important;
+}
+body.light-mode-active .header {
+    background: rgba(244, 246, 249, 0.9) !important;
+    border-bottom: 2px solid rgba(0, 180, 216, 0.2) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+}
+body.light-mode-active .logo, body.light-mode-active .navbar a { color: #333 !important; }
+body.light-mode-active .navbar a:hover, body.light-mode-active .navbar a.active { color: #00b4d8 !important; text-shadow: none !important; }
+body.light-mode-active .heading { color: #222 !important; text-shadow: none !important; }
+body.light-mode-active .heading span { color: #00b4d8 !important; text-shadow: none !important; }
+body.light-mode-active #home { background: #e9ecef !important; }
+body.light-mode-active .about-card, body.light-mode-active .portfolio-box, body.light-mode-active .info-box {
+    background: #ffffff !important;
+    border: 1px solid rgba(0,0,0,0.08) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+    color: #444 !important;
+}
+body.light-mode-active .about-card h3, body.light-mode-active .timeline-item .year { color: #00b4d8 !important; }
+body.light-mode-active .about-card p, body.light-mode-active .timeline-item h4 { color: #555 !important; }
+body.light-mode-active .skill-tag { border-color: #00b4d8 !important; color: #00b4d8 !important; background: transparent !important; }
+body.light-mode-active .skill-tag:hover { background: #00b4d8 !important; color: #fff !important; box-shadow: 0 5px 15px rgba(0,180,216,0.3) !important; }
+body.light-mode-active .btn-box, body.light-mode-active .cyber-btn { background: #00b4d8 !important; color: #fff !important; box-shadow: 0 5px 20px rgba(0,180,216,0.3) !important; }
+body.light-mode-active .custom-footer { background: #e9ecef !important; border-top: 1px solid rgba(0,0,0,0.06) !important; color: #333 !important; }
+body.light-mode-active .footer-content h3, body.light-mode-active .footer-info a { color: #222 !important; }
+body.light-mode-active .footer-content h3 span { color: #00b4d8 !important; }
+body.light-mode-active .cyber-panel { background: rgba(255, 255, 255, 0.98) !important; border-right: 1px solid rgba(0,0,0,0.1) !important; }
+body.light-mode-active .panel-content h3 { color: #222 !important; }
+body.light-mode-active .setting-label { color: #555 !important; }
 
 /* ==================== 📱 MACKKHAN MOBILE RESPONSIVE ENGINE ==================== */
 @media (max-width: 768px) {
     body {
         overflow-x: hidden;
-        overflow-y: auto !important; 
+        overflow-y: auto !important;
         height: auto !important;
     }
     
@@ -383,7 +419,7 @@ body.pink-neon-theme input:checked + .slider:before { background-color: #ff007f;
         left: 0 !important;
         height: auto !important;
         min-height: calc(100vh - 120px) !important;
-        padding: 140px 20px 20px !important;
+        padding: 150px 20px 20px !important;
         display: none !important;
         transform: none !important;
     }
@@ -392,10 +428,10 @@ body.pink-neon-theme input:checked + .slider:before { background-color: #ff007f;
         display: block !important;
     }
 
-    .header { padding: 15px 10px; flex-direction: column; gap: 10px; }
-    .logo { padding-left: 0; font-size: 22px; }
-    .navbar { padding-right: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
-    .navbar a { font-size: 15px; margin-left: 8px; margin-right: 8px; }
+    .header { padding: 15px 10px 15px 70px; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .logo { font-size: 22px; }
+    .navbar { width: 100%; display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 5px; }
+    .navbar a { font-size: 15px; margin-left: 5px; margin-right: 10px; }
 
     #home.active { 
         display: flex !important;
@@ -424,5 +460,5 @@ body.pink-neon-theme input:checked + .slider:before { background-color: #ff007f;
         padding: 25px 15px;
     }
     
-    .cyber-panel { top: 18%; }
+    .panel-toggle-btn { top: 12px; left: 15px; }
 }
