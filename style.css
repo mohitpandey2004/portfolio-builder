@@ -271,6 +271,91 @@ body {
 
 @keyframes floatImage { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
+/* ==================== 🎛️ NEW CYBER CONTROL PANEL FRAMEWORK STYLES ==================== */
+.cyber-panel {
+    position: fixed;
+    top: 25%;
+    right: -260px; /* Hidden state by default */
+    width: 260px;
+    background: rgba(4, 13, 22, 0.96);
+    border: 1px solid rgba(0, 239, 255, 0.3);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    backdrop-filter: blur(15px);
+    box-shadow: -5px 0 25px rgba(0, 239, 255, 0.2);
+    z-index: 9999;
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 20px;
+}
+.cyber-panel.open {
+    right: 0;
+    box-shadow: -5px 0 35px rgba(0, 239, 255, 0.4);
+}
+.panel-toggle-btn {
+    position: absolute;
+    left: -45px;
+    top: 20px;
+    width: 45px;
+    height: 45px;
+    background: #040d16;
+    border: 1px solid rgba(0, 239, 255, 0.3);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    color: #0ef;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.panel-toggle-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 10px #0ef;
+}
+.panel-content h3 { font-size: 16px; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
+.panel-divider { border: none; border-top: 1px solid rgba(0, 239, 255, 0.15); margin: 15px 0; }
+.setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.setting-label { font-size: 14px; color: #aaa; display: flex; align-items: center; gap: 10px; }
+.setting-label i { color: #0ef; }
+
+/* 🎚️ HARDWARE COMPONENT SWITCH STYLES */
+.switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #0c1f30; border: 1px solid rgba(0, 239, 255, 0.2); border-radius: 34px; transition: 0.4s; }
+.slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: #aaa; border-radius: 50%; transition: 0.4s; }
+input:checked + .slider { background-color: rgba(0, 239, 255, 0.1); border-color: #0ef; box-shadow: 0 0 10px rgba(0, 239, 255, 0.3); }
+input:checked + .slider:before { background-color: #0ef; transform: translateX(22px); box-shadow: 0 0 8px #0ef; }
+
+/* 🌧️ BACKGROUND LAYER GENERATOR */
+#matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    display: none;
+}
+
+/* 🌸 DYNAMIC RADICAL NEON PINK ALTERNATE MODE INJECTION */
+body.pink-neon-theme { background: #0a030c; }
+body.pink-neon-theme .heading span,
+body.pink-neon-theme .navbar a:hover,
+body.pink-neon-theme .navbar a.active,
+body.pink-neon-theme .about-card h3,
+body.pink-neon-theme .tech-used,
+body.pink-neon-theme .info-icon,
+body.pink-neon-theme .panel-toggle-btn,
+body.pink-neon-theme .setting-label i,
+body.pink-neon-theme .home-content h3 span { color: #ff007f !important; text-shadow: 0 0 15px #ff007f !important; }
+body.pink-neon-theme .btn-box,
+body.pink-neon-theme .cyber-btn { background: #ff007f !important; border-color: #ff007f !important; color: #fff !important; box-shadow: 0 0 25px #ff007f !important; }
+body.pink-neon-theme .skill-tag:hover { background: #ff007f !important; color: #fff !important; box-shadow: 0 0 20px #ff007f !important; border-color: #ff007f !important; }
+body.pink-neon-theme .cyber-panel { border-color: rgba(255, 0, 127, 0.3); box-shadow: -5px 0 25px rgba(255, 0, 127, 0.2); }
+body.pink-neon-theme input:checked + .slider { border-color: #ff007f; box-shadow: 0 0 10px rgba(255, 0, 127, 0.3); }
+body.pink-neon-theme input:checked + .slider:before { background-color: #ff007f; box-shadow: 0 0 8px #ff007f; }
+
 /* ==================== 📱 MACKKHAN MOBILE RESPONSIVE ENGINE ==================== */
 @media (max-width: 768px) {
     body {
@@ -335,4 +420,7 @@ body {
         background: #040d16 !important;
         padding: 25px 15px;
     }
+    
+    /* Responsive tweaks for settings drawer */
+    .cyber-panel { top: 15%; }
 }

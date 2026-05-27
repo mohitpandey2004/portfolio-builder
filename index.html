@@ -75,6 +75,45 @@
         </div>
     </header>
 
+    <!-- 🎛️ CYBER CONTROL PANEL (SIDEBAR MENU) -->
+    <div class="cyber-panel" id="cyberPanel">
+        <button class="panel-toggle-btn" id="panelToggle"><i class="fa-solid fa-sliders"></i></button>
+        <div class="panel-content">
+            <h3><i class="fa-solid fa-gear fa-spin"></i> Cyber Settings_</h3>
+            <hr class="panel-divider">
+            
+            <!-- Matrix Effect Toggle -->
+            <div class="setting-item">
+                <span class="setting-label"><i class="fa-solid fa-database"></i> Matrix Rain</span>
+                <label class="switch">
+                    <input type="checkbox" id="matrixToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Neon Theme Toggle -->
+            <div class="setting-item">
+                <span class="setting-label"><i class="fa-solid fa-palette"></i> Cyber Pink Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Sound FX Toggle -->
+            <div class="setting-item">
+                <span class="setting-label"><i class="fa-solid fa-volume-high"></i> Interface Audio</span>
+                <label class="switch">
+                    <input type="checkbox" id="soundToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🌧️ MATRIX CANVAS BACKGROUND -->
+    <canvas id="matrixCanvas"></canvas>
+
     <main class="main-content">
 
         <section class="content-section active" id="home">
