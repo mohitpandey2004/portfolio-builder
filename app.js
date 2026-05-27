@@ -18,7 +18,7 @@ navLinks.forEach(link => {
         if (targetSectionId) {
             e.preventDefault();
 
-            // 🔥 ON-CLICK AUDIO TRIGGERS: Jab kisi page menu par click ho, tab beep play hoga
+            // 🔥 FORCE AUDIO ON-CLICK MECHANISM
             playSystemSound(550, 'triangle', 0.1);
 
             document.querySelectorAll('.navbar a').forEach(navLink => {
@@ -57,7 +57,7 @@ navLinks.forEach(link => {
     });
 });
 
-// ==================== 🎛️ CONTROL PANEL STRUCTURAL CONFIGURATION LOGIC ====================
+// ==================== 🎛️ CONTROL PANEL ADVANCED SYSTEM LOGIC ====================
 const cyberPanel = document.getElementById('cyberPanel');
 const panelToggle = document.getElementById('panelToggle');
 const matrixToggle = document.getElementById('matrixToggle');
@@ -66,14 +66,14 @@ const lightModeToggle = document.getElementById('lightModeToggle');
 const soundToggle = document.getElementById('soundToggle');
 const matrixCanvas = document.getElementById('matrixCanvas');
 
-// Slide drawer toggle action configuration
+// Slide drawer toggle action handler
 panelToggle.addEventListener('click', (e) => {
     e.stopPropagation(); 
     cyberPanel.classList.toggle('open');
     playSystemSound(650, 'sine', 0.08);
 });
 
-// Auto close if user clicks outside anywhere on the layout
+// Auto close framework wrapper click handler
 document.addEventListener('click', (e) => {
     if (cyberPanel.classList.contains('open') && !cyberPanel.contains(e.target)) {
         cyberPanel.classList.remove('open');
@@ -81,10 +81,10 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// A. NEON MODES CORE LAYER 
+// A. NEON MODES HANDLER
 themeToggle.addEventListener('change', () => {
     if(themeToggle.checked) {
-        lightModeToggle.checked = false; // Turn off light mode if pink neon is active
+        lightModeToggle.checked = false; 
         document.body.classList.remove('light-mode-active');
         document.body.classList.add('pink-neon-theme');
         playSystemSound(440, 'triangle', 0.12);
@@ -94,10 +94,10 @@ themeToggle.addEventListener('change', () => {
     }
 });
 
-// B. LIGHT THEME MODE INTERFACE IMPLEMENTATION
+// B. LIGHT MODE HANDLER
 lightModeToggle.addEventListener('change', () => {
     if(lightModeToggle.checked) {
-        themeToggle.checked = false; // Turn off pink neon if light mode is active
+        themeToggle.checked = false; 
         document.body.classList.remove('pink-neon-theme');
         document.body.classList.add('light-mode-active');
         playSystemSound(700, 'sine', 0.1);
@@ -107,7 +107,7 @@ lightModeToggle.addEventListener('change', () => {
     }
 });
 
-// C. REAL-TIME MULTI-THREAD MATRIX RAIN LOGIC ENGINE (LAPTOP + MOBILE OPTIMIZED)
+// C. LAPTOP + MOBILE UNIFIED MATRIX RAIN CONTROLLER
 const ctx = matrixCanvas.getContext('2d');
 let matrixInterval = null;
 
@@ -115,6 +115,14 @@ function resizeCanvas() {
     matrixCanvas.width = window.innerWidth;
     matrixCanvas.height = window.innerHeight;
 }
+
+// Attach listeners for dynamic sizing loops
+window.addEventListener('resize', () => {
+    if (matrixToggle.checked) {
+        resizeCanvas();
+        initMatrix();
+    }
+});
 
 const katakana = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const alphabet = katakana.split("");
@@ -126,12 +134,11 @@ function initMatrix() {
     columns = window.innerWidth / fontSize;
     rainDrops = [];
     for (let x = 0; x < columns; x++) {
-        rainDrops[x] = 1;
+        rainDrops[x] = Math.floor(Math.random() * -window.innerHeight / fontSize); // Better staggering
     }
 }
 
 function drawMatrix() {
-    // Dynamic trace opacity clear depending on theme context modes
     ctx.fillStyle = document.body.classList.contains('light-mode-active') ? 'rgba(244, 246, 249, 0.05)' : 'rgba(6, 19, 31, 0.05)';
     ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
@@ -172,7 +179,7 @@ matrixToggle.addEventListener('change', () => {
     }
 });
 
-// D. HARDWARE AUDIO CORE RE-SYNTHESIS ENGINE (ON-CLICK ROUTED)
+// D. HARDWARE AUDIO ACOUSTICS CORE AUDIO (ON-CLICK CAPTURED ROUTE)
 function playSystemSound(frequency, type, duration) {
     if (!soundToggle.checked) return; 
     try {
@@ -191,11 +198,11 @@ function playSystemSound(frequency, type, duration) {
         oscillator.start();
         oscillator.stop(audioCtx.currentTime + duration);
     } catch (e) {
-        console.log("Audio contexts locked initialization");
+        console.log("Audio contextual layout blocks");
     }
 }
 
-// Global ambient micro sound on-hover node attachments
+// Mouse hover effects mapping rules
 document.querySelectorAll('.navbar a, .logo, .btn-box, .panel-toggle-btn, .skill-tag, .portfolio-box').forEach(element => {
     element.addEventListener('mouseenter', () => {
         playSystemSound(900, 'sine', 0.015);
