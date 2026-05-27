@@ -33,16 +33,16 @@ body {
     text-shadow: 0 0 15px rgba(0, 239, 255, 0.4);
 }
 
-/* ==================== 2. FIXED HEADER ==================== */
+/* ==================== 2. FIXED HEADER (OPTIMIZED NAVIGATION) ==================== */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 8%; /* Balanced padding coordinates to resolve alignment issues */
-    background: rgba(6, 19, 31, 0.9);
+    padding: 20px 5%;
+    background: rgba(6, 19, 31, 0.85);
     backdrop-filter: blur(12px);
-    border-bottom: 2px solid rgba(0, 239, 255, 0.12);
+    border-bottom: 2px solid rgba(0, 239, 255, 0.12); 
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: space-between;
@@ -94,11 +94,11 @@ body {
 
 .navbar a {
     display: inline-block;
-    font-size: 20px;
+    font-size: 18px;
     color: #aaa;
     text-decoration: none;
     font-weight: 500;
-    margin-left: 35px;
+    margin-left: 28px;
     transition: .3s ease;
     cursor: pointer;
 }
@@ -109,9 +109,57 @@ body {
     text-shadow: 0 0 15px #0ef;
 }
 
-.header-buttons {
-    display: flex;
-    align-items: center;
+/* 🔥 PREMIUM HIGH-END BUTTON SCHEMES (RESUME & CREATE) */
+.create-btn-nav {
+    position: relative;
+    display: inline-block;
+    padding: 7px 18px;
+    color: #ff007f !important;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+    transition: 0.4s ease;
+    border: 2px solid #ff007f;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(255, 0, 127, 0.3);
+    margin-left: 15px;
+    background: rgba(255, 0, 127, 0.02);
+}
+
+.create-btn-nav:hover {
+    color: #00eeff !important;
+    border-color: #00eeff;
+    box-shadow: 0 0 20px #00eeff, inset 0 0 8px rgba(0, 239, 255, 0.2);
+    text-shadow: 0 0 5px #00eeff;
+    transform: translateY(-2px);
+}
+
+.resume-btn-nav {
+    position: relative;
+    display: inline-block;
+    padding: 7px 18px;
+    color: #00eeff !important;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+    transition: 0.4s ease;
+    border: 2px solid #00eeff;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0, 239, 255, 0.3);
+    margin-left: 20px;
+    background: rgba(0, 239, 255, 0.02);
+}
+
+.resume-btn-nav:hover {
+    color: #ff007f !important;
+    border-color: #ff007f;
+    box-shadow: 0 0 20px #ff007f, inset 0 0 8px rgba(255, 0, 127, 0.2);
+    text-shadow: 0 0 5px #ff007f;
+    transform: translateY(-2px);
 }
 
 /* ==================== 3. SINGLE PAGE LAYOUT ENGINE ==================== */
@@ -127,7 +175,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    padding: 140px 10% 120px; /* Secure bottom padding loop limits to allow dynamic desktop rendering */
+    padding: 140px 13% 100px; /* Secure gap above desktop footer */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -138,7 +186,7 @@ body {
     transform: scale(0.96);
     transition: opacity 0.5s ease, transform 0.5s ease;
     z-index: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Internal section scrolling active */
 }
 
 /* Active State Triggered by JS */
@@ -152,7 +200,7 @@ body {
 /* ==================== 4. HOME SECTION (DESKTOP) ==================== */
 #home {
     display: flex;
-    flex-direction: row;
+    flex-direction: row; 
     align-items: center;
     justify-content: space-between;
     background: url("https://img.freepik.com/free-vector/abstract-background-design-black_53876-62802.jpg?w=1060") center/cover no-repeat;
@@ -282,35 +330,29 @@ body {
 .input-group label { position: absolute; left: 5px; top: 12px; font-size: 16px; color: #aaa; pointer-events: none; transition: 0.3s; }
 .input-group input:focus ~ label, .input-group input:valid ~ label, .input-group textarea:focus ~ label, .input-group textarea:valid ~ label { top: -12px; font-size: 12px; color: #0ef; font-weight: 600; }
 .input-group .line { position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #0ef; box-shadow: 0 0 10px #0ef; transition: 0.4s; }
-input:focus ~ .line, textarea:focus ~ .line { width: 100%; }
+.input-group input:focus ~ .line, .input-group textarea:focus ~ .line { width: 100%; }
 
-/* ==================== 🚀 MASTER UNIFIED FOOTER SYSTEM (LAPTOP CORE) ==================== */
+/* ==================== 🚀 ORIGINAL DYNAMIC FIXED FOOTER ARCHITECTURE ==================== */
 .custom-footer {
-    position: absolute; /* Changes fixed overlay dependencies to dynamic stacking nodes */
-    bottom: -100px; /* Secure placement mapping below active layouts view */
+    position: fixed; 
+    bottom: 0;
     left: 0;
     width: 100%;
     background: #040d16;
-    border-top: 1px solid rgba(0, 239, 255, 0.15);
-    padding: 20px 8%;
+    border-top: 2px solid rgba(0, 239, 255, 0.2);
+    padding: 15px 20px;
+    text-align: center;
     z-index: 999;
 }
-
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.footer-left-brand p { font-size: 13px; color: #888; }
-.mobile-footer-nav { display: none; } /* Completely hidden on desktop browsers context arrays */
-.footer-right-details span { font-size: 13px; color: #ccc; margin-left: 25px; }
-.footer-right-details a { color: #0ef; text-decoration: none; }
+.footer-content h3 { font-size: 18px; color: #fff; margin-bottom: 5px; }
+.footer-content h3 span { color: #0ef; }
+.footer-info { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin: 5px 0; font-size: 14px; color: #ccc; }
+.footer-info a { color: #0ef; text-decoration: none; }
+.footer-rights { font-size: 12px; color: #666; }
 
 @keyframes floatImage { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
-/* ==================== 🎛️ FIXED PREMIUM CYBER SIDEBAR DRAWER (LEFT VIEW) ==================== */
+/* ==================== 🎛️ FIXED PREMIUM CYBER SIDEBAR DRAWERS ==================== */
 .cyber-panel {
     position: fixed;
     top: 0;
@@ -364,32 +406,37 @@ body.pink-neon-theme .about-card h3,
 body.pink-neon-theme .tech-used,
 body.pink-neon-theme .info-icon,
 body.pink-neon-theme .setting-label i,
-body.pink-neon-theme .mobile-footer-nav a.active,
 body.pink-neon-theme .home-content h3 span { color: #ff007f !important; text-shadow: 0 0 15px #ff007f !important; }
 body.pink-neon-theme .btn-box,
 body.pink-neon-theme .cyber-btn { background: #ff007f !important; border-color: #ff007f !important; color: #fff !important; box-shadow: 0 0 25px #ff007f !important; }
 body.pink-neon-theme .skill-tag:hover { background: #ff007f !important; color: #fff !important; box-shadow: 0 0 20px #ff007f !important; border-color: #ff007f !important; }
 body.pink-neon-theme .cyber-panel { border-color: rgba(255, 0, 127, 0.4); }
 body.pink-neon-theme .panel-toggle-btn { border-color: #ff007f; color: #ff007f; }
+body.pink-neon-theme .create-btn-nav { border-color: #00eeff !important; color: #00eeff !important; box-shadow: 0 0 8px #00eeff !important;}
+body.pink-neon-theme .create-btn-nav:hover { border-color: #ff007f !important; color: #ff007f !important; box-shadow: 0 0 20px #ff007f !important;}
+body.pink-neon-theme .resume-btn-nav { border-color: #ff007f !important; color: #ff007f !important; box-shadow: 0 0 8px #ff007f !important;}
+body.pink-neon-theme .resume-btn-nav:hover { border-color: #00eeff !important; color: #00eeff !important; box-shadow: 0 0 20px #00eeff !important;}
 body.pink-neon-theme input:checked + .slider:before { background-color: #ff007f; box-shadow: 0 0 8px #ff007f; }
 
-/* ☀️ EXECUTIVE PURE LIGHT MODE THEME OVERRIDES */
-body.light-mode-active { background: #f8fafc !important; color: #0f172a !important; }
-body.light-mode-active .header { background: rgba(255, 255, 255, 0.95) !important; border-color: #e2e8f0 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important; }
-body.light-mode-active .logo, body.light-mode-active .navbar a, body.light-mode-active .mobile-footer-nav a { color: #334155 !important; }
-body.light-mode-active .navbar a.active, body.light-mode-active .navbar a:hover, body.light-mode-active .mobile-footer-nav a.active { color: #0284c7 !important; text-shadow: none !important; }
-body.light-mode-active .heading { color: #0f172a !important; text-shadow: none !important; }
+/* ☀️ SOLID PROFESSIONAL LIGHT THEME ENGINE MODE */
+body.light-mode-active { background: #eceef1 !important; color: #1e293b !important; }
+body.light-mode-active .header { background: rgba(236, 238, 241, 0.9) !important; border-bottom: 2px solid #cbd5e1 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important; }
+body.light-mode-active .logo, body.light-mode-active .navbar a { color: #334155 !important; }
+body.light-mode-active .navbar a.active, body.light-mode-active .navbar a:hover { color: #0284c7 !important; text-shadow: none !important; }
+body.light-mode-active .heading { color: #1e293b !important; text-shadow: none !important; }
 body.light-mode-active .heading span, body.light-mode-active .home-content h3 span { color: #0284c7 !important; text-shadow: none !important; }
-body.light-mode-active .about-card, body.light-mode-active .portfolio-box, body.light-mode-active .info-box { background: #ffffff !important; border: 1px solid #e2e8f0 !important; color: #334155 !important; box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important; }
+body.light-mode-active .about-card, body.light-mode-active .portfolio-box, body.light-mode-active .info-box { background: #ffffff !important; border: 1px solid #cbd5e1 !important; color: #334155 !important; box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important; }
 body.light-mode-active .about-card h3, body.light-mode-active .timeline-item .year { color: #0284c7 !important; }
 body.light-mode-active .about-card p, body.light-mode-active .timeline-item h4 { color: #475569 !important; }
 body.light-mode-active .skill-tag { border-color: #0284c7 !important; color: #0284c7 !important; background: transparent !important; }
 body.light-mode-active .skill-tag:hover { background: #0284c7 !important; color: #fff !important; }
 body.light-mode-active .btn-box, body.light-mode-active .cyber-btn { background: #0284c7 !important; color: #fff !important; box-shadow: none !important; }
-body.light-mode-active .custom-footer { background: #ffffff !important; border-top: 1px solid #e2e8f0 !important; }
+body.light-mode-active .custom-footer { background: #ffffff !important; border-top: 2px solid #cbd5e1 !important; }
+body.light-mode-active .footer-content h3, body.light-mode-active .footer-info a { color: #334155 !important; }
+body.light-mode-active .footer-content h3 span { color: #0284c7 !important; }
 body.light-mode-active .panel-toggle-btn { background: #fff; border-color: #cbd5e0; color: #0284c7; }
-body.light-mode-active .cyber-panel { background: #ffffff !important; border-color: #e2e8f0 !important; }
-body.light-mode-active .panel-content h3 { color: #0f172a !important; }
+body.light-mode-active .cyber-panel { background: #ffffff !important; border-color: #cbd5e1 !important; }
+body.light-mode-active .panel-content h3 { color: #1e293b !important; }
 body.light-mode-active .setting-label { color: #334155 !important; }
 
 /* ==================== 📱 MACKKHAN MOBILE RESPONSIVE ENGINE ==================== */
@@ -409,8 +456,8 @@ body.light-mode-active .setting-label { color: #334155 !important; }
         top: 0 !important;
         left: 0 !important;
         height: auto !important;
-        min-height: calc(100vh - 160px) !important;
-        padding: 110px 20px 100px !important; /* Allocated secure bottom gaps for mobile footer navigation menu */
+        min-height: calc(100vh - 120px) !important;
+        padding: 180px 20px 100px !important; /* Proper padding loop layers allocation */
         display: none !important;
         transform: none !important;
     }
@@ -419,22 +466,52 @@ body.light-mode-active .setting-label { color: #334155 !important; }
         display: block !important;
     }
 
-    /* 🚀 MOBILE TOP NAVIGATION BAR STYLING */
+    /* 🚀 MOBILE NAVIGATION STABILIZATION RULES: Grid overlay lock settings */
     .header { 
         padding: 15px 20px !important; 
-        flex-direction: row !important; 
-        justify-content: space-between !important;
+        flex-direction: column !important; 
+        justify-content: center !important;
         align-items: center !important; 
         position: fixed !important;
+        gap: 12px !important;
     }
     
-    .logo-wrapper { gap: 10px !important; }
-    .desktop-navbar { display: none !important; } /* Strips all text navigation arrays from top smartphone view */
-    
+    .logo-wrapper { 
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* 🚀 NAV BAR RESTORED IN FULL: Visible beautifully on mobile view right below the logo line */
+    .navbar { 
+        width: 100% !important;
+        display: flex !important; 
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important; 
+        gap: 8px 12px !important;
+        padding-bottom: 5px;
+    }
+
     .navbar a { 
         font-size: 14px !important; 
         margin: 0 !important;
-        padding: 0 !important;
+        padding: 2px 4px !important;
+    }
+    
+    /* Keep premium custom action buttons aligned nicely inside row matrices */
+    .header-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 4px;
+    }
+    
+    .create-btn-nav, .resume-btn-nav {
+        margin: 0 10px !important;
+        padding: 5px 14px !important;
+        font-size: 0.85rem !important;
     }
 
     #home.active { 
@@ -457,44 +534,11 @@ body.light-mode-active .setting-label { color: #334155 !important; }
     .input-group { width: 100% !important; }
     .heading { font-size: 30px; }
 
-    /* 🚀 MOBILE BOTTOM ENGINE NAV HUB */
+    /* Mobile view structural layout engine overrides */
     .custom-footer {
-        position: fixed !important;
-        bottom: 0 !important;
-        top: auto !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: auto !important;
+        position: relative !important;
+        margin-top: 40px !important;
         background: #040d16 !important;
-        border-top: 2px solid rgba(0, 239, 255, 0.2) !important;
-        padding: 12px 10px !important;
-        box-shadow: 0 -5px 20px rgba(0,0,0,0.6) !important;
-    }
-    body.light-mode-active .custom-footer { background: #ffffff !important; border-top: 2px solid #cbd5e1 !important; }
-
-    .footer-container { flex-direction: column !important; gap: 10px !important; text-align: center; }
-    .footer-left-brand, .footer-right-details { display: none !important; } /* Strips desktop layouts */
-
-    /* Displays items cleanly inside sticky bottom block rows */
-    .mobile-footer-nav {
-        display: flex !important;
-        justify-content: space-around !important;
-        align-items: center !important;
-        width: 100% !important;
-    }
-    
-    .mobile-footer-nav a {
-        text-decoration: none !important;
-        color: #777 !important;
-        font-size: 12px !important;
-        font-weight: 600 !important;
-        text-transform: uppercase;
-        padding: 6px 4px !important;
-        transition: 0.2s;
-    }
-    
-    .mobile-footer-nav a.active {
-        color: #0ef !important;
-        text-shadow: 0 0 10px #0ef;
+        padding: 25px 15px !important;
     }
 }

@@ -8,8 +8,7 @@ var typed = new Typed(".text", {
 });
 
 // ==================== 2. SINGLE PAGE UNIFIED TAB SWITCHING LOGIC ====================
-// Captures links across top desktop header bar AND mobile bottom sticky footer layout menu
-const navLinks = document.querySelectorAll('.navbar a, .mobile-footer-nav a, .logo, .btn-box');
+const navLinks = document.querySelectorAll('.navbar a, .logo, .btn-box');
 const sections = document.querySelectorAll('.content-section');
 
 navLinks.forEach(link => {
@@ -19,18 +18,18 @@ navLinks.forEach(link => {
         if (targetSectionId) {
             e.preventDefault();
 
-            // 🔥 FORCE AUDIO ON-CLICK MECHANISM (Endless Loops Triggered Uniquely)
+            // 🔥 HIGH-PRECISION AUDIO HOOK CALL ON CLICK (Endless Loop Mode)
             playSystemSound(580, 'triangle', 0.08);
 
-            // Synchronize active highlights state machines cleanly across layout engines
-            document.querySelectorAll('.navbar a, .mobile-footer-nav a').forEach(nav => {
+            document.querySelectorAll('.navbar a').forEach(nav => {
                 nav.classList.remove('active');
-                if(nav.getAttribute('data-target') === targetSectionId) {
-                    nav.classList.add('active');
-                }
             });
 
-            // Section switching block visibility logic
+            const matchingNavbarLink = document.querySelector(`.navbar a[data-target="${targetSectionId}"]`);
+            if (matchingNavbarLink) {
+                matchingNavbarLink.classList.add('active');
+            }
+
             sections.forEach(section => {
                 section.classList.remove('active');
                 
@@ -58,7 +57,7 @@ navLinks.forEach(link => {
     });
 });
 
-// ==================== 🎛 *CONTROL PANEL SYSTEM SCHEMAS CORE* ====================
+// ==================== 🎛️ CONTROL PANEL SYSTEM SCHEMAS ====================
 const cyberPanel = document.getElementById('cyberPanel');
 const panelToggle = document.getElementById('panelToggle');
 const matrixToggle = document.getElementById('matrixToggle');
@@ -131,7 +130,7 @@ function initMatrix() {
 }
 
 function drawMatrix() {
-    ctx.fillStyle = document.body.classList.contains('light-mode-active') ? 'rgba(244, 246, 249, 0.06)' : 'rgba(6, 19, 31, 0.06)';
+    ctx.fillStyle = document.body.classList.contains('light-mode-active') ? 'rgba(236, 238, 241, 0.06)' : 'rgba(6, 19, 31, 0.06)';
     ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
     if (document.body.classList.contains('pink-neon-theme')) { ctx.fillStyle = '#ff007f'; }
@@ -167,14 +166,11 @@ matrixToggle.addEventListener('change', () => {
     }
 });
 
-// D. REUSABLE NON-DESTRUCTIVE AUDIO CORES INTERFACE
+// D. CONTINUOUS OSCILLATOR MODULE ENGINE (PERSISTENT CLICK SOLUTION)
 function playSystemSound(frequency, type, duration) {
     if (!soundToggle.checked) return; 
     try {
-        // Core Web Audio API instantiation scheme pattern tracking rules
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        // Browser standard override hooks loops auto-play policies handler
         if (audioCtx.state === 'suspended') {
             audioCtx.resume();
         }
@@ -185,7 +181,7 @@ function playSystemSound(frequency, type, duration) {
         oscillator.type = type;
         oscillator.frequency.value = frequency;
         
-        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
 
         oscillator.connect(gainNode);
@@ -194,13 +190,13 @@ function playSystemSound(frequency, type, duration) {
         oscillator.start();
         oscillator.stop(audioCtx.currentTime + duration);
     } catch (e) {
-        console.log("Hardware acoustics synthesis pipeline update exception.");
+        console.log("Hardware acoustics framework loop bypass exception.");
     }
 }
 
-// Global dynamic interface nodes hover sound mapping parameters
-document.querySelectorAll('.navbar a, .logo, .btn-box, .panel-toggle-btn, .skill-tag, .portfolio-box, .mobile-footer-nav a').forEach(element => {
+// Global hover micro-beep mapping
+document.querySelectorAll('.navbar a, .logo, .btn-box, .panel-toggle-btn, .skill-tag, .portfolio-box').forEach(element => {
     element.addEventListener('mouseenter', () => {
-        playSystemSound(950, 'sine', 0.02);
+        playSystemSound(950, 'sine', 0.015);
     });
 });
