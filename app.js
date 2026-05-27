@@ -18,18 +18,18 @@ navLinks.forEach(link => {
         if (targetSectionId) {
             e.preventDefault();
 
-            // Step B: Navbar ke saare links se active highlighted classes hatana
+            // Step B: Navbar links reset handling
             document.querySelectorAll('.navbar a').forEach(navLink => {
                 navLink.classList.remove('active');
             });
 
-            // Step C: Sahi link ko active state highlight dena
+            // Step C: Highlight target active nav menu link
             const matchingNavbarLink = document.querySelector(`.navbar a[data-target="${targetSectionId}"]`);
             if (matchingNavbarLink) {
                 matchingNavbarLink.classList.add('active');
             }
 
-            // Step D: Saare sections ko hide karna aur sirf active wale ko show karna
+            // Step D: Active sections visibility handler toggle core
             sections.forEach(section => {
                 section.classList.remove('active');
                 
@@ -48,7 +48,7 @@ navLinks.forEach(link => {
                 }
             });
 
-            // Step E: 🔥 MOBILE ENGINE FORCE RESET
+            // Step E: MOBILE ENGINE SCROLL FORCE JUMP RESET
             if (window.innerWidth <= 768) {
                 window.scrollTo(0, 0);
                 document.body.scrollTop = 0;
@@ -58,7 +58,7 @@ navLinks.forEach(link => {
     });
 });
 
-// ==================== 🎛️ NEW CYBER CONTROL PANEL FRAMEWORK LOGIC ====================
+// ==================== 🎛️ CONTROL PANEL ADVANCED LOCK SCHEME LOGIC ====================
 const cyberPanel = document.getElementById('cyberPanel');
 const panelToggle = document.getElementById('panelToggle');
 const matrixToggle = document.getElementById('matrixToggle');
@@ -66,13 +66,22 @@ const themeToggle = document.getElementById('themeToggle');
 const soundToggle = document.getElementById('soundToggle');
 const matrixCanvas = document.getElementById('matrixCanvas');
 
-// Toggle sliding animation drawer
-panelToggle.addEventListener('click', () => {
+// 🔥 FIX: Stop propagation taaki body par laga close event toggle ko block na kare
+panelToggle.addEventListener('click', (e) => {
+    e.stopPropagation(); 
     cyberPanel.classList.toggle('open');
     playSystemSound(500, 'triangle', 0.08);
 });
 
-// A. NEON MODES CORE HANDLER
+// 🔥 NEW SMART DETECTOR: Agar panel open hai aur user screen par kahin bhi bahar click kare toh panel automatic andar slide ho jaye
+document.addEventListener('click', (e) => {
+    if (cyberPanel.classList.contains('open') && !cyberPanel.contains(e.target)) {
+        cyberPanel.classList.remove('open');
+        playSystemSound(250, 'triangle', 0.05);
+    }
+});
+
+// A. CYBER THEME SWAPPING CORE ENGINE
 themeToggle.addEventListener('change', () => {
     if(themeToggle.checked) {
         document.body.classList.add('pink-neon-theme');
@@ -83,7 +92,7 @@ themeToggle.addEventListener('change', () => {
     }
 });
 
-// B. REAL-TIME HARDWARE ADVANCED MATRIX STREAMER ENGINE
+// B. REAL-TIME MULTI-THREAD MATRIX RAIN LOGIC ENGINE
 const ctx = matrixCanvas.getContext('2d');
 let matrixInterval = null;
 
@@ -111,7 +120,6 @@ function drawMatrix() {
     ctx.fillStyle = 'rgba(6, 19, 31, 0.05)'; 
     ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
-    // Swap color mapping according to live toggle configurations
     ctx.fillStyle = document.body.classList.contains('pink-neon-theme') ? '#ff007f' : '#00eeff';
     ctx.font = fontSize + 'px monospace';
 
@@ -141,7 +149,7 @@ matrixToggle.addEventListener('change', () => {
     }
 });
 
-// C. WEB AUDIO API SOUND SYNTHESIZER
+// C. WEB AUDIO API SIGNALS SOUND SYNTHESIZER
 function playSystemSound(frequency, type, duration) {
     if (!soundToggle.checked) return; 
     try {
@@ -164,7 +172,7 @@ function playSystemSound(frequency, type, duration) {
     }
 }
 
-// Attach hover acoustics to interactive nodes
+// Global hover audio nodes attachments loop map
 document.querySelectorAll('.navbar a, .logo, .btn-box, .panel-toggle-btn, .skill-tag, .portfolio-box').forEach(element => {
     element.addEventListener('mouseenter', () => {
         playSystemSound(900, 'sine', 0.015);
