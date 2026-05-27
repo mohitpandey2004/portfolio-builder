@@ -185,7 +185,7 @@ body {
     pointer-events: none;
     transform: scale(0.96);
     transition: opacity 0.5s ease, transform 0.5s ease;
-    z-index: 2 !important; /* 🚀 Fixed Layer: Shifted up to avoid canvas overlap codes */
+    z-index: 2 !important; /* Fixed Layer System */
     overflow-y: auto; /* Internal section scrolling active */
 }
 
@@ -194,25 +194,34 @@ body {
     opacity: 1;
     pointer-events: auto;
     transform: scale(1);
-    z-index: 10 !important; /* 🚀 Fixed Layer: Content section explicitly pushed to top */
+    z-index: 10 !important; /* Content explicitly locked above everything */
 }
 
-/* ==================== 4. HOME SECTION (DESKTOP) ==================== */
+/* ==================== 4. HOME SECTION (PURE DYNAMIC CSS BACKDROP) ==================== */
 #home {
     display: flex;
     flex-direction: row; 
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
-/* 🚀 FIX: Background photo relative positioning assigned to layer natively beneath canvas streams */
+/* 🚀 PURE DYNAMIC GRADIENT ANIMATION (Image hatakar ye lagaya hai taaki laptop ka khela set ho) */
 #home::before {
     content: '';
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: url("https://img.freepik.com/free-vector/abstract-background-design-black_53876-62802.jpg?w=1060") center/cover no-repeat;
+    background: linear-gradient(-45deg, #040d16, #0b1e30, #06131f, #021a2e);
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite; /* Cyberpunk background gradient move loop */
     z-index: -10 !important;
     pointer-events: none;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .home-content {
@@ -395,20 +404,21 @@ body {
 input:checked + .slider { background-color: rgba(0, 239, 255, 0.1); border-color: #0ef; box-shadow: 0 0 10px rgba(0, 239, 255, 0.3); }
 input:checked + .slider:before { background-color: #0ef; transform: translateX(22px); box-shadow: 0 0 8px #0ef; }
 
-/* 🚀 FIXED FOR DESKTOP & MOBILE LAPTOP RENDER */
+/* 🌧️ HIGH-PRECISION DYNAMIC MATRIX LAYER CANVAS OVERRIDE (LOCKED SECURELY ABOVE BG BACKDROP) */
 #matrixCanvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw !important;
     height: 100vh !important;
-    z-index: 1 !important; /* 🚀 Fixed Layer Matrix: Brought in front of solid background wallpaper layers */
+    z-index: 3 !important; /* 🚀 Fixed Layer Matrix: Shifted securely above dynamic CSS gradients but behind content text */
     pointer-events: none;
     display: none;
 }
 
 /* 🌸 HOT NEON PINK THEME MODES */
 body.pink-neon-theme { background: #0a030c; }
+body.pink-neon-theme #home::before { background: linear-gradient(-45deg, #0a030c, #2d001e, #14000b, #0a030c); } /* Custom pink shifting loop */
 body.pink-neon-theme .heading span,
 body.pink-neon-theme .navbar a:hover,
 body.pink-neon-theme .navbar a.active,
@@ -430,6 +440,7 @@ body.pink-neon-theme input:checked + .slider:before { background-color: #ff007f;
 
 /* ☀️ SOLID PROFESSIONAL LIGHT THEME ENGINE MODE */
 body.light-mode-active { background: #eceef1 !important; color: #1e293b !important; }
+body.light-mode-active #home::before { background: linear-gradient(-45deg, #eceef1, #cbd5e1, #e2e8f0, #f1f5f9); } /* Custom clean gray shifting loop */
 body.light-mode-active .header { background: rgba(236, 238, 241, 0.9) !important; border-bottom: 2px solid #cbd5e1 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important; }
 body.light-mode-active .logo, body.light-mode-active .navbar a { color: #334155 !important; }
 body.light-mode-active .navbar a.active, body.light-mode-active .navbar a:hover { color: #0284c7 !important; text-shadow: none !important; }
@@ -523,8 +534,7 @@ body.light-mode-active .setting-label { color: #334155 !important; }
 
     #home.active { 
         display: flex !important;
-        flex-direction: column-reverse !important; 
-        text-align: center; 
+        flex-direction: column-reverse !important; text-align: center; 
         background: none !important; 
         gap: 25px !important;
     }
