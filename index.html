@@ -9,54 +9,6 @@
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    <style>
-        /* Cyberpunk buttons setup */
-        .create-btn-nav {
-            position: relative;
-            display: inline-block;
-            padding: 5px 15px;
-            color: #ff007f;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 500;
-            letter-spacing: 1px;
-            font-size: 1.1rem;
-            transition: 0.5s;
-            border: 1px solid #ff007f;
-            border-radius: 4px;
-            box-shadow: 0 0 5px #ff007f;
-            margin-left: 15px;
-        }
-        .create-btn-nav:hover {
-            color: #00eeff;
-            border-color: #00eeff;
-            box-shadow: 0 0 15px #00eeff;
-            text-shadow: 0 0 5px #00eeff;
-        }
-        /* Resume button configuration with custom cyan neon theme */
-        .resume-btn-nav {
-            position: relative;
-            display: inline-block;
-            padding: 5px 15px;
-            color: #00eeff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 500;
-            letter-spacing: 1px;
-            font-size: 1.1rem;
-            transition: 0.5s;
-            border: 1px solid #00eeff;
-            border-radius: 4px;
-            box-shadow: 0 0 5px #00eeff;
-            margin-left: 15px;
-        }
-        .resume-btn-nav:hover {
-            color: #ff007f;
-            border-color: #ff007f;
-            box-shadow: 0 0 15px #ff007f;
-            text-shadow: 0 0 5px #ff007f;
-        }
-    </style>
 </head>
 <body>
     
@@ -109,25 +61,28 @@
 
     <header class="header">
         <div class="logo-wrapper">
-            <!-- Toggle button integrated cleanly inside header grid layout context -->
             <button class="panel-toggle-btn" id="panelToggle"><i class="fa-solid fa-sliders"></i></button>
             <a href="#" class="logo" data-target="home">Portfolio</a>
         </div>
 
-        <div class="navbar">
-            <a href="#" style="--i:1" class="nav-link active" data-target="home">Home</a>
-            <a href="#" style="--i:2" class="nav-link" data-target="about">About</a>
-            <a href="#" style="--i:3" class="nav-link" data-target="skills">Skills</a>
-            <a href="#" style="--i:4" class="nav-link" data-target="portfolio">Portfolio</a>
-            <a href="#" style="--i:5" class="nav-link" data-target="contact">Contact</a>
-            
-            <a href="resume.html" style="--i:5.5" class="resume-btn-nav">Resume_</a>
-            <a href="create.html" style="--i:6" class="create-btn-nav">Create_</a>
+        <!-- Desktop Menu: Laptop par dikhega, Phone par CSS layout se automatic hidden rahega -->
+        <div class="navbar desktop-navbar">
+            <a href="#" class="nav-link active" data-target="home">Home</a>
+            <a href="#" class="nav-link" data-target="about">About</a>
+            <a href="#" class="nav-link" data-target="skills">Skills</a>
+            <a href="#" class="nav-link" data-target="portfolio">Portfolio</a>
+            <a href="#" class="nav-link" data-target="contact">Contact</a>
+        </div>
+
+        <div class="header-buttons">
+            <a href="resume.html" class="resume-btn-nav">Resume_</a>
+            <a href="create.html" class="create-btn-nav">Create_</a>
         </div>
     </header>
 
     <main class="main-content">
 
+        <!-- HOME SECTION -->
         <section class="content-section active" id="home">
             <div class="home-content">
                 <h3>Hello, It's Me</h3>
@@ -136,10 +91,10 @@
                 <p>I'm a Web Designer and a BCA student. I specialize in creating premium frontend designs, robust backend management, and mobile applications.</p>
                     
                 <div class="home-sci">
-                    <a href="#" style="--i:7"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://www.linkedin.com/in/mohit-pandey-383900274/" target="_blank" style="--i:8"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#" style="--i:9"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" style="--i:10"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.linkedin.com/in/mohit-pandey-383900274/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 </div> 
                     
                 <a href="#" class="btn-box nav-link" data-target="about">More about Me</a>
@@ -150,6 +105,7 @@
             </div>
         </section>
 
+        <!-- ABOUT SECTION -->
         <section class="content-section" id="about">
             <div class="about-container">
                 <h2 class="heading">About <span>Me</span></h2>
@@ -185,6 +141,7 @@
             </div>
         </section>
 
+        <!-- SKILLS SECTION -->
         <section class="content-section" id="skills">
             <h2 class="heading">My <span>Skills</span></h2>
             <div class="skills-row">
@@ -192,28 +149,29 @@
                 <div class="skills-column">
                     <h3>Technical Skills</h3>
                     <div class="skills-box">
-                        <span class="skill-tag" style="--i:1">Web Development</span>
-                        <span class="skill-tag" style="--i:2">Kotlin (Android)</span>
-                        <span class="skill-tag" style="--i:3">XML</span>
-                        <span class="skill-tag" style="--i:4">C / C++ Programming</span>
-                        <span class="skill-tag" style="--i:5">PHP & SQL</span>
-                        <span class="skill-tag" style="--i:6">Java</span>
+                        <span class="skill-tag">Web Development</span>
+                        <span class="skill-tag">Kotlin (Android)</span>
+                        <span class="skill-tag">XML</span>
+                        <span class="skill-tag">C / C++ Programming</span>
+                        <span class="skill-tag">PHP & SQL</span>
+                        <span class="skill-tag">Java</span>
                     </div>
                 </div>
 
                 <div class="skills-column">
                     <h3>Soft Skills</h3>
                     <div class="skills-box">
-                        <span class="skill-tag" style="--i:7">Problem Solving</span>
-                        <span class="skill-tag" style="--i:8">Team Working</span>
-                        <span class="skill-tag" style="--i:9">Communication</span>
-                        <span class="skill-tag" style="--i:10">People Management</span>
-                        <span class="skill-tag" style="--i:11">Decision Making</span>
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Team Working</span>
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">People Management</span>
+                        <span class="skill-tag">Decision Making</span>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- PORTFOLIO SECTION -->
         <section class="content-section" id="portfolio">
             <h2 class="heading">Latest <span>Projects</span></h2>
             <div class="portfolio-container">
@@ -234,12 +192,13 @@
             </div>
         </section>
 
+        <!-- CONTACT SECTION -->
         <section class="content-section" id="contact">
             <h2 class="heading">Contact <span>Me!</span></h2>
             
             <div class="contact-container">
                 <div class="contact-info">
-                    <div class="info-box" style="--i:1">
+                    <div class="info-box">
                         <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
                         <div class="info-text">
                             <span>Email Me</span>
@@ -247,7 +206,7 @@
                         </div>
                     </div>
                     
-                    <div class="info-box" style="--i:2">
+                    <div class="info-box">
                         <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
                         <div class="info-text">
                             <span>Call Me</span>
@@ -255,7 +214,7 @@
                         </div>
                     </div>
 
-                    <div class="info-box" style="--i:3">
+                    <div class="info-box">
                         <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
                         <div class="info-text">
                             <span>Location</span>
@@ -266,32 +225,32 @@
 
                 <div class="contact-form-wrap">
                     <form action="insert.php" method="POST">
-                        <div class="input-group" style="--i:4">
+                        <div class="input-group">
                             <input type="text" name="fullname" required>
                             <label>Full Name</label>
                             <span class="line"></span>
                         </div>
-                        <div class="input-group" style="--i:5">
+                        <div class="input-group">
                             <input type="email" name="email" required>
                             <label>Email Address</label>
                             <span class="line"></span>
                         </div>
-                        <div class="input-group" style="--i:6">
+                        <div class="input-group">
                             <input type="number" name="mobile" required>
                             <label>Mobile Number</label>
                             <span class="line"></span>
                         </div>
-                        <div class="input-group" style="--i:7">
+                        <div class="input-group">
                             <input type="text" name="subject" required>
                             <label>Email Subject</label>
                             <span class="line"></span>
                         </div>
-                        <div class="input-group full-width" style="--i:8">
+                        <div class="input-group full-width">
                             <textarea name="message" rows="5" required></textarea>
                             <label>Your Message</label>
                             <span class="line"></span>
                         </div>
-                        <button type="submit" name="submit" class="cyber-btn" style="--i:9">
+                        <button type="submit" name="submit" class="cyber-btn">
                             <span>Send Message_</span>
                         </button>
                     </form>
@@ -301,16 +260,25 @@
 
     </main>
 
+    <!-- UNIFIED STRUCTURAL FOOTER ENGINE -->
     <div class="custom-footer">
-        <div class="footer-content">
-            <h3>Need a Professional Website? <span>Let's Build It!</span></h3>
-            <div class="footer-info">
-                <span><i class="fa-solid fa-envelope"></i> <a href="mailto:mohitsyou81025@gmail.com">mohitsyou81025@gmail.com</a></span>
-                <span><i class="fa-solid fa-phone"></i> <a href="tel:+918102584930">+91 8102584930</a></span>
-                <span><i class="fa-solid fa-laptop-code"></i> Freelance Available</span>
-            </div>
-            <div class="footer-rights">
+        <div class="footer-container">
+            <div class="footer-left-brand">
                 <p>&copy; 2026 Mohit Pandey. All Rights Reserved.</p>
+            </div>
+            
+            <!-- 🚀 NAVIGATION HUB FOR PHONE: Sticky bottom dynamic layout links -->
+            <div class="mobile-footer-nav" id="mobileFooterNav">
+                <a href="#" class="footer-link active" data-target="home">Home</a>
+                <a href="#" class="footer-link" data-target="about">About</a>
+                <a href="#" class="footer-link" data-target="skills">Skills</a>
+                <a href="#" class="footer-link" data-target="portfolio">Portfolio</a>
+                <a href="#" class="footer-link" data-target="contact">Contact</a>
+            </div>
+
+            <div class="footer-right-details">
+                <span><a href="mailto:mohitsyou81025@gmail.com"><i class="fa-solid fa-envelope"></i> mohitsyou81025@gmail.com</a></span>
+                <span><i class="fa-solid fa-laptop-code"></i> Freelance Available</span>
             </div>
         </div>
     </div>

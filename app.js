@@ -7,8 +7,9 @@ var typed = new Typed(".text", {
     loop: true
 });
 
-// ==================== 2. SINGLE PAGE TAB SWITCHING LOGIC ====================
-const navLinks = document.querySelectorAll('.navbar a, .logo, .btn-box');
+// ==================== 2. SINGLE PAGE UNIFIED TAB SWITCHING LOGIC ====================
+// Captures links across top desktop header bar AND mobile bottom sticky footer layout menu
+const navLinks = document.querySelectorAll('.navbar a, .mobile-footer-nav a, .logo, .btn-box');
 const sections = document.querySelectorAll('.content-section');
 
 navLinks.forEach(link => {
@@ -18,18 +19,18 @@ navLinks.forEach(link => {
         if (targetSectionId) {
             e.preventDefault();
 
-            // 🔥 FORCE AUDIO ON-CLICK MECHANISM
-            playSystemSound(550, 'triangle', 0.1);
+            // 🔥 FORCE AUDIO ON-CLICK MECHANISM (Endless Loops Triggered Uniquely)
+            playSystemSound(580, 'triangle', 0.08);
 
-            document.querySelectorAll('.navbar a').forEach(navLink => {
-                navLink.classList.remove('active');
+            // Synchronize active highlights state machines cleanly across layout engines
+            document.querySelectorAll('.navbar a, .mobile-footer-nav a').forEach(nav => {
+                nav.classList.remove('active');
+                if(nav.getAttribute('data-target') === targetSectionId) {
+                    nav.classList.add('active');
+                }
             });
 
-            const matchingNavbarLink = document.querySelector(`.navbar a[data-target="${targetSectionId}"]`);
-            if (matchingNavbarLink) {
-                matchingNavbarLink.classList.add('active');
-            }
-
+            // Section switching block visibility logic
             sections.forEach(section => {
                 section.classList.remove('active');
                 
@@ -57,7 +58,7 @@ navLinks.forEach(link => {
     });
 });
 
-// ==================== 🎛️ CONTROL PANEL ADVANCED SYSTEM LOGIC ====================
+// ==================== 🎛 *CONTROL PANEL SYSTEM SCHEMAS CORE* ====================
 const cyberPanel = document.getElementById('cyberPanel');
 const panelToggle = document.getElementById('panelToggle');
 const matrixToggle = document.getElementById('matrixToggle');
@@ -81,7 +82,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// A. NEON MODES HANDLER
+// A. NEON MODES MUTATION MANAGER
 themeToggle.addEventListener('change', () => {
     if(themeToggle.checked) {
         lightModeToggle.checked = false; 
@@ -94,20 +95,20 @@ themeToggle.addEventListener('change', () => {
     }
 });
 
-// B. LIGHT MODE HANDLER
+// B. PREMIUM LIGHT MODE CONTROLLER
 lightModeToggle.addEventListener('change', () => {
     if(lightModeToggle.checked) {
         themeToggle.checked = false; 
         document.body.classList.remove('pink-neon-theme');
         document.body.classList.add('light-mode-active');
-        playSystemSound(700, 'sine', 0.1);
+        playSystemSound(750, 'sine', 0.1);
     } else {
         document.body.classList.remove('light-mode-active');
-        playSystemSound(350, 'sine', 0.1);
+        playSystemSound(380, 'sine', 0.1);
     }
 });
 
-// C. LAPTOP + MOBILE UNIFIED MATRIX RAIN CONTROLLER
+// C. UNIFIED REAL-TIME STREAMING MATRIX ENGINE
 const ctx = matrixCanvas.getContext('2d');
 let matrixInterval = null;
 
@@ -116,39 +117,26 @@ function resizeCanvas() {
     matrixCanvas.height = window.innerHeight;
 }
 
-// Attach listeners for dynamic sizing loops
-window.addEventListener('resize', () => {
-    if (matrixToggle.checked) {
-        resizeCanvas();
-        initMatrix();
-    }
-});
-
 const katakana = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const alphabet = katakana.split("");
 let fontSize = 16;
-let columns = window.innerWidth / fontSize;
 let rainDrops = [];
 
 function initMatrix() {
-    columns = window.innerWidth / fontSize;
+    let columns = window.innerWidth / fontSize;
     rainDrops = [];
     for (let x = 0; x < columns; x++) {
-        rainDrops[x] = Math.floor(Math.random() * -window.innerHeight / fontSize); // Better staggering
+        rainDrops[x] = 1;
     }
 }
 
 function drawMatrix() {
-    ctx.fillStyle = document.body.classList.contains('light-mode-active') ? 'rgba(244, 246, 249, 0.05)' : 'rgba(6, 19, 31, 0.05)';
+    ctx.fillStyle = document.body.classList.contains('light-mode-active') ? 'rgba(244, 246, 249, 0.06)' : 'rgba(6, 19, 31, 0.06)';
     ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
 
-    if (document.body.classList.contains('pink-neon-theme')) {
-        ctx.fillStyle = '#ff007f';
-    } else if (document.body.classList.contains('light-mode-active')) {
-        ctx.fillStyle = '#00b4d8';
-    } else {
-        ctx.fillStyle = '#00eeff';
-    }
+    if (document.body.classList.contains('pink-neon-theme')) { ctx.fillStyle = '#ff007f'; }
+    else if (document.body.classList.contains('light-mode-active')) { ctx.fillStyle = '#0284c7'; }
+    else { ctx.fillStyle = '#00eeff'; }
     
     ctx.font = fontSize + 'px monospace';
 
@@ -179,17 +167,25 @@ matrixToggle.addEventListener('change', () => {
     }
 });
 
-// D. HARDWARE AUDIO ACOUSTICS CORE AUDIO (ON-CLICK CAPTURED ROUTE)
+// D. REUSABLE NON-DESTRUCTIVE AUDIO CORES INTERFACE
 function playSystemSound(frequency, type, duration) {
     if (!soundToggle.checked) return; 
     try {
+        // Core Web Audio API instantiation scheme pattern tracking rules
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Browser standard override hooks loops auto-play policies handler
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+
         const oscillator = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
 
         oscillator.type = type;
         oscillator.frequency.value = frequency;
-        gainNode.gain.setValueAtTime(duration, audioCtx.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
 
         oscillator.connect(gainNode);
@@ -198,13 +194,13 @@ function playSystemSound(frequency, type, duration) {
         oscillator.start();
         oscillator.stop(audioCtx.currentTime + duration);
     } catch (e) {
-        console.log("Audio contextual layout blocks");
+        console.log("Hardware acoustics synthesis pipeline update exception.");
     }
 }
 
-// Mouse hover effects mapping rules
-document.querySelectorAll('.navbar a, .logo, .btn-box, .panel-toggle-btn, .skill-tag, .portfolio-box').forEach(element => {
+// Global dynamic interface nodes hover sound mapping parameters
+document.querySelectorAll('.navbar a, .logo, .btn-box, .panel-toggle-btn, .skill-tag, .portfolio-box, .mobile-footer-nav a').forEach(element => {
     element.addEventListener('mouseenter', () => {
-        playSystemSound(900, 'sine', 0.015);
+        playSystemSound(950, 'sine', 0.02);
     });
 });
