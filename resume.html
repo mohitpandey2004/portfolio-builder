@@ -3,41 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Builder Pro</title>
+    <title>Resume Builder Pro | Studio Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="resume-style.css">
+    <style>
+        /* CSS injection inside wizard layout bounds */
+        .builder-container { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
+        .builder-title { font-size: 2rem; color: #fff; margin-bottom: 25px; font-weight: 600; letter-spacing: 0.5px; }
+        .back-home { color: #0ef; text-decoration: none; font-size: 0.95rem; margin-bottom: 15px; display: inline-block; transition: 0.3s; }
+        .back-home:hover { text-shadow: 0 0 10px #0ef; }
+        
+        .resume-layout { display: flex; gap: 30px; margin-top: 20px; }
+        .resume-sidebar { flex: 0 0 280px; display: flex; flex-direction: column; gap: 10px; }
+        .section-tab { background: rgba(255,255,255,0.02); border: 1px solid rgba(0,239,255,0.1); color: #bbb; padding: 15px 20px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; font-weight: 500; }
+        .section-tab i.fa-solid { width: 20px; text-align: center; margin-right: 10px; color: #0ef; }
+        .section-tab.active { background: rgba(0,239,255,0.06); border-color: #0ef; color: #fff; box-shadow: 0 0 15px rgba(0,239,255,0.15); }
+        
+        .form-content-area { flex: 1; background: rgba(6, 19, 31, 0.65); border: 1px solid rgba(0,239,255,0.15); padding: 35px; border-radius: 12px; min-height: 580px; backdrop-filter: blur(10px); position: relative; }
+        .resume-form-section { display: none; }
+        .resume-form-section.active { display: block; animation: sectionFade 0.4s ease; }
+        @keyframes sectionFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .section-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,239,255,0.2); padding-bottom: 12px; margin-bottom: 25px; }
+        .form-section-title { font-size: 1.3rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .form-section-title i { color: #0ef; }
+        .help-trigger-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #aaa; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.3s; }
+        .help-trigger-btn:hover { border-color: #0ef; color: #0ef; }
+        
+        .help-panel { display: none; background: rgba(0,0,0,0.3); border-left: 3px solid #0ef; padding: 15px; margin-bottom: 20px; border-radius: 0 6px 6px 0; }
+        .help-panel h4 { font-size: 14px; color: #0ef; margin-bottom: 6px; }
+        .help-panel ul { padding-left: 18px; font-size: 13px; color: #ccc; line-height: 1.6; }
+        
+        .form-grid-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .input-group-cell { display: flex; flex-direction: column; gap: 8px; }
+        .input-group-cell.full-width { grid-column: span 2; }
+        .input-group-cell label { font-size: 13.5px; color: #aaa; font-weight: 500; }
+        .input-group-cell input, .input-group-cell textarea { width: 100%; padding: 12px; background: rgba(0,0,0,0.25); border: 1px solid rgba(0,239,255,0.2); border-radius: 6px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; }
+        .input-group-cell input:focus, .input-group-cell textarea:focus { border-color: #0ef; box-shadow: 0 0 10px rgba(0,239,255,0.2); }
+        
+        /* Premium hardware toggle sliders configurations */
+        .optional-switches-box { margin-top: 35px; padding-top: 25px; border-top: 1px solid rgba(0,239,255,0.15); }
+        .optional-switches-box h3 { font-size: 15px; color: #0ef; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18px; }
+        .switches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+        .switch-item { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
+        .switch-item span { font-size: 13px; color: #ddd; }
+        
+        .switch { position: relative; display: inline-block; width: 38px; height: 18px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1a2f42; border-radius: 20px; transition: 0.4s; }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: #aaa; border-radius: 50%; transition: 0.4s; }
+        input:checked + .slider { background-color: rgba(0, 239, 255, 0.2); }
+        input:checked + .slider:before { background-color: #0ef; transform: translateX(20px); box-shadow: 0 0 5px #0ef; }
+        
+        .notice-info-text { font-size: 12.5px; color: #666; font-style: italic; text-align: center; margin-top: 25px; }
+        .dynamic-appended-inputs, .dynamic-sections-area { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px; }
+        .dynamic-sections-area { grid-template-columns: 100%; }
+        
+        .wizard-footer-actions { margin-top: 35px; display: flex; justify-content: flex-end; gap: 15px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; }
+        .nav-action-btn { background: #0ef; color: #040d16; border: none; padding: 11px 24px; font-weight: 600; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; transition: 0.3s; }
+        .nav-action-btn:hover { background: #00b4d8; transform: translateY(-2px); box-shadow: 0 0 15px #0ef; }
+        
+        .template-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
+        .template-card { background: #040d16; border: 2px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px; cursor: pointer; text-align: center; transition: 0.3s; }
+        .template-card.active { border-color: #0ef; box-shadow: 0 0 15px rgba(0,239,255,0.25); }
+        .template-card p { font-size: 12px; color: #aaa; margin-top: 8px; font-weight: 500; }
+        .template-card.active p { color: #0ef; }
+        .tpl-preview { height: 110px; background: #222; border-radius: 4px; }
+        .tpl-51 { background: linear-gradient(to right, #0052d4, #fff 40%); }
+        .tpl-52 { background: linear-gradient(to bottom, #d4af37 15%, #fff 15%); }
+        .tpl-53 { background: linear-gradient(to right, #1e293b 30%, #fff 30%); }
+        .tpl-54 { background: #0f172a; border: 1px dashed #0ef; }
+        
+        .live-canvas-preview-wrapper { width: 100%; background: #fff; color: #333; border-radius: 8px; padding: 40px; margin-top: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .cv-render-output-box { min-height: 700px; font-family: 'Arial', sans-serif; }
+        
+        @media (max-width: 768px) {
+            .resume-layout { flex-direction: column; }
+            .resume-sidebar { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+            .section-tab { padding: 10px 12px; font-size: 13px; }
+            .section-tab i.fa-chevron-right { display: none; }
+            .form-grid-matrix, .dynamic-appended-inputs { grid-template-columns: 100%; }
+            .input-group-cell.full-width { grid-column: span 1; }
+            .template-grid { grid-template-columns: repeat(2, 1fr); }
+            .live-canvas-preview-wrapper { padding: 15px; }
+        }
+    </style>
 </head>
 <body>
 
     <div class="builder-container">
-        <a href="index.html" class="back-home">← Back to Portfolio</a>
-        <h1 class="builder-title">Resume Builder Pro</h1>
+        <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
+        <h1 class="builder-title">Resume Builder Pro_</h1>
         
-        <form action="generate-resume.php" method="POST" enctype="multipart/form-data">
+        <form action="generate-resume.php" method="POST" enctype="multipart/form-data" id="wizardMasterForm">
             <div class="resume-layout">
                 
+                <!-- 9 STEPPERS SIDEBAR NAV (MANUAL CONTROLS MAPPED AS REQUESTED) -->
                 <div class="resume-sidebar">
-                    <div class="section-tab active" onclick="switchSection('personal-sec')">
-                        <span><i class="fa-solid fa-user"></i> Personal Details</span>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                    <div class="section-tab" onclick="switchSection('education-sec')">
-                        <span><i class="fa-solid fa-graduation-cap"></i> Education</span>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                    <div class="section-tab" onclick="switchSection('skills-sec')">
-                        <span><i class="fa-solid fa-laptop-code"></i> Skills Matrix</span>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                    <div class="section-tab" onclick="switchSection('experience-sec')">
-                        <span><i class="fa-solid fa-briefcase"></i> Work & Template</span>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
+                    <div class="section-tab active" data-target="1" onclick="switchWizardStep('1')"><span><i class="fa-solid fa-user"></i> Personal</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="section-tab" data-target="2" onclick="switchWizardStep('2')"><span><i class="fa-solid fa-graduation-cap"></i> Education</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="section-tab" data-target="3" onclick="switchWizardStep('3')"><span><i class="fa-solid fa-briefcase"></i> Experience</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="section-tab" data-target="4" onclick="switchWizardStep('4')"><span><i class="fa-solid fa-code"></i> Skills</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="section-tab" data-target="5" onclick="switchWizardStep('5')"><span><i class="fa-solid fa-bullseye"></i> Objective</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="section-tab" data-target="6" onclick="switchWizardStep('6')"><span><i class="fa-solid fa-address-book"></i> Reference</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="section-tab" data-target="7" onclick="switchWizardStep('7')"><span><i class="fa-solid fa-diagram-project"></i> Projects</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="section-tab" data-target="8" onclick="switchWizardStep('8')"><span><i class="fa-solid fa-folder-plus"></i> Add More</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="section-tab" data-target="9" onclick="switchWizardStep('9')"><span><i class="fa-solid fa-download"></i> View & Download</span><i class="fa-solid fa-chevron-right"></i></div>
                 </div>
 
                 <div class="form-content-area">
                     
-                    <div class="resume-form-section active" id="personal-sec">
+                    <!-- STEP 1: PERSONAL DETAILS CONTAINER -->
+                    <div class="resume-form-section active" id="step-1">
                         <div class="section-header-row">
                             <div class="form-section-title"><i class="fa-solid fa-user"></i> Personal Information</div>
                             <button type="button" class="help-trigger-btn" onclick="toggleHelp('personal-help')">?</button>
@@ -47,128 +124,154 @@
                             <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Personal Details</h4>
                             <ul>
                                 <li><span>Compulsory Fields:</span> Full Name, Email, Phone aur Address compulsory hain.</li>
-                                <li><span>Profile Photo:</span> Optional hai, select karne par live preview dikhega.</li>
+                                <li><span>Photo Option:</span> Optional field toggle system ko manage karein.</li>
                             </ul>
                         </div>
 
-                        <div class="photo-uploader-container">
-                            <div class="avatar-preview-box" id="avatarPreview">
+                        <div class="photo-uploader-container" style="margin-bottom: 25px; display: flex; align-items: center; gap: 20px;">
+                            <div class="avatar-preview-box" id="avatarPreview" style="width: 80px; height: 80px; border-radius: 50%; background: rgba(0,0,0,0.3); border: 1px solid #0ef; display: flex; justify-content: center; align-items: center; font-size: 2rem; color: #0ef; overflow: hidden;">
                                 <i class="fa-solid fa-user-tie"></i>
                             </div>
                             <div class="upload-action-btns">
                                 <input type="file" id="realFolderFile" name="res_image" accept="image/*" style="display: none;" onchange="previewImage(this)">
-                                <button type="button" class="photo-btn btn-change" onclick="triggerUpload()">Add / Change Photo</button>
-                                <button type="button" class="photo-btn btn-remove" id="removeImgBtn" onclick="removeSelectedImage()">Remove Photo</button>
+                                <button type="button" class="photo-btn btn-change" onclick="triggerUpload()" style="background: transparent; border: 1px solid #0ef; color: #0ef; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">Add / Change Photo</button>
+                                <button type="button" class="photo-btn btn-remove" id="removeImgBtn" onclick="removeSelectedImage()" style="display: none; background: transparent; border: 1px solid #ff007f; color: #ff007f; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; margin-left: 10px;">Remove Photo</button>
                             </div>
                         </div>
 
-                        <div class="input-group">
-                            <input type="text" name="res_name" required>
-                            <label>Full Name</label>
+                        <div class="form-grid-matrix">
+                            <div class="input-group-cell"><label>Full Name</label><input type="text" id="res_name" name="res_name" placeholder="e.g. Mohit Pandey" required></div>
+                            <div class="input-group-cell"><label>Email Address</label><input type="email" id="res_email" name="res_email" placeholder="e.g. mohitmp882170@gmail.com" required></div>
+                            <div class="input-group-cell"><label>Phone Number</label><input type="text" id="res_phone" name="res_phone" placeholder="e.g. +91 8102584930" required></div>
+                            <div class="input-group-cell"><label>Full Address (City, State)</label><input type="text" id="res_address" name="res_address" placeholder="e.g. Dhanbad, Jharkhand" required></div>
                         </div>
-                        <div class="input-group">
-                            <input type="text" name="res_title" placeholder="e.g. Android Developer" required>
-                            <label>Professional Target Role</label>
+
+                        <!-- 🚀 DETAILED ON/OFF FIELDS GENERATOR TOOLKIT -->
+                        <div class="optional-switches-box">
+                            <h3>Custom Optional Fields Hub</h3>
+                            <div class="switches-grid">
+                                <div class="switch-item"><span>Date of Birth</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="dob" onchange="toggleFieldInput('dob')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Nationality</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="nationality" onchange="toggleFieldInput('nationality')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Marital Status</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="marital" onchange="toggleFieldInput('marital')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Website</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="website" onchange="toggleFieldInput('website')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>LinkedIn</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="linkedin" onchange="toggleFieldInput('linkedin')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Facebook</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="facebook" onchange="toggleFieldInput('facebook')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Twitter (X)</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="twitter" onchange="toggleFieldInput('twitter')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Religion</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="religion" onchange="toggleFieldInput('religion')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Passport</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="passport" onchange="toggleFieldInput('passport')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Gender</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="gender" onchange="toggleFieldInput('gender')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Driving Licence</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="licence" onchange="toggleFieldInput('licence')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Place</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="place" onchange="toggleFieldInput('place')"><span class="slider"></span></label></div>
+                                <div class="switch-item"><span>Salary Claim</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="salary" onchange="toggleFieldInput('salary')"><span class="slider"></span></label></div>
+                            </div>
+                            
+                            <!-- Dynamic elements mount matrix -->
+                            <div class="dynamic-appended-inputs" id="personalDynamicContainer"></div>
+                            <p class="notice-info-text">"Above given profile fields are most the commonly used."</p>
                         </div>
-                        <div class="input-group">
-                            <input type="email" name="res_email" required>
-                            <label>Email Address</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" name="res_phone" required>
-                            <label>Phone Number</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" name="res_address" required>
-                            <label>Full Address (City, State)</label>
-                        </div>
+
+                        <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('2')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <div class="resume-form-section" id="education-sec">
-                        <div class="section-header-row">
-                            <div class="form-section-title"><i class="fa-solid fa-graduation-cap"></i> Education Timeline</div>
-                            <button type="button" class="help-trigger-btn" onclick="toggleHelp('edu-help')">?</button>
-                        </div>
-
-                        <div class="help-panel" id="edu-help">
-                            <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Education</h4>
-                            <ul>
-                                <li><span>Tip:</span> Qualifications ko break karke line-by-line enter karein.</li>
-                            </ul>
-                        </div>
-
-                        <div class="input-group">
-                            <textarea name="res_education" rows="5" placeholder="e.g. BCA - CGC Jhanjheri (CGPA: 8.07) [2022-2025]&#10;12th - CBSE Board (85%)" required></textarea>
+                    <!-- STEP 2: EDUCATION TIMELINE -->
+                    <div class="resume-form-section" id="step-2">
+                        <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-graduation-cap"></i> Education Timeline</div></div>
+                        <div class="input-group-cell full-width">
                             <label>Education Qualifications</label>
+                            <textarea id="res_education" name="res_education" rows="6" placeholder="Please fill your education history&#10;Ex: 10th - CBSE Board (90%)&#10;12th - CBSE Board (85%)&#10;Highest Education: BCA - CGC Jhanjheri (Current CGPA: 8.07) [2022-2025]" required></textarea>
                         </div>
+                        <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('3')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <div class="resume-form-section" id="skills-sec">
-                        <div class="section-header-row">
-                            <div class="form-section-title"><i class="fa-solid fa-laptop-code"></i> Technical Matrix</div>
-                            <button type="button" class="help-trigger-btn" onclick="toggleHelp('skills-help')">?</button>
+                    <!-- STEP 3: WORK EXPERIENCE -->
+                    <div class="resume-form-section" id="step-3">
+                        <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-briefcase"></i> Work Experience</div></div>
+                        <div class="input-group-cell full-width">
+                            <label>Experience / Internships Record</label>
+                            <textarea id="res_experience" name="res_experience" rows="6" placeholder="Manually enter your work experience history details here...&#10;If you don't have prior records, type 'I am a Fresher' or custom profile summary metrics..." required></textarea>
                         </div>
-
-                        <div class="help-panel" id="skills-help">
-                            <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Skills</h4>
-                            <ul>
-                                <li><span>Format:</span> Har ek skill ke baad comma (,) daalna mandatory hai.</li>
-                            </ul>
-                        </div>
-
-                        <div class="input-group">
-                            <input type="text" name="res_skills" placeholder="e.g. Kotlin, Java, PHP, HTML, CSS, PostgreSQL" required>
-                            <label>Technical Skills (Comma separated)</label>
-                        </div>
+                        <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('4')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <div class="resume-form-section" id="experience-sec">
-                        <div class="section-header-row">
-                            <div class="form-section-title"><i class="fa-solid fa-briefcase"></i> Work & Creation Matrix</div>
-                            <button type="button" class="help-trigger-btn" onclick="toggleHelp('exp-help')">?</button>
+                    <!-- STEP 4: SKILLS MATRIX -->
+                    <div class="resume-form-section" id="step-4">
+                        <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-laptop-code"></i> Technical Matrix</div></div>
+                        <div class="input-group-cell full-width">
+                            <label>Technical Skills (Provide helpful placeholder guide examples)</label>
+                            <input type="text" id="res_skills" name="res_skills" placeholder="e.g. Kotlin, Java, XML Programming, Web Development, PHP, SQL, HTML5, CSS3" required>
                         </div>
+                        <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('5')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
+                    </div>
 
-                        <div class="help-panel" id="exp-help">
-                            <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Templates</h4>
-                            <ul>
-                                <li><span>Template:</span> Niche charo premium structures me se apna layout choose karein.</li>
-                            </ul>
+                    <!-- STEP 5: CAREER OBJECTIVE -->
+                    <div class="resume-form-section" id="step-5">
+                        <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-bullseye"></i> Career Objective</div></div>
+                        <div class="input-group-cell full-width">
+                            <label>Professional Career Profile Objective</label>
+                            <textarea id="res_objective" name="res_objective" rows="5" placeholder="Enter your career purpose statement to target recruiters directly..." required></textarea>
                         </div>
+                        <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('6')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
+                    </div>
 
-                        <div class="input-group">
-                            <textarea name="res_projects" rows="4" placeholder="e.g. Family Safety App: Built using Kotlin & Maps API..." required></textarea>
-                            <label>Project Details</label>
+                    <!-- STEP 6: REFERENCE -->
+                    <div class="resume-form-section" id="step-6">
+                        <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-address-book"></i> Professional References</div></div>
+                        <div class="input-group-cell full-width">
+                            <label>References (Optional Field Details)</label>
+                            <textarea id="res_reference" name="res_reference" rows="4" placeholder="Enter reference credentials details like Name, Designation, Institution Data..."></textarea>
                         </div>
-                        <div class="input-group">
-                            <textarea name="res_experience" rows="3" placeholder="e.g. Fresher Developer / Android Intern" required></textarea>
-                            <label>Experience / Internships</label>
-                        </div>
+                        <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('7')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
+                    </div>
 
-                        <div class="form-section-title" style="font-size: 1.1rem; margin-bottom: 15px;"><i class="fa-solid fa-images"></i> Choose Premium Layout Engine_</div>
+                    <!-- STEP 7: KEY PROJECTS -->
+                    <div class="resume-form-section" id="step-7">
+                        <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-diagram-project"></i> Key Projects Showcase</div></div>
+                        <div class="input-group-cell full-width">
+                            <label>Featured Projects Specifications</label>
+                            <textarea id="res_projects" name="res_projects" rows="5" placeholder="e.g. Family Safety App: Built tracking engine maps features using Kotlin...&#10;Movie Search Website: Built response logic blocks via JavaScript fetch modules..." required></textarea>
+                        </div>
+                        <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('8')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
+                    </div>
+
+                    <!-- STEP 8: ADD MORE ON/OFF EXTRA BLOCKS SECTIONS -->
+                    <div class="resume-form-section" id="step-8">
+                        <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-folder-plus"></i> Add More Custom Sections</div></div>
+                        <div class="switches-grid">
+                            <div class="switch-item"><span>Interests</span><label class="switch"><input type="checkbox" class="sec-toggle" onchange="toggleDynamicSection('interests', 'Interests / Hobbies', 'e.g. Android Coding, Open Source Contributions, Blogging...')"><span class="slider"></span></label></div>
+                            <div class="switch-item"><span>Achievements & Awards</span><label class="switch"><input type="checkbox" class="sec-toggle" onchange="toggleDynamicSection('awards', 'Achievements & Awards', 'e.g. Secured 1st Position in State Tech Hackathon Event...')"><span class="slider"></span></label></div>
+                            <div class="switch-item"><span>Activities</span><label class="switch"><input type="checkbox" class="sec-toggle" onchange="toggleDynamicSection('activities', 'Extracurricular Activities', 'e.g. Team Leader at Technical Fest Club Systems...')"><span class="slider"></span></label></div>
+                            <div class="switch-item"><span>Publications</span><label class="switch"><input type="checkbox" class="sec-toggle" onchange="toggleDynamicSection('publications', 'Research Publications', 'Enter scientific research papers or technical reports details...')"><span class="slider"></span></label></div>
+                            <div class="switch-item"><span>Languages</span><label class="switch"><input type="checkbox" class="sec-toggle" onchange="toggleDynamicSection('languages', 'Languages Known', 'e.g. English (Professional), Hindi (Native Fluency)')"><span class="slider"></span></label></div>
+                            <div class="switch-item"><span>Additional Info</span><label class="switch"><input type="checkbox" class="sec-toggle" onchange="toggleDynamicSection('additional', 'Additional Information', 'Enter extra dynamic certifications data here...')"><span class="slider"></span></label></div>
+                            <div class="switch-item"><span>Signature</span><label class="switch"><input type="checkbox" class="sec-toggle" onchange="toggleDynamicSection('signature', 'Authorized Digital Signature Name', 'e.g. Mohit Pandey')"><span class="slider"></span></label></div>
+                        </div>
+                        
+                        <div class="dynamic-sections-area" id="customSectionsDynamicArea"></div>
+                        <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('9')">Go to Preview Hub <i class="fa-solid fa-eye"></i></button></div>
+                    </div>
+
+                    <!-- STEP 9: LIVE EXPORTS & THEMES RENDER HUBS PRE-VIEW -->
+                    <div class="resume-form-section" id="step-9">
+                        <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-images"></i> Live Previews & Templates Center</div></div>
+                        
                         <div class="template-grid">
                             <input type="hidden" name="chosen_template" id="selectedTemplateInput" value="51">
-                            
-                            <div class="template-card active" id="tpl51" onclick="selectTemplate('51')">
-                                <div class="tpl-preview tpl-51"></div>
-                                <p>Corporate Blue (Tpl 51)</p>
-                            </div>
-                            <div class="template-card" id="tpl52" onclick="selectTemplate('52')">
-                                <div class="tpl-preview tpl-52"></div>
-                                <p>Gold Minimal (Tpl 52)</p>
-                            </div>
-                            <div class="template-card" id="tpl53" onclick="selectTemplate('53')">
-                                <div class="tpl-preview tpl-53"></div>
-                                <p>Dark Accent Sidebar (Tpl 53)</p>
-                            </div>
-                            <div class="template-card" id="tpl54" onclick="selectTemplate('54')">
-                                <div class="tpl-preview tpl-54"></div>
-                                <p>Neon Cyber Clean (Tpl 54)</p>
+                            <div class="template-card active" id="tpl51" onclick="selectActiveThemeTemplate('51')"><div class="tpl-preview tpl-51"></div><p>Corporate Blue (Tpl 51)</p></div>
+                            <div class="template-card" id="tpl52" onclick="selectActiveThemeTemplate('52')"><div class="tpl-preview tpl-52"></div><p>Gold Minimal (Tpl 52)</p></div>
+                            <div class="template-card" id="tpl53" onclick="selectActiveThemeTemplate('53')"><div class="tpl-preview tpl-53"></div><p>Dark Accent Sidebar (Tpl 53)</p></div>
+                            <div class="template-card" id="tpl54" onclick="selectActiveThemeTemplate('54')"><div class="tpl-preview tpl-54"></div><p>Neon Cyber Clean (Tpl 54)</p></div>
+                        </div>
+
+                        <!-- LIVE PREVIEW SHEET FRAMEWORK OUTPUT NODE -->
+                        <div class="live-canvas-preview-wrapper" id="canvasPrintTarget">
+                            <div class="cv-render-output-box" id="realtimeLiveRenderBox">
+                                <!-- Generated profile elements map directly inside via client rendering triggers scripts -->
                             </div>
                         </div>
 
-                        <div style="margin-top: 35px; text-align: right;">
-                            <button type="submit" class="cyber-btn" style="color: #00eeff; border-color: #00eeff;">
-                                <span>View & Generate Layout_</span>
+                        <div class="wizard-footer-actions" style="justify-content: center; margin-top: 30px;">
+                            <button type="button" class="nav-action-btn download-btn" onclick="triggerNativeDocumentPrint()" style="background: #ff007f; color: #fff; padding: 14px 35px; box-shadow: 0 0 15px rgba(255,0,127,0.3); font-size: 16px;">
+                                <i class="fa-solid fa-cloud-arrow-down"></i> Export & Download Layout Document_
                             </button>
                         </div>
                     </div>
@@ -178,34 +281,99 @@
         </form>
     </div>
 
+    <!-- WIZARD DYNAMIC CLIENT RENDERING SYSTEM LOGIC -->
     <script>
-        function switchSection(sectionId) {
+        // Data maps definitions array sets
+        const fieldMetaDict = {
+            'dob': { label: 'Date of Birth', placeholder: 'e.g. 15 August 2002' },
+            'nationality': { label: 'Nationality', placeholder: 'e.g. Indian' },
+            'marital': { label: 'Marital Status', placeholder: 'e.g. Single / Married' },
+            'website': { label: 'Personal Portfolio Link', placeholder: 'e.g. https://mohitmp.dev' },
+            'linkedin': { label: 'LinkedIn Profile URL', placeholder: 'e.g. https://linkedin.com/in/mohit...' },
+            'facebook': { label: 'Facebook Link', placeholder: 'e.g. https://facebook.com/...' },
+            'twitter': { label: 'Twitter (X) Link', placeholder: 'e.g. https://x.com/...' },
+            'religion': { label: 'Religion', placeholder: 'e.g. Hinduism' },
+            'passport': { label: 'Passport Details / No', placeholder: 'e.g. Available / No Record' },
+            'gender': { label: 'Gender', placeholder: 'e.g. Male / Female' },
+            'licence': { label: 'Driving Licence No', placeholder: 'e.g. LMV License Details...' },
+            'place': { label: 'Place / City', placeholder: 'e.g. Dhanbad' },
+            'salary': { label: 'Salary Claim / Expectation', placeholder: 'e.g. Negotiable / Industry Standards' }
+        };
+
+        let dynamicFieldKeysTrackers = [];
+        let dynamicSectionKeysTrackers = {};
+
+        function switchWizardStep(stepId) {
             document.querySelectorAll('.resume-form-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.section-tab').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            
+            document.getElementById(`step-${stepId}`).classList.add('active');
+            const correspondingTab = document.querySelector(`.section-tab[data-target="${stepId}"]`);
+            if(correspondingTab) correspondingTab.classList.add('active');
+            
+            window.scrollTo(0, 0);
+            if(stepId === '9') renderRealtimeLivePreviewDocumentCanvas();
         }
 
-        function toggleHelp(helpId) {
-            const panel = document.getElementById(helpId);
-            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+        function toggleFieldInput(key) {
+            const container = document.getElementById('personalDynamicContainer');
+            const checkbox = document.querySelector(`.field-toggle[data-field="${key}"]`);
+            
+            if (checkbox.checked) {
+                dynamicFieldKeysTrackers.push(key);
+                const wrap = document.createElement('div');
+                wrap.className = 'input-group-cell';
+                wrap.id = `dyn-wrap-${key}`;
+                wrap.innerHTML = `<label>${fieldMetaDict[key].label}</label><input type="text" id="dyn-input-${key}" name="custom_${key}" placeholder="${fieldMetaDict[key].placeholder}">`;
+                container.appendChild(wrap);
+            } else {
+                dynamicFieldKeysTrackers = dynamicFieldKeysTrackers.filter(k => k !== key);
+                const wrapElement = document.getElementById(`dyn-wrap-${key}`);
+                if (wrapElement) wrapElement.remove();
+            }
         }
 
-        function selectTemplate(id) {
+        function toggleDynamicSection(key, title, placeholder) {
+            const container = document.getElementById('customSectionsDynamicArea');
+            const checkbox = event.target;
+            
+            if (checkbox.checked) {
+                dynamicSectionKeysTrackers[key] = title;
+                const wrap = document.createElement('div');
+                wrap.className = 'input-group-cell full-width';
+                wrap.id = `dyn-sec-wrap-${key}`;
+                wrap.innerHTML = `<label>${title}</label><textarea id="dyn-sec-input-${key}" name="sec_${key}" rows="4" placeholder="${placeholder}"></textarea>`;
+                container.appendChild(wrap);
+            } else {
+                delete dynamicSectionKeysTrackers[key];
+                const wrapElement = document.getElementById(`dyn-sec-wrap-${key}`);
+                if (wrapElement) wrapElement.remove();
+            }
+        }
+
+        function selectActiveThemeTemplate(id) {
             document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
             document.getElementById('tpl' + id).classList.add('active');
             document.getElementById('selectedTemplateInput').value = id;
+            renderRealtimeLivePreviewDocumentCanvas();
+        }
+
+        function toggleHelp(id) {
+            const panel = document.getElementById(id);
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
         }
 
         function triggerUpload() { document.getElementById('realFolderFile').click(); }
-
+        
+        let localUploadedPhotoBase64Data = "";
         function previewImage(input) {
             const previewBox = document.getElementById('avatarPreview');
             const removeBtn = document.getElementById('removeImgBtn');
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    previewBox.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    localUploadedPhotoBase64Data = e.target.result;
+                    previewBox.innerHTML = `<img src="${e.target.result}" alt="Preview" style="width:100%; height:100%; object-fit:cover;">`;
                     removeBtn.style.display = 'inline-block';
                 }
                 reader.readAsDataURL(input.files[0]);
@@ -214,9 +382,92 @@
 
         function removeSelectedImage() {
             document.getElementById('realFolderFile').value = "";
+            localUploadedPhotoBase64Data = "";
             document.getElementById('avatarPreview').innerHTML = `<i class="fa-solid fa-user-tie"></i>`;
             document.getElementById('removeImgBtn').style.display = 'none';
         }
+
+        function renderRealtimeLivePreviewDocumentCanvas() {
+            const outputBox = document.getElementById('realtimeLiveRenderBox');
+            const theme = document.getElementById('selectedTemplateInput').value;
+            
+            const name = document.getElementById('res_name').value || 'MOHIT PANDEY';
+            const email = document.getElementById('res_email').value || 'mohitmp882170@gmail.com';
+            const phone = document.getElementById('res_phone').value || '+91 8102584930';
+            const address = document.getElementById('res_address').value || 'Dhanbad, Jharkhand';
+            const education = document.getElementById('res_education').value || '';
+            const experience = document.getElementById('res_experience').value || '';
+            const skills = document.getElementById('res_skills').value || '';
+            const objective = document.getElementById('res_objective').value || '';
+            const reference = document.getElementById('res_reference').value || '';
+            const projects = document.getElementById('res_projects').value || '';
+
+            let profileOptionalsHtmlText = "";
+            dynamicFieldKeysTrackers.forEach(key => {
+                const value = document.getElementById(`dyn-input-${key}`).value;
+                if(value) profileOptionalsHtmlText += `<p style="margin-bottom:4px; font-size:13px;"><strong>${fieldMetaDict[key].label}:</strong> ${value}</p>`;
+            });
+
+            let appendedBlocksSectionsHtmlText = "";
+            Object.keys(dynamicSectionKeysTrackers).forEach(key => {
+                const value = document.getElementById(`dyn-sec-input-${key}`).value;
+                if(value) {
+                    appendedBlocksSectionsHtmlText += `
+                        <div style="margin-bottom:20px;">
+                            <h3 style="font-size:14px; text-transform:uppercase; border-bottom:1px solid #ccc; padding-bottom:3px; margin-bottom:6px; color:#111; font-weight:700;">${dynamicSectionKeysTrackers[key]}</h3>
+                            <p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${value}</p>
+                        </div>
+                    `;
+                }
+            });
+
+            // Master schema selection templates loops configurations mapping
+            let builtLayoutBlueprintString = "";
+            if (theme === '53') {
+                // Split accent template layout setup
+                builtLayoutBlueprintString = `
+                    <div style="display:flex; gap:20px; width:100%;">
+                        <div style="flex:0 0 32%; background:#1e293b; color:#fff; padding:20px; border-radius:6px 0 0 6px;">
+                            ${localUploadedPhotoBase64Data ? `<div style="width:90px; height:90px; border-radius:50%; overflow:hidden; margin-bottom:15px; border:2px solid #fff;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                            <h2 style="font-size:20px; font-weight:700; margin-bottom:10px;">${name}</h2>
+                            <p style="font-size:12px; line-height:1.5; color:#cbd5e1;">✉️ ${email}<br>📞 ${phone}<br>📍 ${address}</p>
+                            <div style="margin-top:20px; border-top:1px solid #475569; padding-top:15px;">${profileOptionalsHtmlText}</div>
+                        </div>
+                        <div style="flex:1; padding:20px; color:#222; background:#fff;">
+                            ${objective ? `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Objective</h3><p style="font-size:12.5px; line-height:1.5;">${objective}</p></div>` : ''}
+                            ${education ?  `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Education</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                            ${experience ? `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Work Experience</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                            ${skills ?     `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Skills</h3><p style="font-size:12.5px; line-height:1.5;">${skills}</p></div>` : ''}
+                            ${projects ?   `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Key Projects</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                            ${reference ?  `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">References</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                            <div style="color:#222;">${appendedBlocksSectionsHtmlText}</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Standard continuous sheet blueprint rules layouts structures
+                builtLayoutBlueprintString = `
+                    <div style="border-bottom:2px solid #333; padding-bottom:15px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <h1 style="font-size:26px; font-weight:700; color:#111; text-transform:uppercase; letter-spacing:0.5px;">${name}</h1>
+                            <div style="font-size:13px; color:#555; margin-top:5px; display:flex; gap:15px; flex-wrap:wrap;"><span>✉️ ${email}</span>|<span>📞 ${phone}</span>|<span>📍 ${address}</span></div>
+                        </div>
+                        ${localUploadedPhotoBase64Data ? `<div style="width:75px; height:75px; border-radius:4px; overflow:hidden; border:1px solid #ccc;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                    </div>
+                    <div style="display:grid; grid-template-columns:100%; gap:5px; margin-bottom:15px; background:rgba(0,0,0,0.02); padding:10px; border-radius:4px;">${profileOptionalsHtmlText}</div>
+                    ${objective ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Career Objective</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${objective}</p></div>` : ''}
+                    ${education ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Education Timeline</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                    ${experience ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Work History</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                    ${skills ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Skills Inventory</h3><p style="font-size:13px; color:#333; line-height:1.5;">${skills}</p></div>` : ''}
+                    ${projects ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Featured Projects</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                    ${reference ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">References Details</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                    <div>${appendedBlocksSectionsHtmlText}</div>
+                `;
+            }
+            outputBox.innerHTML = builtLayoutBlueprintString;
+        }
+
+        function triggerNativeDocumentPrint() { window.print(); }
     </script>
 </body>
 </html>

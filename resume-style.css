@@ -19,13 +19,14 @@ body {
 }
 
 .builder-container {
-    max-width: 1100px;
+    max-width: 1300px; /* Expanded bounds for rich wizard view templates matrices */
     margin: 40px auto;
     padding: 40px;
     background: rgba(18, 38, 54, 0.9);
     border: 2px solid #00eeff;
     box-shadow: 0 0 25px #00eeff;
     border-radius: 10px;
+    backdrop-filter: blur(10px);
 }
 
 .builder-title {
@@ -55,7 +56,7 @@ body {
 .resume-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
-    gap: 25px;
+    gap: 30px;
     margin-top: 30px;
 }
 
@@ -75,7 +76,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: 0.3s;
+    transition: 0.3s ease;
+}
+
+.section-tab i.fa-solid {
+    width: 20px;
+    text-align: center;
+    margin-right: 8px;
 }
 
 .section-tab.active, .section-tab:hover {
@@ -85,12 +92,18 @@ body {
     font-weight: bold;
 }
 
+.section-tab.active i.fa-solid, .section-tab:hover i.fa-solid {
+    color: #081b29 !important;
+}
+
 .form-content-area {
     background: rgba(8, 27, 41, 0.85);
     border: 2px solid #ff007f;
     box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);
     border-radius: 12px;
-    padding: 30px;
+    padding: 35px;
+    min-height: 580px;
+    position: relative;
 }
 
 .resume-form-section {
@@ -99,48 +112,75 @@ body {
 
 .resume-form-section.active {
     display: block;
+    animation: wizardPanelFade 0.4s ease-out;
+}
+
+@keyframes wizardPanelFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
 }
 
 .form-section-title {
     color: #ff007f;
     font-size: 1.3rem;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.input-group {
-    position: relative;
-    width: 100%;
-    margin-bottom: 30px;
+/* Form Matrix Elements Layout Grids System */
+.form-grid-matrix {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
-.input-group input, .input-group textarea {
+.input-group-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group-cell.full-width {
+    grid-column: span 2;
+}
+
+.input-group-cell label {
+    font-size: 14px;
+    color: #00eeff;
+    font-weight: 500;
+}
+
+.input-group-cell input, .input-group-cell textarea {
     width: 100%;
-    padding: 12px 10px;
+    padding: 12px;
     font-size: 1rem;
     color: #fff;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 6px;
     outline: none;
     background: rgba(8, 27, 41, 0.5);
+    transition: 0.3s;
 }
 
-.input-group textarea { resize: none; }
-
-.input-group label {
-    position: absolute;
-    top: -12px;
-    left: 12px;
-    font-size: 0.85rem;
-    color: #00eeff;
-    background: #081b29;
-    padding: 0 6px;
-    border-radius: 4px;
-    pointer-events: none; 
+.input-group-cell textarea { 
+    resize: none; 
 }
 
-.input-group input:focus, .input-group textarea:focus {
+.input-group-cell input:focus, .input-group-cell textarea:focus {
     border-color: #00eeff;
+    box-shadow: 0 0 10px rgba(0, 239, 255, 0.2);
 }
 
 /* ==================== 3. COMPONENT STYLES ==================== */
@@ -168,10 +208,22 @@ body {
     background: #122636;
 }
 
-.avatar-preview-box img { width: 100%; height: 100%; object-fit: cover; }
-.avatar-preview-box i { font-size: 2.5rem; color: #00eeff; }
+.avatar-preview-box img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
 
-.upload-action-btns { display: flex; flex-direction: column; gap: 8px; }
+.avatar-preview-box i { 
+    font-size: 2.5rem; 
+    color: #00eeff; 
+}
+
+.upload-action-btns { 
+    display: flex; 
+    flex-direction: row; 
+    gap: 10px; 
+}
 
 .photo-btn {
     padding: 8px 14px;
@@ -187,17 +239,8 @@ body {
 
 .btn-change { color: #00eeff; border-color: #00eeff; }
 .btn-change:hover { background: #00eeff; color: #000; }
-.btn-remove { color: #ff007f; border-color: #ff007f; display: none; }
+.btn-remove { color: #ff007f; border-color: #ff007f; }
 .btn-remove:hover { background: #ff007f; color: #fff; }
-
-.section-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 10px;
-}
 
 .help-trigger-btn {
     background: transparent;
@@ -223,33 +266,142 @@ body {
 }
 
 .help-panel h4 { color: #00eeff; margin-bottom: 8px; }
-.help-panel ul { margin-left: 20px; color: #ccc; font-size: 0.9rem;}
+.help-panel ul { margin-left: 20px; color: #ccc; font-size: 0.9rem; line-height: 1.6;}
 .help-panel ul li span { color: #ff007f; font-weight: bold; }
 
-.cyber-btn {
-    padding: 14px 32px;
-    background: transparent;
-    color: #00eeff;
-    border: 2px solid #00eeff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.5s;
+/* ==================== 🎛️ DYNAMIC OPTIONAL SLIDERS & SWITCHES ==================== */
+.optional-switches-box {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(0, 239, 255, 0.15);
 }
 
-.cyber-btn:hover {
+.optional-switches-box h3 {
+    font-size: 15px;
+    color: #00eeff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+}
+
+.switches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 15px;
+}
+
+.switch-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.switch-item span {
+    font-size: 13px;
+    color: #ddd;
+}
+
+/* Switch widgets engine classes */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 18px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #1a2f42;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #aaa;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: rgba(0, 239, 255, 0.25);
+}
+
+input:checked + .slider:before {
+    background-color: #00eeff;
+    transform: translateX(20px);
+    box-shadow: 0 0 5px #00eeff;
+}
+
+.notice-info-text {
+    font-size: 12.5px;
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.dynamic-appended-inputs, .dynamic-sections-area {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.dynamic-sections-area {
+    grid-template-columns: 100%;
+}
+
+/* Next / Action Steps Navigation buttons properties mapping */
+.wizard-footer-actions {
+    margin-top: 35px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 20px;
+}
+
+.nav-action-btn {
     background: #00eeff;
     color: #081b29;
-    box-shadow: 0 0 25px #00eeff;
+    border: none;
+    padding: 12px 26px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14.5px;
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(0, 239, 255, 0.2);
+}
+
+.nav-action-btn:hover {
+    background: #00b4d8;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px #00eeff;
 }
 
 /* ==================== 4. PREMIUM TEMPLATES SELECTION GRID STYLES ==================== */
 .template-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr); /* 🚀 Expanded to 4 columns for all premium cards layout views */
+    gap: 15px;
     margin-top: 15px;
 }
 
@@ -257,14 +409,14 @@ body {
     background: rgba(18, 38, 54, 0.6);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px;
     text-align: center;
     cursor: pointer;
     transition: 0.3s ease;
 }
 
 .template-card p {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     margin-top: 8px;
     color: #ccc;
 }
@@ -281,18 +433,33 @@ body {
 }
 
 .tpl-preview {
-    height: 120px;
+    height: 110px; /* Balanced ratio matrix elements */
     border-radius: 4px;
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Form Layout Colors Representational Triggers */
 .tpl-51 { background: linear-gradient(to bottom, #1a365d 20%, #fff 20%); }
 .tpl-52 { background: linear-gradient(to right, #fcfbf7 32%, #fff 32%); border-left: 5px solid #d4af37; }
 .tpl-53 { background: linear-gradient(to right, #1e293b 32%, #fff 32%); }
 .tpl-54 { background: #fff; box-shadow: inset 0 15px 0 #00eeff; }
 
+/* Realtime Previews Output Wrapper sheets styles metrics mapping */
+.live-canvas-preview-wrapper {
+    width: 100%;
+    background: #fff;
+    color: #333;
+    border-radius: 8px;
+    padding: 40px;
+    margin-top: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.cv-render-output-box {
+    min-height: 750px;
+    background: #fff;
+}
 
 /* ==================== 📱 MOBILE RESPONSIVE QUERIES ==================== */
 @media (max-width: 768px) {
@@ -320,7 +487,7 @@ body {
 
     .resume-sidebar {
         flex-direction: row;
-        overflow-x: auto; /* Sidebar turns into scrollable top horizontal navigation buttons */
+        overflow-x: auto; /* Sidebar turns into scrollable top horizontal navigation buttons loop */
         padding-bottom: 10px;
         gap: 10px;
         -webkit-overflow-scrolling: touch;
@@ -328,13 +495,25 @@ body {
 
     .section-tab {
         padding: 10px 15px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         white-space: nowrap; /* Prevent tab titles from breaking into lines */
         flex: 0 0 auto;
+    }
+    
+    .section-tab i.fa-chevron-right {
+        display: none; /* Hide chevron paths cleanly on mobile stacks row view */
     }
 
     .form-content-area {
         padding: 20px 15px;
+    }
+
+    .form-grid-matrix, .dynamic-appended-inputs {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .input-group-cell.full-width {
+        grid-column: span 1;
     }
 
     /* Avatar file input alignment */
@@ -347,18 +526,17 @@ body {
     .upload-action-btns {
         width: 100%;
         align-items: center;
+        justify-content: center;
     }
 
-    /* Template Cards grid drops to single line stack */
+    /* Template Cards grid drops cleanly to double column matrix */
     .template-grid {
-        grid-template-columns: 1fr !important;
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
     }
 
-    .cyber-btn {
-        width: 100%; /* Force submit button full width on mobile view */
-        padding: 12px;
-        font-size: 1rem;
+    .live-canvas-preview-wrapper {
+        padding: 20px 12px;
     }
 }
 
@@ -368,5 +546,9 @@ body {
     }
     .form-section-title {
         font-size: 1.1rem;
+    }
+    .switches-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
 }
