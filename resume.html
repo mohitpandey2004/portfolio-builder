@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="resume-style.css">
     <style>
-        /* CSS injection inside wizard layout bounds */
         .builder-container { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
         .builder-title { font-size: 2rem; color: #fff; margin-bottom: 25px; font-weight: 600; letter-spacing: 0.5px; }
         .back-home { color: #0ef; text-decoration: none; font-size: 0.95rem; margin-bottom: 15px; display: inline-block; transition: 0.3s; }
@@ -41,7 +40,6 @@
         .input-group-cell input, .input-group-cell textarea { width: 100%; padding: 12px; background: rgba(0,0,0,0.25); border: 1px solid rgba(0,239,255,0.2); border-radius: 6px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; }
         .input-group-cell input:focus, .input-group-cell textarea:focus { border-color: #0ef; box-shadow: 0 0 10px rgba(0,239,255,0.2); }
         
-        /* Premium hardware toggle sliders configurations */
         .optional-switches-box { margin-top: 35px; padding-top: 25px; border-top: 1px solid rgba(0,239,255,0.15); }
         .optional-switches-box h3 { font-size: 15px; color: #0ef; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18px; }
         .switches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
@@ -91,14 +89,13 @@
 </head>
 <body>
 
-    <div class="builder-container">
+    <div class="builder-container no-print">
         <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
         <h1 class="builder-title">Resume Builder Pro_</h1>
         
         <form action="generate-resume.php" method="POST" enctype="multipart/form-data" id="wizardMasterForm">
             <div class="resume-layout">
                 
-                <!-- 9 STEPPERS SIDEBAR NAV (MANUAL CONTROLS MAPPED AS REQUESTED) -->
                 <div class="resume-sidebar">
                     <div class="section-tab active" data-target="1" onclick="switchWizardStep('1')"><span><i class="fa-solid fa-user"></i> Personal</span><i class="fa-solid fa-chevron-right"></i></div>
                     <div class="section-tab" data-target="2" onclick="switchWizardStep('2')"><span><i class="fa-solid fa-graduation-cap"></i> Education</span><i class="fa-solid fa-chevron-right"></i></div>
@@ -113,7 +110,6 @@
 
                 <div class="form-content-area">
                     
-                    <!-- STEP 1: PERSONAL DETAILS CONTAINER -->
                     <div class="resume-form-section active" id="step-1">
                         <div class="section-header-row">
                             <div class="form-section-title"><i class="fa-solid fa-user"></i> Personal Information</div>
@@ -124,7 +120,6 @@
                             <h4><i class="fa-solid fa-circle-info"></i> Help Guide: Personal Details</h4>
                             <ul>
                                 <li><span>Compulsory Fields:</span> Full Name, Email, Phone aur Address compulsory hain.</li>
-                                <li><span>Photo Option:</span> Optional field toggle system ko manage karein.</li>
                             </ul>
                         </div>
 
@@ -146,7 +141,6 @@
                             <div class="input-group-cell"><label>Full Address (City, State)</label><input type="text" id="res_address" name="res_address" placeholder="e.g. Dhanbad, Jharkhand" required></div>
                         </div>
 
-                        <!-- 🚀 DETAILED ON/OFF FIELDS GENERATOR TOOLKIT -->
                         <div class="optional-switches-box">
                             <h3>Custom Optional Fields Hub</h3>
                             <div class="switches-grid">
@@ -165,55 +159,49 @@
                                 <div class="switch-item"><span>Salary Claim</span><label class="switch"><input type="checkbox" class="field-toggle" data-field="salary" onchange="toggleFieldInput('salary')"><span class="slider"></span></label></div>
                             </div>
                             
-                            <!-- Dynamic elements mount matrix -->
                             <div class="dynamic-appended-inputs" id="personalDynamicContainer"></div>
-                            <p class="notice-info-text">"Above given profile fields are most the commonly used."</p>
+                            <p class="notice-info-text">"Above given profile fields are most commonly used."</p>
                         </div>
 
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('2')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <!-- STEP 2: EDUCATION TIMELINE -->
                     <div class="resume-form-section" id="step-2">
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-graduation-cap"></i> Education Timeline</div></div>
                         <div class="input-group-cell full-width">
                             <label>Education Qualifications</label>
-                            <textarea id="res_education" name="res_education" rows="6" placeholder="Please fill your education history&#10;Ex: 10th - CBSE Board (90%)&#10;12th - CBSE Board (85%)&#10;Highest Education: BCA - CGC Jhanjheri (Current CGPA: 8.07) [2022-2025]" required></textarea>
+                            <textarea id="res_education" name="res_education" rows="6" placeholder="Please fill your education history...&#10;Ex: 10th - CBSE Board (90%)&#10;12th - CBSE Board (85%)&#10;Highest Education: BCA - CGC Jhanjheri (Current CGPA: 8.07) [2022-2025]" required></textarea>
                         </div>
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('3')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <!-- STEP 3: WORK EXPERIENCE -->
                     <div class="resume-form-section" id="step-3">
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-briefcase"></i> Work Experience</div></div>
                         <div class="input-group-cell full-width">
                             <label>Experience / Internships Record</label>
-                            <textarea id="res_experience" name="res_experience" rows="6" placeholder="Manually enter your work experience history details here...&#10;If you don't have prior records, type 'I am a Fresher' or custom profile summary metrics..." required></textarea>
+                            <textarea id="res_experience" name="res_experience" rows="6" placeholder="Manually enter your work experience history details here...&#10;If you don't have prior records, type 'I am a Fresher'..." required></textarea>
                         </div>
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('4')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <!-- STEP 4: SKILLS MATRIX -->
                     <div class="resume-form-section" id="step-4">
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-laptop-code"></i> Technical Matrix</div></div>
                         <div class="input-group-cell full-width">
-                            <label>Technical Skills (Provide helpful placeholder guide examples)</label>
+                            <label>Technical Skills (Comma separated)</label>
                             <input type="text" id="res_skills" name="res_skills" placeholder="e.g. Kotlin, Java, XML Programming, Web Development, PHP, SQL, HTML5, CSS3" required>
                         </div>
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('5')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <!-- STEP 5: CAREER OBJECTIVE -->
                     <div class="resume-form-section" id="step-5">
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-bullseye"></i> Career Objective</div></div>
                         <div class="input-group-cell full-width">
                             <label>Professional Career Profile Objective</label>
-                            <textarea id="res_objective" name="res_objective" rows="5" placeholder="Enter your career purpose statement to target recruiters directly..." required></textarea>
+                            <textarea id="res_objective" name="res_objective" rows="5" placeholder="Enter your career purpose statement..." required></textarea>
                         </div>
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('6')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <!-- STEP 6: REFERENCE -->
                     <div class="resume-form-section" id="step-6">
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-address-book"></i> Professional References</div></div>
                         <div class="input-group-cell full-width">
@@ -223,17 +211,15 @@
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('7')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <!-- STEP 7: KEY PROJECTS -->
                     <div class="resume-form-section" id="step-7">
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-diagram-project"></i> Key Projects Showcase</div></div>
                         <div class="input-group-cell full-width">
                             <label>Featured Projects Specifications</label>
-                            <textarea id="res_projects" name="res_projects" rows="5" placeholder="e.g. Family Safety App: Built tracking engine maps features using Kotlin...&#10;Movie Search Website: Built response logic blocks via JavaScript fetch modules..." required></textarea>
+                            <textarea id="res_projects" name="res_projects" rows="5" placeholder="e.g. Family Safety App: Built tracking engine maps features using Kotlin..." required></textarea>
                         </div>
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('8')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
-                    <!-- STEP 8: ADD MORE ON/OFF EXTRA BLOCKS SECTIONS -->
                     <div class="resume-form-section" id="step-8">
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-folder-plus"></i> Add More Custom Sections</div></div>
                         <div class="switches-grid">
@@ -250,7 +236,6 @@
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('9')">Go to Preview Hub <i class="fa-solid fa-eye"></i></button></div>
                     </div>
 
-                    <!-- STEP 9: LIVE EXPORTS & THEMES RENDER HUBS PRE-VIEW -->
                     <div class="resume-form-section" id="step-9">
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-images"></i> Live Previews & Templates Center</div></div>
                         
@@ -262,16 +247,13 @@
                             <div class="template-card" id="tpl54" onclick="selectActiveThemeTemplate('54')"><div class="tpl-preview tpl-54"></div><p>Neon Cyber Clean (Tpl 54)</p></div>
                         </div>
 
-                        <!-- LIVE PREVIEW SHEET FRAMEWORK OUTPUT NODE -->
                         <div class="live-canvas-preview-wrapper" id="canvasPrintTarget">
-                            <div class="cv-render-output-box" id="realtimeLiveRenderBox">
-                                <!-- Generated profile elements map directly inside via client rendering triggers scripts -->
-                            </div>
+                            <div class="cv-render-output-box" id="realtimeLiveRenderBox"></div>
                         </div>
 
                         <div class="wizard-footer-actions" style="justify-content: center; margin-top: 30px;">
-                            <button type="button" class="nav-action-btn download-btn" onclick="triggerNativeDocumentPrint()" style="background: #ff007f; color: #fff; padding: 14px 35px; box-shadow: 0 0 15px rgba(255,0,127,0.3); font-size: 16px;">
-                                <i class="fa-solid fa-cloud-arrow-down"></i> Export & Download Layout Document_
+                            <button type="submit" class="nav-action-btn download-btn" style="background: #ff007f; color: #fff; padding: 14px 35px; box-shadow: 0 0 15px rgba(255,0,127,0.3); font-size: 16px;">
+                                <i class="fa-solid fa-cloud-arrow-down"></i> View & Generate Layout Document_
                             </button>
                         </div>
                     </div>
@@ -281,9 +263,13 @@
         </form>
     </div>
 
-    <!-- WIZARD DYNAMIC CLIENT RENDERING SYSTEM LOGIC -->
+    <div class="custom-footer no-print">
+        <div class="footer-content">
+            <p>&copy; 2026 Mohit Pandey. Advanced Dynamic CV Engine System V2. All Rights Reserved.</p>
+        </div>
+    </div>
+
     <script>
-        // Data maps definitions array sets
         const fieldMetaDict = {
             'dob': { label: 'Date of Birth', placeholder: 'e.g. 15 August 2002' },
             'nationality': { label: 'Nationality', placeholder: 'e.g. Indian' },
@@ -351,6 +337,7 @@
             }
         }
 
+        // 🚀 FIX: `selectActiveThemeTemplate` ka naam sateek kiya taaki charo modes render hon
         function selectActiveThemeTemplate(id) {
             document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
             document.getElementById('tpl' + id).classList.add('active');
@@ -404,69 +391,139 @@
 
             let profileOptionalsHtmlText = "";
             dynamicFieldKeysTrackers.forEach(key => {
-                const value = document.getElementById(`dyn-input-${key}`).value;
-                if(value) profileOptionalsHtmlText += `<p style="margin-bottom:4px; font-size:13px;"><strong>${fieldMetaDict[key].label}:</strong> ${value}</p>`;
+                const element = document.getElementById(`dyn-input-${key}`);
+                const value = element ? element.value : '';
+                if(value) profileOptionalsHtmlText += `<p style="margin-bottom:4px; font-size:13px; color:inherit;"><strong>${fieldMetaDict[key].label}:</strong> ${value}</p>`;
             });
 
             let appendedBlocksSectionsHtmlText = "";
             Object.keys(dynamicSectionKeysTrackers).forEach(key => {
-                const value = document.getElementById(`dyn-sec-input-${key}`).value;
+                const element = document.getElementById(`dyn-sec-input-${key}`);
+                const value = element ? element.value : '';
                 if(value) {
+                    // 🚀 FIX: Template 54 ke hisab se text behavior text colors handle kiye
+                    let titleColor = (theme === '54') ? '#ff007f' : '#111';
+                    let textColor = (theme === '54') ? '#e9d5ff' : '#333';
+                    let borderStyle = (theme === '54') ? '1px solid rgba(0,239,255,0.3)' : '1px solid #ddd';
+
                     appendedBlocksSectionsHtmlText += `
                         <div style="margin-bottom:20px;">
-                            <h3 style="font-size:14px; text-transform:uppercase; border-bottom:1px solid #ccc; padding-bottom:3px; margin-bottom:6px; color:#111; font-weight:700;">${dynamicSectionKeysTrackers[key]}</h3>
-                            <p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${value}</p>
+                            <h3 style="font-size:14px; text-transform:uppercase; border-bottom:${borderStyle}; padding-bottom:3px; margin-bottom:6px; color:${titleColor}; font-weight:700;">${dynamicSectionKeysTrackers[key]}</h3>
+                            <p style="font-size:13px; color:${textColor}; line-height:1.5; white-space:pre-line;">${value}</p>
                         </div>
                     `;
                 }
             });
 
-            // Master schema selection templates loops configurations mapping
             let builtLayoutBlueprintString = "";
-            if (theme === '53') {
-                // Split accent template layout setup
+            
+            // 🚀 FIX: Template 51 Schema Build Code
+            if (theme === '51') {
                 builtLayoutBlueprintString = `
-                    <div style="display:flex; gap:20px; width:100%;">
-                        <div style="flex:0 0 32%; background:#1e293b; color:#fff; padding:20px; border-radius:6px 0 0 6px;">
-                            ${localUploadedPhotoBase64Data ? `<div style="width:90px; height:90px; border-radius:50%; overflow:hidden; margin-bottom:15px; border:2px solid #fff;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
-                            <h2 style="font-size:20px; font-weight:700; margin-bottom:10px;">${name}</h2>
-                            <p style="font-size:12px; line-height:1.5; color:#cbd5e1;">✉️ ${email}<br>📞 ${phone}<br>📍 ${address}</p>
-                            <div style="margin-top:20px; border-top:1px solid #475569; padding-top:15px;">${profileOptionalsHtmlText}</div>
+                    <div style="background:#1a365d; color:#fff; padding:25px; margin:-40px -40px 25px -40px; display:flex; justify-content:space-between; align-items:center; border-radius:8px 8px 0 0;">
+                        <div>
+                            <h1 style="font-size:26px; text-transform:uppercase; font-weight:700; letter-spacing:1px;">${name}</h1>
+                            <p style="color:#00eeff; font-size:14px; font-weight:600; margin-top:4px;">RESUME PROFILE</p>
                         </div>
-                        <div style="flex:1; padding:20px; color:#222; background:#fff;">
-                            ${objective ? `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Objective</h3><p style="font-size:12.5px; line-height:1.5;">${objective}</p></div>` : ''}
-                            ${education ?  `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Education</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
-                            ${experience ? `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Work Experience</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
-                            ${skills ?     `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Skills</h3><p style="font-size:12.5px; line-height:1.5;">${skills}</p></div>` : ''}
-                            ${projects ?   `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">Key Projects</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
-                            ${reference ?  `<div style="margin-bottom:15px;"><h3 style="font-size:13px; text-transform:uppercase; border-bottom:2px solid #1e293b; padding-bottom:2px; margin-bottom:6px; font-weight:700;">References</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
-                            <div style="color:#222;">${appendedBlocksSectionsHtmlText}</div>
+                        ${localUploadedPhotoBase64Data ? `<div style="width:85px; height:85px; border-radius:50%; border:3px solid #fff; overflow:hidden;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                    </div>
+                    <div style="display:grid; grid-template-columns:32% 68%; gap:25px;">
+                        <div style="color:#333;">
+                            <h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Contact</h3>
+                            <p style="font-size:12.5px; margin-bottom:8px;"><strong>Email:</strong><br>${email}</p>
+                            <p style="font-size:12.5px; margin-bottom:8px;"><strong>Phone:</strong><br>${phone}</p>
+                            <p style="font-size:12.5px; margin-bottom:15px;"><strong>Location:</strong><br>${address}</p>
+                            ${profileOptionalsHtmlText ? `<h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Profile</h3><div style="font-size:12px; margin-bottom:15px;">${profileOptionalsHtmlText}</div>` : ''}
+                            <h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Skills</h3>
+                            <p style="font-size:13px; line-height:1.5;">${skills}</p>
+                        </div>
+                        <div style="color:#333;">
+                            ${objective ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Objective</h3><p style="font-size:13px; line-height:1.5;">${objective}</p></div>` : ''}
+                            ${education ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Education</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                            ${experience ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Experience</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                            ${projects ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Projects</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                            ${reference ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">References</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                            <div>${appendedBlocksSectionsHtmlText}</div>
                         </div>
                     </div>
                 `;
-            } else {
-                // Standard continuous sheet blueprint rules layouts structures
+            }
+            // 🚀 FIX: Template 52 Schema Build Code
+            else if (theme === '52') {
                 builtLayoutBlueprintString = `
-                    <div style="border-bottom:2px solid #333; padding-bottom:15px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <h1 style="font-size:26px; font-weight:700; color:#111; text-transform:uppercase; letter-spacing:0.5px;">${name}</h1>
-                            <div style="font-size:13px; color:#555; margin-top:5px; display:flex; gap:15px; flex-wrap:wrap;"><span>✉️ ${email}</span>|<span>📞 ${phone}</span>|<span>📍 ${address}</span></div>
+                    <div style="display:grid; grid-template-columns:30% 70%; gap:30px; margin:-40px;">
+                        <div style="background:#fcfbf7; padding:40px 20px; border-right:1px solid #e5e5e0;">
+                            ${localUploadedPhotoBase64Data ? `<div style="width:95px; height:95px; border-radius:50%; border:2px solid #bc9c22; overflow:hidden; margin-bottom:20px;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                            <h3 style="color:#bc9c22; font-size:13px; font-weight:bold; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Contact</h3>
+                            <p style="font-size:12px; color:#555; line-height:1.6; margin-bottom:20px;"><strong>Email:</strong><br>${email}<br><strong>Phone:</strong><br>${phone}<br><strong>Location:</strong><br>${address}</p>
+                            ${profileOptionalsHtmlText ? `<h3 style="color:#bc9c22; font-size:13px; font-weight:bold; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Profile</h3><div style="font-size:12px; color:#555; line-height:1.5; margin-bottom:20px;">${profileOptionalsHtmlText}</div>` : ''}
+                            <h3 style="color:#bc9c22; font-size:13px; font-weight:bold; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Skills</h3>
+                            <p style="font-size:12px; color:#555; line-height:1.5;">${skills}</p>
                         </div>
-                        ${localUploadedPhotoBase64Data ? `<div style="width:75px; height:75px; border-radius:4px; overflow:hidden; border:1px solid #ccc;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                        <div style="padding:40px 30px 40px 10px; color:#222;">
+                            <h1 style="font-size:26px; color:#111; text-transform:uppercase; font-weight:300; letter-spacing:1px; margin-bottom:5px;">${name}</h1>
+                            <div style="color:#bc9c22; font-size:14px; font-weight:600; text-transform:uppercase; margin-bottom:25px;">PROFESSIONAL APPLICANT</div>
+                            ${objective ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Objective</h3><p style="font-size:13px; line-height:1.5;">${objective}</p></div>` : ''}
+                            ${education ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Education</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                            ${experience ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Experience</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                            ${projects ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Projects</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                            ${reference ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">References</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                            <div>${appendedBlocksSectionsHtmlText}</div>
+                        </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:100%; gap:5px; margin-bottom:15px; background:rgba(0,0,0,0.02); padding:10px; border-radius:4px;">${profileOptionalsHtmlText}</div>
-                    ${objective ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Career Objective</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${objective}</p></div>` : ''}
-                    ${education ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Education Timeline</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
-                    ${experience ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Work History</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
-                    ${skills ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Skills Inventory</h3><p style="font-size:13px; color:#333; line-height:1.5;">${skills}</p></div>` : ''}
-                    ${projects ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">Featured Projects</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
-                    ${reference ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; font-weight:700; text-transform:uppercase; border-bottom:1px solid #ddd; padding-bottom:3px; margin-bottom:6px; color:#111;">References Details</h3><p style="font-size:13px; color:#333; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
-                    <div>${appendedBlocksSectionsHtmlText}</div>
+                `;
+            }
+            // 🚀 FIX: Template 53 Schema Build Code
+            else if (theme === '53') {
+                builtLayoutBlueprintString = `
+                    <div style="display:flex; gap:20px; width:100%; margin:-40px; min-height:850px;">
+                        <div style="flex:0 0 33%; background:#1e293b; color:#fff; padding:35px 20px 35px 35px;">
+                            ${localUploadedPhotoBase64Data ? `<div style="width:100px; height:100px; border-radius:50%; overflow:hidden; margin-bottom:20px; border:2px solid #38bdf8;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                            <h3 style="color:#38bdf8; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700;">Contact Details</h3>
+                            <p style="font-size:12.5px; color:#cbd5e1; line-height:1.6; margin-bottom:20px;">✉️ ${email}<br>📞 ${phone}<br>📍 ${address}</p>
+                            ${profileOptionalsHtmlText ? `<h3 style="color:#38bdf8; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700;">Personal Info</h3><div style="font-size:12px; color:#cbd5e1; line-height:1.5; margin-bottom:20px;">${profileOptionalsHtmlText}</div>` : ''}
+                            <h3 style="color:#38bdf8; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700;">Expertise</h3>
+                            <p style="font-size:12.5px; color:#cbd5e1; line-height:1.5;">${skills}</p>
+                        </div>
+                        <div style="flex:1; padding:35px 35px 35px 15px; color:#222; background:#fff;">
+                            <h2 style="font-size:26px; font-weight:700; color:#0f172a; text-transform:uppercase; margin-bottom:5px;">${name}</h2>
+                            <div style="color:#475569; font-size:15px; font-weight:600; margin-bottom:25px;">DEVELOPER PROFILE</div>
+                            ${objective ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">Summary Objective</h3><p style="font-size:12.5px; line-height:1.5;">${objective}</p></div>` : ''}
+                            ${education ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">Education Timeline</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                            ${experience ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">Work History</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                            ${projects ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">Key Projects</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                            ${reference ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">References</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                            <div>${appendedBlocksSectionsHtmlText}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            // 🚀 FIX: Template 54 Schema Build Code (Neon Cyber Clean)
+            else if (theme === '54') {
+                builtLayoutBlueprintString = `
+                    <div style="background:#0d0314; color:#f3e8ff; padding:30px; border-radius:8px; border:2px solid #ff007f; margin:-40px; min-height:850px;">
+                        <div style="border-bottom:2px solid rgba(0,239,255,0.3); padding-bottom:15px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <h1 style="font-size:28px; font-weight:800; color:#ff007f; text-transform:uppercase; text-shadow:0 0 10px #ff007f;">${name}</h1>
+                                <div style="font-size:13px; color:#e9d5ff; margin-top:6px; display:flex; gap:15px; flex-wrap:wrap;"><span>✉️ ${email}</span>|<span>📞 ${phone}</span>|<span>📍 ${address}</span></div>
+                            </div>
+                            ${localUploadedPhotoBase64Data ? `<div style="width:80px; height:80px; border-radius:8px; border:2px solid #ff007f; overflow:hidden;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                        </div>
+                        ${profileOptionalsHtmlText ? `<div style="display:flex; flex-wrap:wrap; gap:10px 20px; background:rgba(255,255,255,0.02); padding:10px; border-radius:4px; border:1px solid rgba(0,239,255,0.1); margin-bottom:20px; font-size:12px; color:#e9d5ff;">${profileOptionalsHtmlText}</div>` : ''}
+                        ${objective ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; text-transform:uppercase; background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:4px; margin-bottom:8px; color:#00eeff; font-weight:700; text-shadow:0 0 5px #00eeff;">Career Objective</h3><p style="font-size:13px; color:#e9d5ff; line-height:1.5; white-space:pre-line;">${objective}</p></div>` : ''}
+                        ${skills ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; text-transform:uppercase; background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:4px; margin-bottom:8px; color:#00eeff; font-weight:700; text-shadow:0 0 5px #00eeff;">Core Technologies</h3><p style="font-size:13px; color:#e9d5ff; line-height:1.5;">${skills}</p></div>` : ''}
+                        ${education ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; text-transform:uppercase; background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:4px; margin-bottom:8px; color:#00eeff; font-weight:700; text-shadow:0 0 5px #00eeff;">Education Timeline</h3><p style="font-size:13px; color:#e9d5ff; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                        ${experience ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; text-transform:uppercase; background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:4px; margin-bottom:8px; color:#00eeff; font-weight:700; text-shadow:0 0 5px #00eeff;">Work History</h3><p style="font-size:13px; color:#e9d5ff; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                        ${projects ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; text-transform:uppercase; background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:4px; margin-bottom:8px; color:#00eeff; font-weight:700; text-shadow:0 0 5px #00eeff;">Key Projects</h3><p style="font-size:13px; color:#e9d5ff; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                        ${reference ? `<div style="margin-bottom:20px;"><h3 style="font-size:14px; text-transform:uppercase; background:rgba(255,255,255,0.04); padding:6px 12px; border-radius:4px; margin-bottom:8px; color:#00eeff; font-weight:700; text-shadow:0 0 5px #00eeff;">References</h3><p style="font-size:13px; color:#e9d5ff; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                        <div>${appendedBlocksSectionsHtmlText}</div>
+                    </div>
                 `;
             }
             outputBox.innerHTML = builtLayoutBlueprintString;
         }
 
+        // 🚀 BUTTON ACTION SWITCH: Ab ye print window ke sath data generate php link handle karega
         function triggerNativeDocumentPrint() { window.print(); }
     </script>
 </body>

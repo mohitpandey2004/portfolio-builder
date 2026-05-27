@@ -19,7 +19,7 @@ body {
 }
 
 .builder-container {
-    max-width: 1300px; /* Expanded bounds for rich wizard view templates matrices */
+    max-width: 1300px;
     margin: 40px auto;
     padding: 40px;
     background: rgba(18, 38, 54, 0.9);
@@ -139,7 +139,6 @@ body {
     gap: 10px;
 }
 
-/* Form Matrix Elements Layout Grids System */
 .form-grid-matrix {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -184,7 +183,6 @@ body {
 }
 
 /* ==================== 3. COMPONENT STYLES ==================== */
-/* Photo Box Setup */
 .photo-uploader-container {
     display: flex;
     align-items: center;
@@ -269,7 +267,7 @@ body {
 .help-panel ul { margin-left: 20px; color: #ccc; font-size: 0.9rem; line-height: 1.6;}
 .help-panel ul li span { color: #ff007f; font-weight: bold; }
 
-/* ==================== 🎛️ DYNAMIC OPTIONAL SLIDERS & SWITCHES ==================== */
+/* ==================== 🎛️ TOGGLES SLIDERS GADGETS ==================== */
 .optional-switches-box {
     margin-top: 35px;
     padding-top: 25px;
@@ -305,7 +303,6 @@ body {
     color: #ddd;
 }
 
-/* Switch widgets engine classes */
 .switch {
     position: relative;
     display: inline-block;
@@ -365,7 +362,6 @@ input:checked + .slider:before {
     grid-template-columns: 100%;
 }
 
-/* Next / Action Steps Navigation buttons properties mapping */
 .wizard-footer-actions {
     margin-top: 35px;
     display: flex;
@@ -397,10 +393,10 @@ input:checked + .slider:before {
     box-shadow: 0 0 20px #00eeff;
 }
 
-/* ==================== 4. PREMIUM TEMPLATES SELECTION GRID STYLES ==================== */
+/* ==================== 4. PREMIUM LAYOUT SELECTION CARDS ==================== */
 .template-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 🚀 Expanded to 4 columns for all premium cards layout views */
+    grid-template-columns: repeat(4, 1fr); 
     gap: 15px;
     margin-top: 15px;
 }
@@ -433,18 +429,17 @@ input:checked + .slider:before {
 }
 
 .tpl-preview {
-    height: 110px; /* Balanced ratio matrix elements */
+    height: 110px; 
     border-radius: 4px;
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.tpl-51 { background: linear-gradient(to bottom, #1a365d 20%, #fff 20%); }
-.tpl-52 { background: linear-gradient(to right, #fcfbf7 32%, #fff 32%); border-left: 5px solid #d4af37; }
-.tpl-53 { background: linear-gradient(to right, #1e293b 32%, #fff 32%); }
-.tpl-54 { background: #fff; box-shadow: inset 0 15px 0 #00eeff; }
+.tpl-51 { background: linear-gradient(to right, #1a365d 30%, #fff 30%); }
+.tpl-52 { background: linear-gradient(to bottom, #bc9c22 15%, #fff 15%); }
+.tpl-53 { background: linear-gradient(to right, #1e293b 33%, #fff 33%); }
+.tpl-54 { background: #0d0314; border: 1px dashed #ff007f; }
 
-/* Realtime Previews Output Wrapper sheets styles metrics mapping */
 .live-canvas-preview-wrapper {
     width: 100%;
     background: #fff;
@@ -461,94 +456,74 @@ input:checked + .slider:before {
     background: #fff;
 }
 
+.custom-footer { width:100%; background:#040d16; padding:20px; text-align:center; border-top:1px solid rgba(0,239,255,0.15); }
+.custom-footer p { font-size:12px; color:#555; }
+
 /* ==================== 📱 MOBILE RESPONSIVE QUERIES ==================== */
 @media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-
-    .builder-container {
-        margin: 10px auto;
-        padding: 20px 15px;
-        border-radius: 6px;
-    }
-
-    .builder-title {
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-        letter-spacing: 1px;
-    }
-
-    /* Column grid turns to vertical full width stack */
-    .resume-layout {
-        grid-template-columns: 1fr !important;
-        gap: 20px;
-    }
-
-    .resume-sidebar {
-        flex-direction: row;
-        overflow-x: auto; /* Sidebar turns into scrollable top horizontal navigation buttons loop */
-        padding-bottom: 10px;
-        gap: 10px;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .section-tab {
-        padding: 10px 15px;
-        font-size: 0.85rem;
-        white-space: nowrap; /* Prevent tab titles from breaking into lines */
-        flex: 0 0 auto;
-    }
-    
-    .section-tab i.fa-chevron-right {
-        display: none; /* Hide chevron paths cleanly on mobile stacks row view */
-    }
-
-    .form-content-area {
-        padding: 20px 15px;
-    }
-
-    .form-grid-matrix, .dynamic-appended-inputs {
-        grid-template-columns: 1fr !important;
-    }
-    
-    .input-group-cell.full-width {
-        grid-column: span 1;
-    }
-
-    /* Avatar file input alignment */
-    .photo-uploader-container {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-    }
-
-    .upload-action-btns {
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* Template Cards grid drops cleanly to double column matrix */
-    .template-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px;
-    }
-
-    .live-canvas-preview-wrapper {
-        padding: 20px 12px;
-    }
+    body { padding: 10px; }
+    .builder-container { margin: 10px auto; padding: 20px 15px; border-radius: 6px; }
+    .builder-title { font-size: 1.8rem; margin-bottom: 20px; letter-spacing: 1px; }
+    .resume-layout { grid-template-columns: 1fr !important; gap: 20px; }
+    .resume-sidebar { flex-direction: row; overflow-x: auto; padding-bottom: 10px; gap: 10px; -webkit-overflow-scrolling: touch; }
+    .section-tab { padding: 10px 15px; font-size: 0.85rem; white-space: nowrap; flex: 0 0 auto; }
+    .section-tab i.fa-chevron-right { display: none; }
+    .form-content-area { padding: 20px 15px; }
+    .form-grid-matrix, .dynamic-appended-inputs { grid-template-columns: 1fr !important; }
+    .input-group-cell.full-width { grid-column: span 1; }
+    .photo-uploader-container { flex-direction: column; text-align: center; gap: 15px; }
+    .upload-action-btns { width: 100%; align-items: center; justify-content: center; }
+    .template-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; }
+    .live-canvas-preview-wrapper { padding: 20px 12px; }
 }
 
 @media (max-width: 480px) {
-    .builder-title {
-        font-size: 1.5rem;
+    .builder-title { font-size: 1.5rem; }
+    .form-section-title { font-size: 1.1rem; }
+    .switches-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+
+/* ==================== 🚀 CRITICAL FIX: HARDWARE PRINT MEDIA STYLES ENGINE ==================== */
+/* 📄 Jab user print/save karega, toh browser sirf resume ko 1 single page par save kareg */
+@media print {
+    body {
+        background: #fff !important;
+        color: #000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
-    .form-section-title {
-        font-size: 1.1rem;
+    .no-print, .builder-title, .back-home, .resume-sidebar, .form-content-area, .section-header-row, .photo-uploader-container, .form-grid-matrix, .optional-switches-box, .wizard-footer-actions, .template-grid, .custom-footer {
+        display: none !important; /* Saare control panels ko ek jhatke me hide kiya */
     }
-    .switches-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+    .builder-container {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+    .form-content-area {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+    .resume-form-section {
+        display: none !important;
+    }
+    .resume-form-section#step-9 {
+        display: block !important; /* Sirf final preview window open rkhega */
+    }
+    .live-canvas-preview-wrapper {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #fff !important;
+    }
+    .cv-render-output-box {
+        background: #fff !important;
+        color: #000 !important;
     }
 }
