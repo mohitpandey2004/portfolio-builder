@@ -434,8 +434,32 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // 🔥 HIGH-PERFORMANCE PRO LISTENERS FOR NEW REAL-TIME DESIGN ENGINE CUSTOMIZER
+    const fontSelector = document.getElementById('resumeFontSelector');
+    const colorPicker = document.getElementById('resumeColorPicker');
+
+    if (fontSelector) {
+        fontSelector.addEventListener('change', () => {
+            playSystemSound(600, 'sine', 0.05);
+            if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
+                renderRealtimeLivePreviewDocumentCanvas(); // Instant Font Switch!
+            }
+        });
+    }
+
+    if (colorPicker) {
+        colorPicker.addEventListener('input', () => {
+            if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
+                renderRealtimeLivePreviewDocumentCanvas(); // Live sliding layout background/border color injection!
+            }
+        });
+        colorPicker.addEventListener('change', () => {
+            playSystemSound(700, 'sine', 0.05);
+        });
+    }
     
-    // Initial run synchronization
+    // Initial run synchronization context matching blueprint bootstrap
     calculateATSScore();
     if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
         renderRealtimeLivePreviewDocumentCanvas();

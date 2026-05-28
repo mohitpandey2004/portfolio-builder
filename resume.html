@@ -6,6 +6,11 @@
     <title>Resume Builder Pro | Studio Edition</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='96' height='96'><defs><linearGradient id='mohitBrand2' x1='0% ' y1='0% ' x2='100% ' y2='100% '><stop offset='0% ' stop-color='%2300eeff'/><stop offset='100% ' stop-color='%23ff007f'/></linearGradient></defs><path fill='none' stroke='url(%23mohitBrand2)' stroke-width='3' stroke-linejoin='round' d='M16 3l11 6v12l-11 8-11-8V9l11-6z'/><circle cx='16' cy='15' r='3' fill='%23ff007f'/><path fill='%2300eeff' d='M16 7v3m-5 5h3m5 0h3'/></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- 🌐 PRO TYPOGRAPHY FONT HOOKS CDN (Google Fonts Integration) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="resume-style.css">
     <style>
         .builder-container { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
@@ -118,6 +123,31 @@
                 <div class="module-tag critical" id="mod-reference"><i class="fa-solid fa-address-book"></i> Reference</div>
                 <div class="module-tag critical" id="mod-projects"><i class="fa-solid fa-cubes"></i> Projects</div>
                 <div class="module-tag critical" id="mod-addmore"><i class="fa-solid fa-folder-plus"></i> Add More</div>
+            </div>
+        </div>
+
+        <div class="design-customizer-panel">
+            <div class="customizer-header">
+                <h5><i class="fa-solid fa-wand-magic-sparkles"></i> Design Engine Customizer</h5>
+            </div>
+            <div class="customizer-controls-grid">
+                <div class="control-item">
+                    <label><i class="fa-solid fa-font"></i> Typography Font</label>
+                    <select id="resumeFontSelector" class="custom-select-tool">
+                        <option value="'Arial', sans-serif">Standard Arial (Corporate)</option>
+                        <option value="'Poppins', sans-serif" selected>Poppins (Modern Clean)</option>
+                        <option value="'Montserrat', sans-serif">Montserrat (Premium Bold)</option>
+                        <option value="'Roboto', sans-serif">Roboto (Tech Sleek)</option>
+                        <option value="'Georgia', serif">Georgia (Elegant Serif)</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label><i class="fa-solid fa-palette"></i> Brand Accent Color</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="resumeColorPicker" class="custom-color-tool" value="#1a365d">
+                        <span class="color-hint-text">Template Accent Color</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -285,7 +315,9 @@
                 </div>
 
                 <div class="live-canvas-preview-wrapper" id="canvasPrintTarget">
-                    <div class="cv-render-output-box" id="realtimeLiveRenderBox"></div>
+                    <div class="realtimeLiveRenderBox-container" style="width:100%; height:100%;">
+                        <div class="cv-render-output-box" id="realtimeLiveRenderBox"></div>
+                    </div>
                 </div>
 
             </div>
@@ -403,10 +435,17 @@
             document.getElementById('removeImgBtn').style.display = 'none';
         }
 
+        // ==================== 🚀 HIGH PERFORMANCE REAL-TIME MASTER DESIGN GENERATOR ====================
         function renderRealtimeLivePreviewDocumentCanvas() {
             const outputBox = document.getElementById('realtimeLiveRenderBox');
-            const theme = document.getElementById('selectedTemplateInput').value;
+            if (!outputBox) return;
+
+            const theme = document.getElementById('selectedTemplateInput')?.value || "51";
             
+            // 🎛️ DYNAMIC VARIABLES INTEGRATION
+            const chosenFont = document.getElementById('resumeFontSelector')?.value || "'Poppins', sans-serif";
+            const chosenColor = document.getElementById('resumeColorPicker')?.value || "#1a365d";
+
             const name = document.getElementById('res_name').value || 'MOHIT PANDEY';
             const email = document.getElementById('res_email').value || 'mohitmp882170@gmail.com';
             const phone = document.getElementById('res_phone').value || '+91 8102584930';
@@ -430,12 +469,12 @@
                 const element = document.getElementById(`dyn-sec-input-${key}`);
                 const value = element ? element.value : '';
                 if(value) {
-                    let titleColor = (theme === '54') ? '#ff007f' : '#111';
+                    let titleColor = (theme === '54') ? '#ff007f' : chosenColor;
                     let textColor = (theme === '54') ? '#e9d5ff' : '#333';
-                    let borderStyle = (theme === '54') ? '1px solid rgba(0,239,255,0.3)' : '1px solid #ddd';
+                    let borderStyle = (theme === '54') ? '1px solid rgba(0,239,255,0.3)' : `1px solid ${chosenColor}40`;
 
                     appendedBlocksSectionsHtmlText += `
-                        <div style="margin-bottom:20px;">
+                        <div style="margin-bottom:20px; font-family:${chosenFont};">
                             <h3 style="font-size:14px; text-transform:uppercase; border-bottom:${borderStyle}; padding-bottom:3px; margin-bottom:6px; color:${titleColor}; font-weight:700;">${dynamicSectionKeysTrackers[key]}</h3>
                             <p style="font-size:13px; color:${textColor}; line-height:1.5; white-space:pre-line;">${value}</p>
                         </div>
@@ -445,90 +484,96 @@
 
             let builtLayoutBlueprintString = "";
             
+            // 🚀 TEMPLATE 51 (Corporate Blue Style)
             if (theme === '51') {
                 builtLayoutBlueprintString = `
-                    <div style="background:#1a365d; color:#fff; padding:25px; margin:-40px -40px 25px -40px; display:flex; justify-content:space-between; align-items:center; border-radius:8px 8px 0 0;">
-                        <div>
-                            <h1 style="font-size:26px; text-transform:uppercase; font-weight:700; letter-spacing:1px;">${name}</h1>
-                            <p style="color:#00eeff; font-size:14px; font-weight:600; margin-top:4px;">RESUME PROFILE</p>
+                    <div style="font-family:${chosenFont}; min-height:750px; background:#fff; color:#333;">
+                        <div style="background:${chosenColor}; color:#fff; padding:25px; margin:-40px -40px 25px -40px; display:flex; justify-content:space-between; align-items:center; border-radius:8px 8px 0 0; transition: background 0.2s;">
+                            <div>
+                                <h1 style="font-size:26px; text-transform:uppercase; font-weight:700; letter-spacing:1px; margin:0;">${name}</h1>
+                                <p style="color:#00eeff; font-size:14px; font-weight:600; margin-top:4px; margin-bottom:0;">RESUME PROFILE</p>
+                            </div>
+                            ${localUploadedPhotoBase64Data ? `<div style="width:85px; height:85px; border-radius:50%; border:3px solid #fff; overflow:hidden;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
                         </div>
-                        ${localUploadedPhotoBase64Data ? `<div style="width:85px; height:85px; border-radius:50%; border:3px solid #fff; overflow:hidden;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
-                    </div>
-                    <div style="display:grid; grid-template-columns:32% 68%; gap:25px;">
-                        <div style="color:#333;">
-                            <h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Contact</h3>
-                            <p style="font-size:12.5px; margin-bottom:8px;"><strong>Email:</strong><br>${email}</p>
-                            <p style="font-size:12.5px; margin-bottom:8px;"><strong>Phone:</strong><br>${phone}</p>
-                            <p style="font-size:12.5px; margin-bottom:15px;"><strong>Location:</strong><br>${address}</p>
-                            ${profileOptionalsHtmlText ? `<h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Profile</h3><div style="font-size:12px; margin-bottom:15px;">${profileOptionalsHtmlText}</div>` : ''}
-                            <h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Skills</h3>
-                            <p style="font-size:13px; line-height:1.5;">${skills}</p>
-                        </div>
-                        <div style="color:#333;">
-                            ${objective ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Objective</h3><p style="font-size:13px; line-height:1.5;">${objective}</p></div>` : ''}
-                            ${education ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Education</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
-                            ${experience ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Experience</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
-                            ${projects ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Projects</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
-                            ${reference ? `<div style="margin-bottom:15px;"><h3 style="color:#1a365d; font-size:14px; text-transform:uppercase; border-bottom:2px solid #1a365d; padding-bottom:3px; margin-bottom:6px; font-weight:700;">References</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
-                            <div>${appendedBlocksSectionsHtmlText}</div>
+                        <div style="display:grid; grid-template-columns:32% 68%; gap:25px; padding-top:10px;">
+                            <div style="color:#333;">
+                                <h3 style="color:${chosenColor}; font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Contact</h3>
+                                <p style="font-size:12.5px; margin-bottom:8px;"><strong>Email:</strong><br>${email}</p>
+                                <p style="font-size:12.5px; margin-bottom:8px;"><strong>Phone:</strong><br>${phone}</p>
+                                <p style="font-size:12.5px; margin-bottom:15px;"><strong>Location:</strong><br>${address}</p>
+                                ${profileOptionalsHtmlText ? `<h3 style="color:${chosenColor}; font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Profile</h3><div style="font-size:12px; margin-bottom:15px;">${profileOptionalsHtmlText}</div>` : ''}
+                                <h3 style="color:${chosenColor}; font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:10px; font-weight:700;">Skills</h3>
+                                <p style="font-size:13px; line-height:1.5;">${skills}</p>
+                            </div>
+                            <div style="color:#333;">
+                                ${objective ? `<div style="margin-bottom:15px;"><h3 style="color:${chosenColor}; font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Objective</h3><p style="font-size:13px; line-height:1.5;">${objective}</p></div>` : ''}
+                                ${education ? `<div style="margin-bottom:15px;"><h3 style="color:${chosenColor}; font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Education</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                                ${experience ? `<div style="margin-bottom:15px;"><h3 style="color:${chosenColor}; font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Experience</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                                ${projects ? `<div style="margin-bottom:15px;"><h3 style="color:${chosenColor}; font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700;">Projects</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                                ${reference ? `<div style="margin-bottom:15px;"><h3 style="color:${chosenColor}; font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700;">References</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                                <div>${appendedBlocksSectionsHtmlText}</div>
+                            </div>
                         </div>
                     </div>
                 `;
             }
+            // 🚀 TEMPLATE 52 (Gold Minimal Style)
             else if (theme === '52') {
                 builtLayoutBlueprintString = `
-                    <div style="display:grid; grid-template-columns:30% 70%; gap:30px; margin:-40px;">
+                    <div style="font-family:${chosenFont}; display:grid; grid-template-columns:30% 70%; gap:30px; margin:-40px; min-height:750px; background:#fff; color:#222;">
                         <div style="background:#fcfbf7; padding:40px 20px; border-right:1px solid #e5e5e0;">
-                            ${localUploadedPhotoBase64Data ? `<div style="width:95px; height:95px; border-radius:50%; border:2px solid #bc9c22; overflow:hidden; margin-bottom:20px;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
-                            <h3 style="color:#bc9c22; font-size:13px; font-weight:bold; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Contact</h3>
+                            ${localUploadedPhotoBase64Data ? `<div style="width:95px; height:95px; border-radius:50%; border:2px solid ${chosenColor}; overflow:hidden; margin-bottom:20px;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                            <h3 style="color:${chosenColor}; font-size:13px; font-weight:bold; border-bottom:1px solid ${chosenColor}; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Contact</h3>
                             <p style="font-size:12px; color:#555; line-height:1.6; margin-bottom:20px;"><strong>Email:</strong><br>${email}<br><strong>Phone:</strong><br>${phone}<br><strong>Location:</strong><br>${address}</p>
-                            ${profileOptionalsHtmlText ? `<h3 style="color:#bc9c22; font-size:13px; font-weight:bold; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Profile</h3><div style="font-size:12px; color:#555; line-height:1.5; margin-bottom:20px;">${profileOptionalsHtmlText}</div>` : ''}
-                            <h3 style="color:#bc9c22; font-size:13px; font-weight:bold; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Skills</h3>
+                            ${profileOptionalsHtmlText ? `<h3 style="color:${chosenColor}; font-size:13px; font-weight:bold; border-bottom:1px solid ${chosenColor}; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Profile</h3><div style="font-size:12px; color:#555; line-height:1.5; margin-bottom:20px;">${profileOptionalsHtmlText}</div>` : ''}
+                            <h3 style="color:${chosenColor}; font-size:13px; font-weight:bold; border-bottom:1px solid ${chosenColor}; padding-bottom:4px; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">Skills</h3>
                             <p style="font-size:12px; color:#555; line-height:1.5;">${skills}</p>
                         </div>
-                        <div style="padding:40px 30px 40px 10px; color:#222;">
-                            <h1 style="font-size:26px; color:#111; text-transform:uppercase; font-weight:300; letter-spacing:1px; margin-bottom:5px;">${name}</h1>
-                            <div style="color:#bc9c22; font-size:14px; font-weight:600; text-transform:uppercase; margin-bottom:25px;">PROFESSIONAL APPLICANT</div>
-                            ${objective ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Objective</h3><p style="font-size:13px; line-height:1.5;">${objective}</p></div>` : ''}
-                            ${education ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Education</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
-                            ${experience ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Experience</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
-                            ${projects ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Projects</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
-                            ${reference ? `<div style="margin-bottom:20px;"><h3 style="color:#bc9c22; font-size:13px; text-transform:uppercase; border-bottom:1px solid #bc9c22; padding-bottom:4px; margin-bottom:8px; font-weight:700;">References</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                        <div style="padding:40px 30px 40px 10px;">
+                            <h1 style="font-size:26px; color:#111; text-transform:uppercase; font-weight:300; letter-spacing:1px; margin-bottom:5px; margin-top:0;">${name}</h1>
+                            <div style="color:${chosenColor}; font-size:14px; font-weight:600; text-transform:uppercase; margin-bottom:25px;">PROFESSIONAL APPLICANT</div>
+                            ${objective ? `<div style="margin-bottom:20px;"><h3 style="color:${chosenColor}; font-size:13px; text-transform:uppercase; border-bottom:1px solid ${chosenColor}; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Objective</h3><p style="font-size:13px; line-height:1.5;">${objective}</p></div>` : ''}
+                            ${education ? `<div style="margin-bottom:20px;"><h3 style="color:${chosenColor}; font-size:13px; text-transform:uppercase; border-bottom:1px solid ${chosenColor}; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Education</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                            ${experience ? `<div style="margin-bottom:20px;"><h3 style="color:${chosenColor}; font-size:13px; text-transform:uppercase; border-bottom:1px solid ${chosenColor}; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Experience</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                            ${projects ? `<div style="margin-bottom:20px;"><h3 style="color:${chosenColor}; font-size:13px; text-transform:uppercase; border-bottom:1px solid ${chosenColor}; padding-bottom:4px; margin-bottom:8px; font-weight:700;">Projects</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                            ${reference ? `<div style="margin-bottom:20px;"><h3 style="color:${chosenColor}; font-size:13px; text-transform:uppercase; border-bottom:1px solid ${chosenColor}; padding-bottom:4px; margin-bottom:8px; font-weight:700;">References</h3><p style="font-size:13px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
                             <div>${appendedBlocksSectionsHtmlText}</div>
                         </div>
                     </div>
                 `;
             }
+            // 🚀 TEMPLATE 53 (Dark Accent Sidebar Style)
             else if (theme === '53') {
                 builtLayoutBlueprintString = `
-                    <div style="display:flex; gap:20px; width:100%; margin:-40px; min-height:850px;">
-                        <div style="flex:0 0 33%; background:#1e293b; color:#fff; padding:35px 20px 35px 35px;">
-                            ${localUploadedPhotoBase64Data ? `<div style="width:100px; height:100px; border-radius:50%; overflow:hidden; margin-bottom:20px; border:2px solid #38bdf8;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
-                            <h3 style="color:#38bdf8; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700;">Contact Details</h3>
+                    <div style="font-family:${chosenFont}; display:flex; gap:20px; width:100%; margin:-40px; min-height:850px; background:#fff;">
+                        <div style="flex:0 0 33%; background:${chosenColor}; color:#fff; padding:35px 20px 35px 35px; transition: background 0.2s;">
+                            ${localUploadedPhotoBase64Data ? `<div style="width:100px; height:100px; border-radius:50%; overflow:hidden; margin-bottom:20px; border:2px solid #fff;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                            <h3 style="color:#00eeff; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700; margin-top:0;">Contact Details</h3>
                             <p style="font-size:12.5px; color:#cbd5e1; line-height:1.6; margin-bottom:20px;">✉️ ${email}<br>📞 ${phone}<br>📍 ${address}</p>
-                            ${profileOptionalsHtmlText ? `<h3 style="color:#38bdf8; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700;">Personal Info</h3><div style="font-size:12px; color:#cbd5e1; line-height:1.5; margin-bottom:20px;">${profileOptionalsHtmlText}</div>` : ''}
-                            <h3 style="color:#38bdf8; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700;">Expertise</h3>
+                            ${profileOptionalsHtmlText ? `<h3 style="color:#00eeff; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700;">Personal Info</h3><div style="font-size:12px; color:#cbd5e1; line-height:1.5; margin-bottom:20px;">${profileOptionalsHtmlText}</div>` : ''}
+                            <h3 style="color:#00eeff; font-size:14px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:12px; font-weight:700;">Expertise</h3>
                             <p style="font-size:12.5px; color:#cbd5e1; line-height:1.5;">${skills}</p>
-                        </div>
+                </div>
                         <div style="flex:1; padding:35px 35px 35px 15px; color:#222; background:#fff;">
-                            <h2 style="font-size:26px; font-weight:700; color:#0f172a; text-transform:uppercase; margin-bottom:5px;">${name}</h2>
-                            <div style="color:#475569; font-size:15px; font-weight:600; margin-bottom:25px;">DEVELOPER PROFILE</div>
-                            ${objective ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">Summary Objective</h3><p style="font-size:12.5px; line-height:1.5;">${objective}</p></div>` : ''}
-                            ${education ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">Education Timeline</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
-                            ${experience ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">Work History</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
-                            ${projects ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">Key Projects</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
-                            ${reference ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:#0f172a;">References</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                            <h2 style="font-size:26px; font-weight:700; color:#0f172a; text-transform:uppercase; margin-bottom:5px; margin-top:0;">${name}</h2>
+                            <div style="color:${chosenColor}; font-size:15px; font-weight:600; margin-bottom:25px;">DEVELOPER PROFILE</div>
+                            ${objective ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Summary Objective</h3><p style="font-size:12.5px; line-height:1.5;">${objective}</p></div>` : ''}
+                            ${education ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Education Timeline</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                            ${experience ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Work History</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                            ${projects ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Key Projects</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                            ${reference ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">References</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
                             <div>${appendedBlocksSectionsHtmlText}</div>
                         </div>
                     </div>
                 `;
             }
+            // 🚀 TEMPLATE 54 (Neon Cyber Minimal)
             else if (theme === '54') {
                 builtLayoutBlueprintString = `
-                    <div style="background:#0d0314; color:#f3e8ff; padding:30px; border-radius:8px; border:2px solid #ff007f; margin:-40px; min-height:850px;">
+                    <div style="font-family:${chosenFont}; background:#0d0314; color:#f3e8ff; padding:30px; border-radius:8px; border:2px solid #ff007f; margin:-40px; min-height:850px;">
                         <div style="border-bottom:2px solid rgba(0,239,255,0.3); padding-bottom:15px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h1 style="font-size:28px; font-weight:800; color:#ff007f; text-transform:uppercase; text-shadow:0 0 10px #ff007f;">${name}</h1>
+                                <h1 style="font-size:28px; font-weight:800; color:#ff007f; text-transform:uppercase; text-shadow:0 0 10px #ff007f; margin:0;">${name}</h1>
                                 <div style="font-size:13px; color:#e9d5ff; margin-top:6px; display:flex; gap:15px; flex-wrap:wrap;"><span>✉️ ${email}</span>|<span>📞 ${phone}</span>|<span>📍 ${address}</span></div>
                             </div>
                             ${localUploadedPhotoBase64Data ? `<div style="width:80px; height:80px; border-radius:8px; border:2px solid #ff007f; overflow:hidden;"><img src="${localUploadedPhotoBase64Data}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
