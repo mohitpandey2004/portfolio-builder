@@ -186,10 +186,11 @@ document.querySelectorAll('.navbar a, .logo, .btn-box, .panel-toggle-btn, .skill
 });
 
 // ==================== 🚀 5. ADVANCED GAMIFIED PROGRESSIVE ATS SCORE ENGINE ====================
+let globalAtsPenaltyScore = 0; 
+
 function calculateATSScore() {
     let score = 0;
 
-    // Static Forms Mapping Pulling
     const name = document.getElementById('res_name')?.value || "";
     const email = document.getElementById('res_email')?.value || "";
     const phone = document.getElementById('res_phone')?.value || "";
@@ -201,7 +202,6 @@ function calculateATSScore() {
     const reference = document.getElementById('res_reference')?.value || "";
     const projects = document.getElementById('res_projects')?.value || "";
 
-    // Stepper View Badges List
     const modContact = document.getElementById('mod-contact');
     const modEducation = document.getElementById('mod-education');
     const modExperience = document.getElementById('mod-experience');
@@ -211,7 +211,6 @@ function calculateATSScore() {
     const modProjects = document.getElementById('mod-projects');
     const modAddMore = document.getElementById('mod-addmore');
 
-    // Wipe global toggle states before execution context mapping
     const modulesArr = [modContact, modEducation, modExperience, modSkills, modObjective, modReference, modProjects, modAddMore];
     modulesArr.forEach(tag => {
         if(tag) { tag.classList.remove('active-step', 'optimized'); tag.classList.add('critical'); }
@@ -281,7 +280,7 @@ function calculateATSScore() {
 
     // 🛑 PHASE D: TECHNICAL SKILLS ARRAY EXTRACTION (Max: 15 Points)
     if (basePersonalReady && experience.trim().length > 60) {
-        let cleanSkills = skills.split(',').filter(s => s.trim().length > 0).length;
+        let cleanSkills = skills.split(',').map(s => s.trim()).filter(s => s.length > 0).length;
         let skillScore = Math.min(cleanSkills * 3, 15);
         score += skillScore;
 
@@ -359,15 +358,17 @@ function calculateATSScore() {
         }
     }
 
-    // Bound ultimate calculations constraints cap at 100
-    if(score > 100) score = 100;
+    if (typeof globalAtsPenaltyScore !== "undefined") {
+        score -= globalAtsPenaltyScore;
+    }
 
-    // Open visibility class engine state
+    if(score > 100) score = 100;
+    if(score < 0) score = 0;
+
     if (currentVisibleStep) {
         currentVisibleStep.classList.add('active-step');
     }
 
-    // Diagnostic Logs Output Box Management Rendering
     const scoreBadge = document.getElementById('atsScoreBadge');
     const feedbackText = document.getElementById('atsFeedbackText');
     const radarBox = document.querySelector('.radar-box');
@@ -399,7 +400,175 @@ function calculateATSScore() {
     }
 }
 
-// Runtime Listener Triggers & Real-Time Canvas Render Hook Integration
+// ==================== 🧠 DYNAMIC INPUT DATA SCANNER FRAMEWORK ====================
+const globalAtsVault = {
+    skillsBackup: ['Kotlin', 'Java', 'Android SDK', 'Jetpack Compose', 'Git & GitHub', 'REST APIs', 'SQL Database', 'Firebase integration'],
+    objectiveUpgrades: [
+        'Seeking to leverage robust software development expertise within a high-growth tech architecture context.',
+        'Driven engineer aiming to innovate and deploy resilient technical solutions aligned with enterprise benchmarks.'
+    ],
+    educationBlueprints: [
+        "Highest Education: BCA - CGC Jhanjheri (Current CGPA: 8.07) [2022-2025]\nSenior Secondary: 12th - CBSE Board (85%)\nSecondary School: 10th - CBSE Board (90%)",
+        "Degree: B.Tech in Computer Science & Engineering [2021-2025]\nCGPA: 8.2 | Core Focus: Software Engineering & Data Structures\nHigh School Matrix: 12th Board (88%)"
+    ]
+};
+
+function universalInputScanner(fieldId, mentorId, statusId, suggestId, type) {
+    const inputNode = document.getElementById(fieldId);
+    const mentorBox = document.getElementById(mentorId);
+    const statusBox = document.getElementById(statusId);
+    const suggestBox = document.getElementById(suggestId);
+
+    if (!inputNode || !mentorBox || !statusBox || !suggestBox) return;
+
+    let textVal = inputNode.value.trim();
+    let lowerText = textVal.toLowerCase();
+
+    if (textVal.length === 0) {
+        mentorBox.style.display = 'none';
+        inputNode.classList.remove('input-error-glow');
+        inputNode.setAttribute('data-penalty', '0');
+        compileTotalGlobalPenalties();
+        return;
+    }
+
+    let isInvalid = false;
+    let warningMsg = "";
+    let suggestionsHtml = "";
+    let fieldPenalty = 0;
+
+    // 🛑 Anti-Spam Data Radar Check (Fake keywords/junk validation check)
+    let hasGibberishSequence = /(.)\1{4,}/i.test(lowerText);
+    let spaceSpamArray = textVal.split(/[\s,.\n]+/);
+    let hasVowellessSpam = spaceSpamArray.some(w => w.length > 4 && !/[aeiouy]{1,}/i.test(w));
+    let hasDummyKeywords = ['asdf', 'dfg', 'qwer', 'zxcv', '12345'].some(v => lowerText.includes(v));
+
+    if (hasGibberishSequence || hasVowellessSpam || hasDummyKeywords) {
+        isInvalid = true;
+        fieldPenalty = 15; 
+        warningMsg = "🚨 Junk / Dummy Text Detected! Kripya sahi professional info enter karein.";
+        
+        if (fieldId === 'res_education') {
+            globalAtsVault.educationBlueprints.forEach((eduStr, idx) => {
+                suggestionsHtml += `<button type="button" class="suggest-token-btn" style="text-align:left; display:block; margin-bottom:5px;" onclick="applyFullEducationBlueprint('${fieldId}', ${idx})">Inject Premium Education Format ${idx + 1}</button>`;
+            });
+        }
+    } 
+    else if (type === 'personal') {
+        if (fieldId === 'res_email' && (!textVal.includes('@') || !textVal.includes('.'))) {
+            isInvalid = true;
+            fieldPenalty = 5;
+            warningMsg = "📧 Invalid Email Pattern Structure: Matrix system requires valid domain formatting.";
+        } else if (fieldId === 'res_phone' && (textVal.replace(/[\s+]/g, '').length < 10 || isNaN(textVal.replace(/[\s+]/g, '')))) {
+            isInvalid = true;
+            fieldPenalty = 5;
+            warningMsg = "📞 Contact String Deficient: Phone numeric code requires complete global digits pattern.";
+        }
+    } 
+    else if (type === 'skills') {
+        let items = textVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
+        if (items.length < 3) {
+            isInvalid = true;
+            fieldPenalty = 8;
+            warningMsg = "🛠️ Low Keyword Density Alert: Technical matrix requires minimum 3 core technologies.";
+            globalAtsVault.skillsBackup.forEach(sk => {
+                if (!items.map(i => i.toLowerCase()).includes(sk.toLowerCase())) {
+                    suggestionsHtml += `<button type="button" class="suggest-token-btn" onclick="addSuggestedSkill('${fieldId}', '${sk}')">+ Add ${sk}</button> `;
+                }
+            });
+        }
+    } 
+    else if (type === 'objective') {
+        if (textVal.length < 25) {
+            isInvalid = true;
+            fieldPenalty = 7;
+            warningMsg = "🎯 Profile Summary Short: Use premium high-impact pre-built frameworks below:";
+            globalAtsVault.objectiveUpgrades.forEach((obj, idx) => {
+                suggestionsHtml += `<button type="button" class="suggest-token-btn" style="text-align:left; display:block; margin-bottom:5px;" onclick="applyFullObjective('${fieldId}', ${idx})">Inject Blueprint Template ${idx + 1}</button>`;
+            });
+        }
+    }
+
+    if (isInvalid) {
+        inputNode.classList.add('input-error-glow');
+        mentorBox.style.display = 'block';
+        mentorBox.classList.remove('optimized-active');
+        mentorBox.classList.add('warning-active');
+        statusBox.innerHTML = `<span style="color: #ff4a4a;"><i class="fa-solid fa-triangle-exclamation"></i> ${warningMsg}</span>`;
+        suggestBox.innerHTML = suggestionsHtml;
+        inputNode.setAttribute('data-penalty', fieldPenalty);
+    } else {
+        inputNode.classList.remove('input-error-glow');
+        inputNode.setAttribute('data-penalty', '0');
+        mentorBox.style.display = 'block';
+        mentorBox.classList.remove('warning-active');
+        mentorBox.classList.add('optimized-active');
+        statusBox.innerHTML = `<span style="color: #00ff66;"><i class="fa-solid fa-circle-check"></i> ATS Parameter Synced: Verified enterprise structural benchmark standard.</span>`;
+        suggestBox.innerHTML = "";
+    }
+    compileTotalGlobalPenalties();
+}
+
+function compileTotalGlobalPenalties() {
+    let totalDeduction = 0;
+    document.querySelectorAll('input, textarea').forEach(el => {
+        let p = parseInt(el.getAttribute('data-penalty') || "0");
+        totalDeduction += p;
+    });
+    globalAtsPenaltyScore = totalDeduction;
+    calculateATSScore();
+}
+
+function addSuggestedSkill(id, skillName) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    playSystemSound(900, 'sine', 0.04);
+    if (input.value.trim().length > 0) {
+        input.value += ", " + skillName;
+    } else {
+        input.value = skillName;
+    }
+    input.dispatchEvent(new Event('input'));
+}
+
+function applyFullEducationBlueprint(id, index) {
+    const textarea = document.getElementById(id);
+    if (!textarea) return;
+    playSystemSound(950, 'sine', 0.05);
+    textarea.value = globalAtsVault.educationBlueprints[index];
+    textarea.dispatchEvent(new Event('input'));
+}
+
+function applyFullObjective(id, blueprintIdx) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    playSystemSound(950, 'sine', 0.05);
+    input.value = globalAtsVault.objectiveUpgrades[blueprintIdx];
+    input.dispatchEvent(new Event('input'));
+}
+
+function bindDynamicAtsListeners() {
+    setTimeout(() => {
+        document.querySelectorAll('#personalDynamicContainer input').forEach(input => {
+            input.removeEventListener('input', calculateATSScore);
+            input.addEventListener('input', () => {
+                universalInputScanner(input.id, 'mentor-personal', 'status-personal', 'suggest-personal', 'personal');
+                calculateATSScore();
+                if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") renderRealtimeLivePreviewDocumentCanvas();
+            });
+        });
+        document.querySelectorAll('#customSectionsDynamicArea textarea').forEach(txt => {
+            txt.removeEventListener('input', calculateATSScore);
+            txt.addEventListener('input', () => {
+                universalInputScanner(txt.id, 'mentor-addmore', 'status-addmore', 'suggest-addmore', 'text-content');
+                calculateATSScore();
+                if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") renderRealtimeLivePreviewDocumentCanvas();
+            });
+        });
+    }, 150);
+}
+
+// Runtime Listeners System Mapping
 document.addEventListener("DOMContentLoaded", () => {
     const activeFormNode = document.getElementById('wizardMasterForm') || document.querySelector('form');
     if (activeFormNode) {
@@ -407,25 +576,38 @@ document.addEventListener("DOMContentLoaded", () => {
             input.addEventListener('input', () => {
                 calculateATSScore();
                 if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
-                    renderRealtimeLivePreviewDocumentCanvas(); // Instant canvas sync!
+                    renderRealtimeLivePreviewDocumentCanvas(); 
                 }
             });
         });
 
-        // Toggle detection event bridge
+        ['res_name', 'res_email', 'res_phone', 'res_address'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', () => universalInputScanner(id, 'mentor-personal', 'status-personal', 'suggest-personal', 'personal'));
+        });
+
+        const edu = document.getElementById('res_education');
+        if (edu) edu.addEventListener('input', () => universalInputScanner('res_education', 'mentor-education', 'status-education', 'suggest-education', 'text-content'));
+
+        const exp = document.getElementById('res_experience');
+        if (exp) exp.addEventListener('input', () => universalInputScanner('res_experience', 'mentor-experience', 'status-experience', 'suggest-experience', 'text-content'));
+
+        const sks = document.getElementById('res_skills');
+        if (sks) sks.addEventListener('input', () => universalInputScanner('res_skills', 'mentor-skills', 'status-skills', 'suggest-skills', 'skills'));
+
+        const obj = document.getElementById('res_objective');
+        if (obj) obj.addEventListener('input', () => universalInputScanner('res_objective', 'mentor-objective', 'status-objective', 'suggest-objective', 'objective'));
+
+        const ref = document.getElementById('res_reference');
+        if (ref) ref.addEventListener('input', () => universalInputScanner('res_reference', 'mentor-reference', 'status-reference', 'suggest-reference', 'text-content'));
+
+        const prj = document.getElementById('res_projects');
+        if (prj) prj.addEventListener('input', () => universalInputScanner('res_projects', 'mentor-projects', 'status-projects', 'suggest-projects', 'text-content'));
+
         activeFormNode.addEventListener('change', (e) => {
             if (e.target.classList.contains('field-toggle') || e.target.classList.contains('sec-toggle')) {
+                bindDynamicAtsListeners(); 
                 setTimeout(() => {
-                    const inlineInps = activeFormNode.querySelectorAll('#personalDynamicContainer input, #customSectionsDynamicArea textarea');
-                    inlineInps.forEach(dynInp => {
-                        dynInp.removeEventListener('input', calculateATSScore);
-                        dynInp.addEventListener('input', () => {
-                            calculateATSScore();
-                            if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
-                                renderRealtimeLivePreviewDocumentCanvas();
-                            }
-                        });
-                    });
                     calculateATSScore();
                     if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
                         renderRealtimeLivePreviewDocumentCanvas();
@@ -435,7 +617,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 🔥 HIGH-PERFORMANCE PRO LISTENERS FOR NEW REAL-TIME DESIGN ENGINE CUSTOMIZER
     const fontSelector = document.getElementById('resumeFontSelector');
     const colorPicker = document.getElementById('resumeColorPicker');
 
@@ -443,7 +624,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fontSelector.addEventListener('change', () => {
             playSystemSound(600, 'sine', 0.05);
             if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
-                renderRealtimeLivePreviewDocumentCanvas(); // Instant Font Switch!
+                renderRealtimeLivePreviewDocumentCanvas(); 
             }
         });
     }
@@ -451,7 +632,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (colorPicker) {
         colorPicker.addEventListener('input', () => {
             if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
-                renderRealtimeLivePreviewDocumentCanvas(); // Live sliding layout background/border color injection!
+                renderRealtimeLivePreviewDocumentCanvas(); 
             }
         });
         colorPicker.addEventListener('change', () => {
@@ -459,7 +640,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-    // Initial run synchronization context matching blueprint bootstrap
     calculateATSScore();
     if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
         renderRealtimeLivePreviewDocumentCanvas();

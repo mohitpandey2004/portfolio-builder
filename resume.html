@@ -7,7 +7,6 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='96' height='96'><defs><linearGradient id='mohitBrand2' x1='0% ' y1='0% ' x2='100% ' y2='100% '><stop offset='0% ' stop-color='%2300eeff'/><stop offset='100% ' stop-color='%23ff007f'/></linearGradient></defs><path fill='none' stroke='url(%23mohitBrand2)' stroke-width='3' stroke-linejoin='round' d='M16 3l11 6v12l-11 8-11-8V9l11-6z'/><circle cx='16' cy='15' r='3' fill='%23ff007f'/><path fill='%2300eeff' d='M16 7v3m-5 5h3m5 0h3'/></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- 🌐 PRO TYPOGRAPHY FONT HOOKS CDN (Google Fonts Integration) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -193,10 +192,15 @@
                         </div>
 
                         <div class="form-grid-matrix">
-                            <div class="input-group-cell"><label>Full Name</label><input type="text" id="res_name" name="res_name" placeholder="e.g. Mohit Pandey" required></div>
-                            <div class="input-group-cell"><label>Email Address</label><input type="email" id="res_email" name="res_email" placeholder="e.g. mohitmp882170@gmail.com" required></div>
-                            <div class="input-group-cell"><label>Phone Number</label><input type="text" id="res_phone" name="res_phone" placeholder="e.g. +91 8102584930" required></div>
-                            <div class="input-group-cell"><label>Full Address (City, State)</label><input type="text" id="res_address" name="res_address" placeholder="e.g. Dhanbad, Jharkhand" required></div>
+                            <div class="input-group-cell"><label>Full Name</label><input type="text" id="res_name" name="res_name" placeholder="e.g. Mohit Pandey" spellcheck="true" required></div>
+                            <div class="input-group-cell"><label>Email Address</label><input type="email" id="res_email" name="res_email" placeholder="e.g. mohitmp882170@gmail.com" spellcheck="true" required></div>
+                            <div class="input-group-cell"><label>Phone Number</label><input type="text" id="res_phone" name="res_phone" placeholder="e.g. +91 8102584930" spellcheck="true" required></div>
+                            <div class="input-group-cell"><label>Full Address (City, State)</label><input type="text" id="res_address" name="res_address" placeholder="e.g. Dhanbad, Jharkhand" spellcheck="true" required></div>
+                        </div>
+
+                        <div class="ats-mentor-box" id="mentor-personal" style="display: none; margin-top: 15px; margin-bottom: 25px;">
+                            <div class="mentor-alert-status" id="status-personal"></div>
+                            <div class="mentor-suggestions-list" id="suggest-personal"></div>
                         </div>
 
                         <div class="optional-switches-box">
@@ -228,8 +232,14 @@
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-graduation-cap"></i> Education Timeline</div></div>
                         <div class="input-group-cell full-width">
                             <label>Education Qualifications</label>
-                            <textarea id="res_education" name="res_education" rows="6" placeholder="Please fill your education history...&#10;Ex: 10th - CBSE Board (90%)&#10;12th - CBSE Board (85%)&#10;Highest Education: BCA - CGC Jhanjheri (Current CGPA: 8.07) [2022-2025]" required></textarea>
+                            <textarea id="res_education" name="res_education" rows="6" placeholder="Please fill your education history...&#10;Ex: 10th - CBSE Board (90%)&#10;12th - CBSE Board (85%)&#10;Highest Education: BCA - CGC Jhanjheri (Current CGPA: 8.07) [2022-2025]" spellcheck="true" required></textarea>
                         </div>
+                        
+                        <div class="ats-mentor-box" id="mentor-education" style="display: none; margin-top: 12px;">
+                            <div class="mentor-alert-status" id="status-education"></div>
+                            <div class="mentor-suggestions-list" id="suggest-education"></div>
+                        </div>
+
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('3')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
@@ -237,8 +247,14 @@
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-briefcase"></i> Work Experience</div></div>
                         <div class="input-group-cell full-width">
                             <label>Experience / Internships Record</label>
-                            <textarea id="res_experience" name="res_experience" rows="6" placeholder="Manually enter your work experience history details here...&#10;If you don't have prior records, type 'I am a Fresher'..." required></textarea>
+                            <textarea id="res_experience" name="res_experience" rows="6" placeholder="Manually enter your work experience history details here...&#10;If you don't have prior records, type 'I am a Fresher'..." spellcheck="true" required></textarea>
                         </div>
+
+                        <div class="ats-mentor-box" id="mentor-experience" style="display: none; margin-top: 12px;">
+                            <div class="mentor-alert-status" id="status-experience"></div>
+                            <div class="mentor-suggestions-list" id="suggest-experience"></div>
+                        </div>
+
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('4')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
@@ -246,8 +262,14 @@
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-laptop-code"></i> Technical Matrix</div></div>
                         <div class="input-group-cell full-width">
                             <label>Technical Skills (Comma separated)</label>
-                            <input type="text" id="res_skills" name="res_skills" placeholder="e.g. Kotlin, Java, XML Programming, Web Development, PHP, SQL, HTML5, CSS3" required>
+                            <input type="text" id="res_skills" name="res_skills" placeholder="e.g. Kotlin, Java, XML Programming, Web Development, PHP, SQL, HTML5, CSS3" spellcheck="true" required>
                         </div>
+
+                        <div class="ats-mentor-box" id="mentor-skills" style="display: none; margin-top: 12px;">
+                            <div class="mentor-alert-status" id="status-skills"></div>
+                            <div class="mentor-suggestions-list" id="suggest-skills"></div>
+                        </div>
+
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('5')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
@@ -255,8 +277,14 @@
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-bullseye"></i> Career Objective</div></div>
                         <div class="input-group-cell full-width">
                             <label>Professional Career Profile Objective</label>
-                            <textarea id="res_objective" name="res_objective" rows="5" placeholder="Enter your career purpose statement..." required></textarea>
+                            <textarea id="res_objective" name="res_objective" rows="5" placeholder="Enter your career purpose statement..." spellcheck="true" required></textarea>
                         </div>
+
+                        <div class="ats-mentor-box" id="mentor-objective" style="display: none; margin-top: 12px;">
+                            <div class="mentor-alert-status" id="status-objective"></div>
+                            <div class="mentor-suggestions-list" id="suggest-objective"></div>
+                        </div>
+
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('6')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
@@ -264,8 +292,14 @@
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-address-book"></i> Professional References</div></div>
                         <div class="input-group-cell full-width">
                             <label>References (Optional Field Details)</label>
-                            <textarea id="res_reference" name="res_reference" rows="4" placeholder="Enter reference credentials details like Name, Designation, Institution Data..."></textarea>
+                            <textarea id="res_reference" name="res_reference" rows="4" placeholder="Enter reference credentials details like Name, Designation, Institution Data..." spellcheck="true"></textarea>
                         </div>
+
+                        <div class="ats-mentor-box" id="mentor-reference" style="display: none; margin-top: 12px;">
+                            <div class="mentor-alert-status" id="status-reference"></div>
+                            <div class="mentor-suggestions-list" id="suggest-reference"></div>
+                        </div>
+
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('7')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
@@ -273,8 +307,14 @@
                         <div class="section-header-row"><div class="form-section-title"><i class="fa-solid fa-diagram-project"></i> Key Projects Showcase</div></div>
                         <div class="input-group-cell full-width">
                             <label>Featured Projects Specifications</label>
-                            <textarea id="res_projects" name="res_projects" rows="5" placeholder="e.g. Family Safety App: Built tracking engine maps features using Kotlin..." required></textarea>
+                            <textarea id="res_projects" name="res_projects" rows="5" placeholder="e.g. Family Safety App: Built tracking engine maps features using Kotlin..." spellcheck="true" required></textarea>
                         </div>
+
+                        <div class="ats-mentor-box" id="mentor-projects" style="display: none; margin-top: 12px;">
+                            <div class="mentor-alert-status" id="status-projects"></div>
+                            <div class="mentor-suggestions-list" id="suggest-projects"></div>
+                        </div>
+
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('8')">Next Section <i class="fa-solid fa-chevron-right"></i></button></div>
                     </div>
 
@@ -291,6 +331,12 @@
                         </div>
                         
                         <div class="dynamic-sections-area" id="customSectionsDynamicArea"></div>
+
+                        <div class="ats-mentor-box" id="mentor-addmore" style="display: none; margin-top: 15px;">
+                            <div class="mentor-alert-status" id="status-addmore"></div>
+                            <div class="mentor-suggestions-list" id="suggest-addmore"></div>
+                        </div>
+
                         <div class="wizard-footer-actions"><button type="button" class="nav-action-btn" onclick="switchWizardStep('9')">Go to Preview Hub <i class="fa-solid fa-eye"></i></button></div>
                     </div>
 
@@ -372,7 +418,7 @@
                 const wrap = document.createElement('div');
                 wrap.className = 'input-group-cell';
                 wrap.id = `dyn-wrap-${key}`;
-                wrap.innerHTML = `<label>${fieldMetaDict[key].label}</label><input type="text" id="dyn-input-${key}" name="custom_${key}" placeholder="${fieldMetaDict[key].placeholder}">`;
+                wrap.innerHTML = `<label>${fieldMetaDict[key].label}</label><input type="text" id="dyn-input-${key}" name="custom_${key}" placeholder="${fieldMetaDict[key].placeholder}" spellcheck="true">`;
                 container.appendChild(wrap);
             } else {
                 dynamicFieldKeysTrackers = dynamicFieldKeysTrackers.filter(k => k !== key);
@@ -390,7 +436,7 @@
                 const wrap = document.createElement('div');
                 wrap.className = 'input-group-cell full-width';
                 wrap.id = `dyn-sec-wrap-${key}`;
-                wrap.innerHTML = `<label>${title}</label><textarea id="dyn-sec-input-${key}" name="sec_${key}" rows="4" placeholder="${placeholder}"></textarea>`;
+                wrap.innerHTML = `<label>${title}</label><textarea id="dyn-sec-input-${key}" name="sec_${key}" rows="4" placeholder="${placeholder}" spellcheck="true"></textarea>`;
                 container.appendChild(wrap);
             } else {
                 delete dynamicSectionKeysTrackers[key];
@@ -441,8 +487,6 @@
             if (!outputBox) return;
 
             const theme = document.getElementById('selectedTemplateInput')?.value || "51";
-            
-            // 🎛️ DYNAMIC VARIABLES INTEGRATION
             const chosenFont = document.getElementById('resumeFontSelector')?.value || "'Poppins', sans-serif";
             const chosenColor = document.getElementById('resumeColorPicker')?.value || "#1a365d";
 
@@ -484,7 +528,6 @@
 
             let builtLayoutBlueprintString = "";
             
-            // 🚀 TEMPLATE 51 (Corporate Blue Style)
             if (theme === '51') {
                 builtLayoutBlueprintString = `
                     <div style="font-family:${chosenFont}; min-height:750px; background:#fff; color:#333;">
@@ -517,7 +560,6 @@
                     </div>
                 `;
             }
-            // 🚀 TEMPLATE 52 (Gold Minimal Style)
             else if (theme === '52') {
                 builtLayoutBlueprintString = `
                     <div style="font-family:${chosenFont}; display:grid; grid-template-columns:30% 70%; gap:30px; margin:-40px; min-height:750px; background:#fff; color:#222;">
@@ -542,7 +584,6 @@
                     </div>
                 `;
             }
-            // 🚀 TEMPLATE 53 (Dark Accent Sidebar Style)
             else if (theme === '53') {
                 builtLayoutBlueprintString = `
                     <div style="font-family:${chosenFont}; display:flex; gap:20px; width:100%; margin:-40px; min-height:850px; background:#fff;">
@@ -557,17 +598,16 @@
                         <div style="flex:1; padding:35px 35px 35px 15px; color:#222; background:#fff;">
                             <h2 style="font-size:26px; font-weight:700; color:#0f172a; text-transform:uppercase; margin-bottom:5px; margin-top:0;">${name}</h2>
                             <div style="color:${chosenColor}; font-size:15px; font-weight:600; margin-bottom:25px;">DEVELOPER PROFILE</div>
-                            ${objective ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Summary Objective</h3><p style="font-size:12.5px; line-height:1.5;">${objective}</p></div>` : ''}
-                            ${education ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Education Timeline</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
-                            ${experience ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Work History</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
-                            ${projects ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Key Projects</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
-                            ${reference ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid ${chosenColor}; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">References</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
+                            ${objective ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Summary Objective</h3><p style="font-size:12.5px; line-height:1.5;">${objective}</p></div>` : ''}
+                            ${education ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Education Timeline</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${education}</p></div>` : ''}
+                            ${experience ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Work History</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${experience}</p></div>` : ''}
+                            ${projects ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">Key Projects</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${projects}</p></div>` : ''}
+                            ${reference ? `<div style="margin-bottom:18px;"><h3 style="font-size:14px; text-transform:uppercase; border-bottom:2px solid #0f172a; padding-bottom:3px; margin-bottom:6px; font-weight:700; color:${chosenColor};">References</h3><p style="font-size:12.5px; line-height:1.5; white-space:pre-line;">${reference}</p></div>` : ''}
                             <div>${appendedBlocksSectionsHtmlText}</div>
                         </div>
                     </div>
                 `;
             }
-            // 🚀 TEMPLATE 54 (Neon Cyber Minimal)
             else if (theme === '54') {
                 builtLayoutBlueprintString = `
                     <div style="font-family:${chosenFont}; background:#0d0314; color:#f3e8ff; padding:30px; border-radius:8px; border:2px solid #ff007f; margin:-40px; min-height:850px;">
