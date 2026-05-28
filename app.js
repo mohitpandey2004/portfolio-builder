@@ -358,6 +358,7 @@ function calculateATSScore() {
         }
     }
 
+    // Dynamic semantic penalty application
     if (typeof globalAtsPenaltyScore !== "undefined") {
         score -= globalAtsPenaltyScore;
     }
@@ -400,8 +401,30 @@ function calculateATSScore() {
     }
 }
 
-// ==================== 🧠 DYNAMIC INPUT DATA SCANNER FRAMEWORK ====================
+// ==================== 🧠 DYNAMIC FUZZY SPELL CHECK MATRIX ENGINE ====================
 const globalAtsVault = {
+    // Standard Resume vocabulary base system reference array
+    validDictionaryWords: [
+        'location', 'education', 'experience', 'skills', 'projects', 'objective', 'references', 
+        'developer', 'android', 'fresher', 'history', 'management', 'development', 'kotlin', 'java', 
+        'address', 'contact', 'qualification', 'technical', 'professional', 'engineered', 'spearheaded'
+    ],
+    poorWords: ['made', 'created', 'built', 'worked', 'managed', 'did', 'led', 'handled', 'helped', 'fixed', 'responsible for', 'good', 'bad'],
+    replacements: {
+        'made': ['Engineered', 'Architected', 'Formulated'],
+        'created': ['Developed', 'Innovated', 'Generated'],
+        'built': ['Constructed', 'Assembled', 'Fabricated'],
+        'worked': ['Collaborated', 'Contributed', 'Spearheaded'],
+        'managed': ['Orchestrated', 'Directed', 'Supervised'],
+        'did': ['Executed', 'Implemented', 'Discharged'],
+        'led': ['Spearheaded', 'Pioneered', 'Chambered'],
+        'handled': ['Navigated', 'Controlled', 'Executed'],
+        'helped': ['Assisted', 'Facilitated', 'Supported'],
+        'fixed': ['Resolved', 'Debugged', 'Optimized'],
+        'responsible for': ['Accountable for', 'Entrusted with', 'Executed'],
+        'good': ['Exceptional', 'Proficient', 'Exemplary'],
+        'bad': ['Suboptimal', 'Deficient', 'Inefficient']
+    },
     skillsBackup: ['Kotlin', 'Java', 'Android SDK', 'Jetpack Compose', 'Git & GitHub', 'REST APIs', 'SQL Database', 'Firebase integration'],
     objectiveUpgrades: [
         'Seeking to leverage robust software development expertise within a high-growth tech architecture context.',
@@ -412,6 +435,24 @@ const globalAtsVault = {
         "Degree: B.Tech in Computer Science & Engineering [2021-2025]\nCGPA: 8.2 | Core Focus: Software Engineering & Data Structures\nHigh School Matrix: 12th Board (88%)"
     ]
 };
+
+// 🔮 LEVENSHTEIN DISTANCE ALGORITHM: Calculates string variance dynamically
+function calculateLevenshteinDistance(str1, str2) {
+    const track = Array(str2.length + 1).fill(null).map(() => Array(str1.length + 1).fill(null));
+    for (let i = 0; i <= str1.length; i += 1) track[0][i] = i;
+    for (let j = 0; j <= str2.length; j += 1) track[j][0] = j;
+    for (let j = 1; j <= str2.length; j += 1) {
+        for (let i = 1; i <= str1.length; i += 1) {
+            const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
+            track[j][i] = Math.min(
+                track[j][1 - 1] + 1, 
+                track[j - 1][i] + 1, 
+                track[j - 1][i - 1] + indicator 
+            );
+        }
+    }
+    return track[str2.length][str1.length];
+}
 
 function universalInputScanner(fieldId, mentorId, statusId, suggestId, type) {
     const inputNode = document.getElementById(fieldId);
@@ -437,13 +478,12 @@ function universalInputScanner(fieldId, mentorId, statusId, suggestId, type) {
     let suggestionsHtml = "";
     let fieldPenalty = 0;
 
-    // 🛑 Anti-Spam Data Radar Check (Fake keywords/junk validation check)
-    let hasGibberishSequence = /(.)\1{4,}/i.test(lowerText);
+    // 🛑 1. ANTI-GIBBERISH RADAR ENGINE
+    let gibberishRegex = /([a-z0-9])\1{3,}/i; 
     let spaceSpamArray = textVal.split(/[\s,.\n]+/);
-    let hasVowellessSpam = spaceSpamArray.some(w => w.length > 4 && !/[aeiouy]{1,}/i.test(w));
-    let hasDummyKeywords = ['asdf', 'dfg', 'qwer', 'zxcv', '12345'].some(v => lowerText.includes(v));
+    let isSpamWord = spaceSpamArray.some(word => word.length > 4 && !/[aeiouy]{1,}/i.test(word)); 
 
-    if (hasGibberishSequence || hasVowellessSpam || hasDummyKeywords) {
+    if (gibberishRegex.test(lowerText) || (spaceSpamArray.length > 3 && isSpamWord) || ['asdf', 'dfg', 'qwer', 'zxcv', '12345'].some(v => lowerText.includes(v))) {
         isInvalid = true;
         fieldPenalty = 15; 
         warningMsg = "🚨 Junk / Dummy Text Detected! Kripya sahi professional info enter karein.";
@@ -454,41 +494,94 @@ function universalInputScanner(fieldId, mentorId, statusId, suggestId, type) {
             });
         }
     } 
-    else if (type === 'personal') {
-        if (fieldId === 'res_email' && (!textVal.includes('@') || !textVal.includes('.'))) {
+    // 🔍 2. DYNAMIC UNLIMITED SPELL CORRECTION SCANNER VIA FUZZY MATCHING
+    else {
+        let textWords = lowerText.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").split(/\s+/);
+        let activeTypoMatches = [];
+
+        textWords.forEach(word => {
+            if (word.length > 3 && !globalAtsVault.validDictionaryWords.includes(word)) {
+                globalAtsVault.validDictionaryWords.forEach(validWord => {
+                    let distance = calculateLevenshteinDistance(word, validWord);
+                    // Match closely distorted items (Max 2 characters displacement, e.g., locactin -> location)
+                    if (distance > 0 && distance <= 2) {
+                        if (!activeTypoMatches.some(m => m.wrong === word)) {
+                            activeTypoMatches.push({ wrong: word, right: validWord });
+                        }
+                    }
+                });
+            }
+        });
+
+        if (activeTypoMatches.length > 0) {
             isInvalid = true;
-            fieldPenalty = 5;
-            warningMsg = "📧 Invalid Email Pattern Structure: Matrix system requires valid domain formatting.";
-        } else if (fieldId === 'res_phone' && (textVal.replace(/[\s+]/g, '').length < 10 || isNaN(textVal.replace(/[\s+]/g, '')))) {
-            isInvalid = true;
-            fieldPenalty = 5;
-            warningMsg = "📞 Contact String Deficient: Phone numeric code requires complete global digits pattern.";
-        }
-    } 
-    else if (type === 'skills') {
-        let items = textVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
-        if (items.length < 3) {
-            isInvalid = true;
-            fieldPenalty = 8;
-            warningMsg = "🛠️ Low Keyword Density Alert: Technical matrix requires minimum 3 core technologies.";
-            globalAtsVault.skillsBackup.forEach(sk => {
-                if (!items.map(i => i.toLowerCase()).includes(sk.toLowerCase())) {
-                    suggestionsHtml += `<button type="button" class="suggest-token-btn" onclick="addSuggestedSkill('${fieldId}', '${sk}')">+ Add ${sk}</button> `;
-                }
+            fieldPenalty = activeTypoMatches.length * 3;
+            warningMsg = "✍️ Typo / Spelling Mistake Detected: Sahi corporate keyword chun kar replace karein:";
+            
+            activeTypoMatches.forEach(match => {
+                suggestionsHtml += `<button type="button" class="suggest-token-btn" style="border-color: #ffb700; color: #ffb700; background: rgba(255,183,0,0.05);" onclick="globalWordReplacer('${fieldId}', '${match.wrong}', '${match.right}')"><i class="fa-solid fa-wand-magic-sparkles"></i> Change "${match.wrong}" to [${match.right}]</button> `;
             });
         }
-    } 
-    else if (type === 'objective') {
-        if (textVal.length < 25) {
-            isInvalid = true;
-            fieldPenalty = 7;
-            warningMsg = "🎯 Profile Summary Short: Use premium high-impact pre-built frameworks below:";
-            globalAtsVault.objectiveUpgrades.forEach((obj, idx) => {
-                suggestionsHtml += `<button type="button" class="suggest-token-btn" style="text-align:left; display:block; margin-bottom:5px;" onclick="applyFullObjective('${fieldId}', ${idx})">Inject Blueprint Template ${idx + 1}</button>`;
+        // 🔍 3. NATIVE DESCRIPTIVE TEXT & VALIDATION PARSER LAYER
+        else if (type === 'personal') {
+            if (fieldId === 'res_email' && (!textVal.includes('@') || !textVal.includes('.'))) {
+                isInvalid = true;
+                fieldPenalty = 5;
+                warningMsg = "📧 Invalid Email Pattern Structure: Matrix system requires valid domain formatting.";
+            } else if (fieldId === 'res_phone' && (textVal.replace(/[\s+]/g, '').length < 10 || isNaN(textVal.replace(/[\s+]/g, '')))) {
+                isInvalid = true;
+                fieldPenalty = 5;
+                warningMsg = "📞 Contact String Deficient: Phone numeric code requires complete global digits pattern.";
+            }
+        } 
+        else if (type === 'skills') {
+            let items = textVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
+            if (items.length < 3) {
+                isInvalid = true;
+                fieldPenalty = 8;
+                warningMsg = "🛠️ Low Keyword Density Alert: Technical matrix requires minimum 3 core technologies.";
+                globalAtsVault.skillsBackup.forEach(sk => {
+                    if (!items.map(i => i.toLowerCase()).includes(sk.toLowerCase())) {
+                        suggestionsHtml += `<button type="button" class="suggest-token-btn" onclick="addSuggestedSkill('${fieldId}', '${sk}')">+ Add ${sk}</button> `;
+                    }
+                });
+            }
+        } 
+        else if (type === 'objective') {
+            if (textVal.length < 25) {
+                isInvalid = true;
+                fieldPenalty = 7;
+                warningMsg = "🎯 Profile Summary Short: Use premium high-impact pre-built frameworks below:";
+                globalAtsVault.objectiveUpgrades.forEach((obj, idx) => {
+                    suggestionsHtml += `<button type="button" class="suggest-token-btn" style="text-align:left; display:block; margin-bottom:5px;" onclick="applyFullObjective('${fieldId}', ${idx})">Inject Blueprint Template ${idx + 1}</button>`;
+                });
+            }
+        } 
+        else if (type === 'text-content') {
+            let detectedBadWords = globalAtsVault.poorWords.filter(word => {
+                let regex = new RegExp('\\b' + word + '\\b', 'g');
+                return regex.test(lowerText);
             });
+
+            if (detectedBadWords.length > 0) {
+                isInvalid = true;
+                fieldPenalty = detectedBadWords.length * 4;
+                warningMsg = `❌ Ordinary English Elements Found (${detectedBadWords.join(', ')}). Upgrade using high-impact verbs:`;
+                
+                detectedBadWords.forEach(bad => {
+                    let cleanKey = bad.toLowerCase();
+                    let options = globalAtsVault.replacements[cleanKey];
+                    if (options) {
+                        options.forEach(good => {
+                            suggestionsHtml += `<button type="button" class="suggest-token-btn" onclick="globalWordReplacer('${fieldId}', '${bad}', '${good}')">Sweep "${bad}" ➔ [${good}]</button> `;
+                        });
+                    }
+                });
+            }
         }
     }
 
+    // 🏁 VISUAL COMPILATION BINDING
     if (isInvalid) {
         inputNode.classList.add('input-error-glow');
         mentorBox.style.display = 'block';
@@ -517,6 +610,15 @@ function compileTotalGlobalPenalties() {
     });
     globalAtsPenaltyScore = totalDeduction;
     calculateATSScore();
+}
+
+function globalWordReplacer(id, oldW, newW) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    playSystemSound(900, 'sine', 0.04);
+    let regex = new RegExp('\\b' + oldW + '\\b', 'gi');
+    input.value = input.value.replace(regex, newW);
+    input.dispatchEvent(new Event('input'));
 }
 
 function addSuggestedSkill(id, skillName) {
@@ -568,7 +670,7 @@ function bindDynamicAtsListeners() {
     }, 150);
 }
 
-// Runtime Listeners System Mapping
+// Runtime Listener Triggers & Real-Time Canvas Render Hook Integration
 document.addEventListener("DOMContentLoaded", () => {
     const activeFormNode = document.getElementById('wizardMasterForm') || document.querySelector('form');
     if (activeFormNode) {
