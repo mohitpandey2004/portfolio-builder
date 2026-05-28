@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Builder Pro | Studio Edition</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='96' height='96'><defs><linearGradient id='mohitBrand2' x1='0% ' y1='0% ' x2='100% ' y2='100% '><stop offset='0% ' stop-color='%2300eeff'/><stop offset='100% ' stop-color='%23ff007f'/></linearGradient></defs><path fill='none' stroke='url(%23mohitBrand2)' stroke-width='3' stroke-linejoin='round' d='M16 3l11 6v12l-11 8-11-8V9l11-6z'/><circle cx='16' cy='15' r='3' fill='%23ff007f'/><path fill='%2300eeff' d='M16 7v3m-5 5h3m5 0h3'/></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="resume-style.css">
     <style>
@@ -32,6 +33,7 @@
         .help-panel { display: none; background: rgba(0,0,0,0.3); border-left: 3px solid #0ef; padding: 15px; margin-bottom: 20px; border-radius: 0 6px 6px 0; }
         .help-panel h4 { font-size: 14px; color: #0ef; margin-bottom: 6px; }
         .help-panel ul { padding-left: 18px; font-size: 13px; color: #ccc; line-height: 1.6; }
+        .help-panel ul li span { color: #ff007f; font-weight: bold; }
         
         .form-grid-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .input-group-cell { display: flex; flex-direction: column; gap: 8px; }
@@ -92,6 +94,32 @@
     <div class="builder-container no-print">
         <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
         <h1 class="builder-title">Resume Builder Pro_</h1>
+
+        <div class="cyber-ats-widget">
+            <div class="ats-diagnostic-core">
+                <div class="radar-box">
+                    <div class="radar-pulse"></div>
+                    <div class="radar-scan-line"></div>
+                    <span id="atsScoreBadge" class="cyber-percentage">00%</span>
+                </div>
+                <div class="diagnostic-info">
+                    <span class="system-status-tag"><i class="fa-solid fa-circle-nodes"></i> ATS ENGINE ACTIVE</span>
+                    <h4 class="brand-widget-title">Profile Optimization Index</h4>
+                    <p id="atsFeedbackText" class="cyber-feedback-msg">System awaiting core data matrix...</p>
+                </div>
+            </div>
+            
+            <div class="ats-modules-grid">
+                <div class="module-tag critical" id="mod-contact"><i class="fa-solid fa-shield-halved"></i> Contact</div>
+                <div class="module-tag critical" id="mod-education"><i class="fa-solid fa-terminal"></i> Education</div>
+                <div class="module-tag critical" id="mod-experience"><i class="fa-solid fa-briefcase"></i> Experience</div>
+                <div class="module-tag critical" id="mod-skills"><i class="fa-solid fa-code-branch"></i> Skills</div>
+                <div class="module-tag critical" id="mod-objective"><i class="fa-solid fa-bullseye"></i> Objective</div>
+                <div class="module-tag critical" id="mod-reference"><i class="fa-solid fa-address-book"></i> Reference</div>
+                <div class="module-tag critical" id="mod-projects"><i class="fa-solid fa-cubes"></i> Projects</div>
+                <div class="module-tag critical" id="mod-addmore"><i class="fa-solid fa-folder-plus"></i> Add More</div>
+            </div>
+        </div>
         
         <form action="generate-resume.php" method="POST" enctype="multipart/form-data" id="wizardMasterForm">
             <div class="resume-layout">
@@ -269,6 +297,7 @@
         </div>
     </div>
 
+    <script src="app.js"></script>
     <script>
         const fieldMetaDict = {
             'dob': { label: 'Date of Birth', placeholder: 'e.g. 15 August 2002' },
@@ -337,7 +366,6 @@
             }
         }
 
-        // 🚀 FIX: `selectActiveThemeTemplate` ka naam sateek kiya taaki charo modes render hon
         function selectActiveThemeTemplate(id) {
             document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
             document.getElementById('tpl' + id).classList.add('active');
@@ -401,7 +429,6 @@
                 const element = document.getElementById(`dyn-sec-input-${key}`);
                 const value = element ? element.value : '';
                 if(value) {
-                    // 🚀 FIX: Template 54 ke hisab se text behavior text colors handle kiye
                     let titleColor = (theme === '54') ? '#ff007f' : '#111';
                     let textColor = (theme === '54') ? '#e9d5ff' : '#333';
                     let borderStyle = (theme === '54') ? '1px solid rgba(0,239,255,0.3)' : '1px solid #ddd';
@@ -417,7 +444,6 @@
 
             let builtLayoutBlueprintString = "";
             
-            // 🚀 FIX: Template 51 Schema Build Code
             if (theme === '51') {
                 builtLayoutBlueprintString = `
                     <div style="background:#1a365d; color:#fff; padding:25px; margin:-40px -40px 25px -40px; display:flex; justify-content:space-between; align-items:center; border-radius:8px 8px 0 0;">
@@ -448,7 +474,6 @@
                     </div>
                 `;
             }
-            // 🚀 FIX: Template 52 Schema Build Code
             else if (theme === '52') {
                 builtLayoutBlueprintString = `
                     <div style="display:grid; grid-template-columns:30% 70%; gap:30px; margin:-40px;">
@@ -473,7 +498,6 @@
                     </div>
                 `;
             }
-            // 🚀 FIX: Template 53 Schema Build Code
             else if (theme === '53') {
                 builtLayoutBlueprintString = `
                     <div style="display:flex; gap:20px; width:100%; margin:-40px; min-height:850px;">
@@ -498,7 +522,6 @@
                     </div>
                 `;
             }
-            // 🚀 FIX: Template 54 Schema Build Code (Neon Cyber Clean)
             else if (theme === '54') {
                 builtLayoutBlueprintString = `
                     <div style="background:#0d0314; color:#f3e8ff; padding:30px; border-radius:8px; border:2px solid #ff007f; margin:-40px; min-height:850px;">
@@ -523,7 +546,6 @@
             outputBox.innerHTML = builtLayoutBlueprintString;
         }
 
-        // 🚀 BUTTON ACTION SWITCH: Ab ye print window ke sath data generate php link handle karega
         function triggerNativeDocumentPrint() { window.print(); }
     </script>
 </body>
