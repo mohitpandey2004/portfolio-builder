@@ -399,12 +399,17 @@ function calculateATSScore() {
     }
 }
 
-// Runtime Listener Triggers
+// Runtime Listener Triggers & Real-Time Canvas Render Hook Integration
 document.addEventListener("DOMContentLoaded", () => {
     const activeFormNode = document.getElementById('wizardMasterForm') || document.querySelector('form');
     if (activeFormNode) {
         activeFormNode.querySelectorAll('input, textarea').forEach(input => {
-            input.addEventListener('input', calculateATSScore);
+            input.addEventListener('input', () => {
+                calculateATSScore();
+                if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
+                    renderRealtimeLivePreviewDocumentCanvas(); // Instant canvas sync!
+                }
+            });
         });
 
         // Toggle detection event bridge
@@ -414,12 +419,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     const inlineInps = activeFormNode.querySelectorAll('#personalDynamicContainer input, #customSectionsDynamicArea textarea');
                     inlineInps.forEach(dynInp => {
                         dynInp.removeEventListener('input', calculateATSScore);
-                        dynInp.addEventListener('input', calculateATSScore);
+                        dynInp.addEventListener('input', () => {
+                            calculateATSScore();
+                            if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
+                                renderRealtimeLivePreviewDocumentCanvas();
+                            }
+                        });
                     });
                     calculateATSScore();
+                    if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
+                        renderRealtimeLivePreviewDocumentCanvas();
+                    }
                 }, 100);
             }
         });
     }
+    
+    // Initial run synchronization
     calculateATSScore();
+    if (typeof renderRealtimeLivePreviewDocumentCanvas === "function") {
+        renderRealtimeLivePreviewDocumentCanvas();
+    }
 });

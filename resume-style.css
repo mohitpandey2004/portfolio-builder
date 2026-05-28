@@ -664,3 +664,54 @@ input:checked + .slider:before {
 .module-tag.active-step {
     display: flex !important;
 }
+
+/* 🖥️ PRO EDITION: SPLIT-SCREEN REAL-TIME WORKSPACE */
+@media (min-width: 1025px) {
+    .resume-layout {
+        display: grid;
+        grid-template-columns: 260px 1fr 1fr; /* Sidebar | Form Input Area | Live Preview Paper */
+        gap: 25px;
+        max-width: 100% !important;
+        align-items: start;
+    }
+
+    /* Form Area Styles Reset */
+    .form-content-area {
+        min-height: 750px;
+    }
+
+    /* Right Side Paper Preview Sticky Position Framework */
+    .live-canvas-preview-wrapper {
+        margin-top: 0 !important;
+        position: sticky;
+        top: 20px;
+        max-height: 85vh;
+        overflow-y: auto;
+        border: 2px solid rgba(0, 239, 255, 0.2);
+        box-shadow: 0 0 25px rgba(0, 239, 255, 0.1);
+        border-radius: 12px;
+        padding: 20px !important; /* Compression to fit screen scale */
+    }
+    
+    /* Global Section Override for Split Screen preview visibility */
+    .resume-form-section {
+        display: none;
+    }
+    .resume-form-section.active {
+        display: block;
+    }
+    
+    /* Final step preview text block duplication bypass */
+    #step-9 .live-canvas-preview-wrapper {
+        display: none !important; /* Hide original redundant display on desktop split view */
+    }
+}
+
+/* Scrollbar customization for the sticky paper preview */
+.live-canvas-preview-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+.live-canvas-preview-wrapper::-webkit-scrollbar-thumb {
+    background: #00eeff;
+    border-radius: 4px;
+}
